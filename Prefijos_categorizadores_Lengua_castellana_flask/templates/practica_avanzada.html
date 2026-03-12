@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block title %}Práctica Avanzada - Ecosistema Morfología{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <h2>Práctica de Prefijos - 100 Ejercicios</h2>
+        <p>Demuestra tu dominio de los prefijos categorizadores</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Ejercicio <span id="ejercicio-actual">1</span>/100</h5>
+            </div>
+            <div class="card-body">
+                <div id="practica-container">
+                    <!-- Se carga dinámicamente con JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Estadísticas</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-2">
+                    <strong>Puntos:</strong> <span id="puntos-actuales">{{ current_user.puntos }}</span>
+                </div>
+                <div class="mb-2">
+                    <strong>Racha:</strong> <span id="racha-actual">{{ current_user.racha }}</span>
+                </div>
+                <div class="mb-2">
+                    <strong>Correctas:</strong> <span id="correctas">0</span>/<span id="total">0</span>
+                </div>
+                <div class="mb-2">
+                    <strong>Precisión:</strong> <span id="precision">0</span>%
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header bg-warning text-white">
+                <h5 class="mb-0">Estrellas Obtenidas</h5>
+            </div>
+            <div class="card-body text-center">
+                <div id="estrellas" class="display-4">
+                    ⭐⭐⭐
+                </div>
+                <p class="mt-2">3 estrellas = 100% precisión</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let ejercicios = [];
+let indiceActual = 0;
+let respuestas = [];
+let puntos = {{ current_user.puntos }};
+let racha = {{ current_user.racha }};
+
+// Cargar ejercicios
+fetch('/static/data/ejercicios.json')
+    .then(response => response.json())
+    .then(data => {
+        ejercicios = data.ejercicios;
+        mostrarEjercicio();
+    });
+
+function mostrarEjercicio() {
+    const container = document.getElementById('practica-container');
+    const ejercicio = ejercicios[indiceActual];
+    
+    let html = `
+        <h4>${ejercicio.ejemplo.replace('{palabra}', '______')}</h4>
+        <div class="mt-4">
+            <div class="mb-3">
+                <label class="form-label">Tu respuesta:</label>
+                <input type="text" id="respuesta" class="form-control form-control-lg">
+            </div>
+            <div class="d-grid gap-2">
+                <button onclick="verificarRespuesta()" class="btn btn-success btn-lg">
+                    <i class="bi bi-check-circle"></i> Comprobar
+                </button>
+                <button onclick="mostrarPista()" class="btn btn-info btn-lg">
+                    <i class="bi bi-lightbulb"></i> Pista
+                </button>
+            </div>
+        </div>
+    `;
+    
+    container.innerHTML = html;
+    document.getElementById('ejercicio-actual').textContent = indiceActual + 1;
+}
+
+function verificarRespuesta() {
+    const respuesta = document.getElementById('respuesta').value.toLowerCase().trim();
+    const ejercicio = ejercicios[indiceActual];
+    const oracionCorrecta = ejercicio.oracion_correcta.toLowerCase();
+    
+    let correcto = oracionCorrecta.includes(respuesta);
+    
+    if (correcto) {
+        puntos += 10;
+        racha++;
+        respuestas.push({id: ejercicio.id, correcto: true});
+        mostrarFeedback('✅ ¡Correcto! +10 puntos', 'success');
+    } else {
+        racha = 0;
+        respuestas.push({id: ejercicio.id, correcto: false});
+        mostrarFeedback(`❌ Incorrecto. La respuesta era: ${ejercicio.palabra}`, 'danger');
+    }
+    
+    actualizarEstadisticas();
+    
+    setTimeout(() => {
+        indiceActual++;
+        if (indiceActual < ejercicios.length) {
+            mostrarEjercicio();
+        } else {
+            finalizarPractica();
+        }
+    }, 2000);
+}
+
+function mostrarPista() {
+    const ejercicio = ejercicios[indiceActual];
+    const pistas = ejercicio.pistas.join('\n');
+    alert(`Pistas:\n${pistas}`);
+}
+
+function mostrarFeedback(mensaje, tipo) {
+    const feedback = document.createElement('div');
+    feedback.className = `alert alert-${tipo} mt-3`;
+    feedback.textContent = mensaje;
+    
+    const container = document.getElementById('practica-container');
+    container.appendChild(feedback);
+    
+    setTimeout(() => feedback.remove(), 2000);
+}
+
+function actualizarEstadisticas() {
+    const correctas = respuestas.filter(r => r.correcto).length;
+    const total = respuestas.length;
+    const precision = total > 0 ? Math.round((correctas / total) * 100) : 0;
+    
+    document.getElementById('puntos-actuales').textContent = puntos;
+    document.getElementById('racha-actual').textContent = racha;
+    document.getElementById('correctas').textContent = correctas;
+    document.getElementById('total').textContent = total;
+    document.getElementById('precision').textContent = precision;
+    
+    // Actualizar estrellas
+    let estrellas = '';
+    if (precision >= 90) estrellas = '⭐⭐⭐';
+    else if (precision >= 70) estrellas = '⭐⭐';
+    else if (precision >= 50) estrellas = '⭐';
+    else estrellas = '☆☆☆';
+    
+    document.getElementById('estrellas').textContent = estrellas;
+    
+    // Guardar progreso
+    fetch('/api/guardar-progreso', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            puntos: puntos,
+            racha: racha,
+            ejercicios: respuestas
+        })
+    });
+}
+
+function finalizarPractica() {
+    const container = document.getElementById('practica-container');
+    const correctas = respuestas.filter(r => r.correcto).length;
+    const precision = Math.round((correctas / respuestas.length) * 100);
+    
+    container.innerHTML = `
+        <div class="text-center">
+            <h3>¡Práctica Completada!</h3>
+            <div class="display-1 mt-4 mb-4">${precision >= 90 ? '🏆' : '🎉'}</div>
+            <p class="lead">Has completado los 100 ejercicios</p>
+            <p>Correctas: ${correctas}/100</p>
+            <p>Precisión: ${precision}%</p>
+            <p>Estrellas obtenidas: ${precision >= 90 ? '⭐⭐⭐' : precision >= 70 ? '⭐⭐' : precision >= 50 ? '⭐' : '☆☆☆'}</p>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary mt-3">
+                Volver al Dashboard
+            </a>
+        </div>
+    `;
+}
+</script>
+{% endblock %}

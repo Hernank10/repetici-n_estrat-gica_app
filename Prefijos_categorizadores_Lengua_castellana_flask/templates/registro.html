@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Ecosistema Morfología</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --success: #84fab0;
+            --info: #6B73FF;
+            --warning: #f6d365;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+
+        .register-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            width: 100%;
+            max-width: 500px;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .register-header {
+            background: linear-gradient(135deg, var(--success), var(--info));
+            color: white;
+            padding: 2rem 2rem;
+            text-align: center;
+        }
+
+        .register-header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .register-header p {
+            opacity: 0.9;
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+
+        .register-body {
+            padding: 2rem;
+        }
+
+        .form-floating {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            height: auto;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--success);
+            box-shadow: 0 0 0 0.25rem rgba(132, 250, 176, 0.25);
+        }
+
+        .btn-register {
+            background: linear-gradient(135deg, var(--success), var(--info));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 0.75rem;
+            width: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(132, 250, 176, 0.4);
+        }
+
+        .btn-register:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #6c757d;
+            margin: 1.5rem 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .divider::before {
+            margin-right: .5rem;
+        }
+
+        .divider::after {
+            margin-left: .5rem;
+        }
+
+        .login-link {
+            color: var(--info);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .login-link:hover {
+            color: var(--secondary);
+        }
+
+        .alert {
+            border-radius: 12px;
+            border: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .floating-label {
+            position: relative;
+        }
+
+        .floating-label i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #adb5bd;
+            transition: color 0.3s ease;
+            z-index: 10;
+        }
+
+        .floating-label input {
+            padding-left: 45px;
+        }
+
+        .floating-label input:focus + i {
+            color: var(--success);
+        }
+
+        .password-strength {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .strength-bar {
+            height: 5px;
+            border-radius: 5px;
+            background: #e9ecef;
+            margin-top: 0.3rem;
+            overflow: hidden;
+        }
+
+        .strength-bar-fill {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+
+        .terms-check {
+            margin: 1.2rem 0;
+        }
+
+        .terms-check a {
+            color: var(--info);
+            text-decoration: none;
+        }
+
+        .terms-check a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease;
+        }
+
+        .benefits-list {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .benefits-list p {
+            margin-bottom: 0.5rem;
+            color: #495057;
+        }
+
+        .benefits-list i {
+            color: var(--success);
+            margin-right: 0.5rem;
+        }
+
+        .benefits-list small {
+            display: block;
+            color: #6c757d;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-card">
+        <div class="register-header">
+            <i class="bi bi-person-plus-fill" style="font-size: 3rem; margin-bottom: 0.5rem; display: block;"></i>
+            <h1>¡Únete a la comunidad!</h1>
+            <p>Crea tu cuenta y comienza a aprender</p>
+        </div>
+        
+        <div class="register-body">
+            <!-- Mensajes flash -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+                            <i class="bi bi-{{ 'exclamation-circle' if category == 'error' else 'check-circle' }} me-2"></i>
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <!-- Beneficios -->
+            <div class="benefits-list">
+                <p><i class="bi bi-check-circle-fill"></i> Acceso a 100+ ejercicios</p>
+                <p><i class="bi bi-check-circle-fill"></i> Sistema de logros y medallas</p>
+                <p><i class="bi bi-check-circle-fill"></i> Comunidad de aprendizaje</p>
+                <p><i class="bi bi-check-circle-fill"></i> Progreso guardado automáticamente</p>
+                <small>+ Beneficios exclusivos para miembros</small>
+            </div>
+
+            <!-- Formulario de registro -->
+            <form method="POST" action="{{ url_for('registro') }}" id="registerForm">
+                <div class="floating-label">
+                    <input type="text" class="form-control" id="username" name="username" 
+                           placeholder="Nombre de usuario" required autofocus>
+                    <i class="bi bi-person-fill"></i>
+                </div>
+
+                <div class="floating-label">
+                    <input type="email" class="form-control" id="email" name="email" 
+                           placeholder="Correo electrónico" required>
+                    <i class="bi bi-envelope-fill"></i>
+                </div>
+
+                <div class="floating-label">
+                    <input type="password" class="form-control" id="password" name="password" 
+                           placeholder="Contraseña" required>
+                    <i class="bi bi-lock-fill"></i>
+                </div>
+
+                <!-- Indicador de fortaleza de contraseña -->
+                <div class="password-strength">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">Fortaleza de la contraseña:</small>
+                        <small id="strengthText" class="fw-bold">Muy débil</small>
+                    </div>
+                    <div class="strength-bar">
+                        <div class="strength-bar-fill" id="strengthBar"></div>
+                    </div>
+                </div>
+
+                <div class="floating-label">
+                    <input type="password" class="form-control" id="confirm_password" 
+                           name="confirm_password" placeholder="Confirmar contraseña" required>
+                    <i class="bi bi-shield-lock-fill"></i>
+                </div>
+
+                <div class="terms-check">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
+                        <label class="form-check-label" for="terms">
+                            Acepto los <a href="#" onclick="mostrarTerminos()">términos y condiciones</a> 
+                            y la <a href="#" onclick="mostrarPrivacidad()">política de privacidad</a>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-register">
+                    <i class="bi bi-person-plus me-2"></i>Crear Cuenta
+                </button>
+            </form>
+
+            <div class="divider">
+                <span>o</span>
+            </div>
+
+            <!-- Botón de demostración -->
+            <button class="btn btn-outline-secondary w-100 mb-3" onclick="usarDemo()">
+                <i class="bi bi-play-circle me-2"></i>Probar sin registrarme
+            </button>
+
+            <!-- Enlace a login -->
+            <div class="text-center">
+                <span class="text-muted">¿Ya tienes cuenta?</span>
+                <a href="{{ url_for('login') }}" class="login-link ms-2">
+                    Inicia sesión <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de términos y condiciones -->
+    <div class="modal fade" id="modalTerminos" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0">
+                <div class="modal-header bg-primary text-white border-0">
+                    <h5 class="modal-title">
+                        <i class="bi bi-file-text-fill me-2"></i>
+                        Términos y Condiciones
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <h6>1. Aceptación de términos</h6>
+                    <p>Al registrarte en Ecosistema Morfología, aceptas cumplir con estos términos de servicio.</p>
+                    
+                    <h6>2. Uso de la plataforma</h6>
+                    <p>La plataforma está diseñada para fines educativos. Los usuarios deben mantener un comportamiento respetuoso.</p>
+                    
+                    <h6>3. Propiedad intelectual</h6>
+                    <p>Los contenidos creados por usuarios pueden ser compartidos dentro de la comunidad.</p>
+                    
+                    <h6>4. Privacidad</h6>
+                    <p>Tus datos serán tratados según nuestra política de privacidad.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Verificación de fortaleza de contraseña
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthText = document.getElementById('strengthText');
+            
+            let strength = 0;
+            
+            if (password.length >= 6) strength += 1;
+            if (password.length >= 8) strength += 1;
+            if (/[A-Z]/.test(password)) strength += 1;
+            if (/[0-9]/.test(password)) strength += 1;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+            
+            const strengths = ['Muy débil', 'Débil', 'Media', 'Fuerte', 'Muy fuerte', 'Excelente'];
+            const colors = ['#dc3545', '#ffc107', '#17a2b8', '#28a745', '#28a745', '#28a745'];
+            
+            strengthBar.style.width = (strength * 20) + '%';
+            strengthBar.style.backgroundColor = colors[strength];
+            strengthText.textContent = strengths[strength];
+            strengthText.style.color = colors[strength];
+        });
+
+        // Validación del formulario
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirm = document.getElementById('confirm_password').value;
+            const terms = document.getElementById('terms').checked;
+            
+            let errors = [];
+            
+            if (username.length < 3) {
+                errors.push('El nombre de usuario debe tener al menos 3 caracteres');
+                document.getElementById('username').classList.add('is-invalid');
+            }
+            
+            if (!email.includes('@') || !email.includes('.')) {
+                errors.push('Introduce un email válido');
+                document.getElementById('email').classList.add('is-invalid');
+            }
+            
+            if (password.length < 6) {
+                errors.push('La contraseña debe tener al menos 6 caracteres');
+                document.getElementById('password').classList.add('is-invalid');
+            }
+            
+            if (password !== confirm) {
+                errors.push('Las contraseñas no coinciden');
+                document.getElementById('confirm_password').classList.add('is-invalid');
+            }
+            
+            if (!terms) {
+                errors.push('Debes aceptar los términos y condiciones');
+            }
+            
+            if (errors.length > 0) {
+                e.preventDefault();
+                alert('Errores:\n- ' + errors.join('\n- '));
+                document.querySelector('.register-card').classList.add('shake');
+                setTimeout(() => {
+                    document.querySelector('.register-card').classList.remove('shake');
+                }, 500);
+            }
+        });
+
+        // Limpiar clases de error al escribir
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('input', function() {
+                this.classList.remove('is-invalid');
+            });
+        });
+
+        // Función para usar demo
+        function usarDemo() {
+            window.location.href = "{{ url_for('practica_avanzada') }}?demo=true";
+        }
+
+        // Mostrar términos
+        function mostrarTerminos() {
+            new bootstrap.Modal(document.getElementById('modalTerminos')).show();
+        }
+
+        // Mostrar política de privacidad
+        function mostrarPrivacidad() {
+            alert('Política de Privacidad:\n\nTus datos personales serán utilizados únicamente para la gestión de tu cuenta en la plataforma. No compartiremos tu información con terceros sin tu consentimiento explícito.');
+        }
+
+        // Sugerir nombre de usuario basado en email
+        document.getElementById('email').addEventListener('blur', function() {
+            const username = document.getElementById('username');
+            if (!username.value && this.value) {
+                const suggested = this.value.split('@')[0];
+                username.value = suggested;
+            }
+        });
+
+        // Animación de entrada
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('.form-control');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+                input.addEventListener('blur', function() {
+                    if (!this.value) {
+                        this.parentElement.classList.remove('focused');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,385 @@
+{% extends "base.html" %}
+
+{% block title %}Teoría - Ecosistema Morfología{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Encabezado -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-gradient-primary text-white shadow-lg border-0">
+                <div class="card-body p-5">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <h1 class="display-4 fw-bold mb-3">
+                                <i class="bi bi-book-fill me-2"></i>
+                                Teoría de Prefijos Categorizadores
+                            </h1>
+                            <p class="lead mb-0 opacity-75">
+                                Comprende cómo los prefijos pueden transformar la categoría gramatical de las palabras en español
+                            </p>
+                        </div>
+                        <div class="col-lg-4 text-lg-end">
+                            <div class="d-inline-block bg-white bg-opacity-25 rounded-4 p-4">
+                                <i class="bi bi-diagram-3 display-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Introducción -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-shrink-0">
+                            <div class="bg-primary bg-opacity-10 rounded-3 p-3">
+                                <i class="bi bi-question-circle-fill text-primary fs-2"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-4">
+                            <h4 class="mb-3 fw-bold">¿Qué son los prefijos categorizadores?</h4>
+                            <p class="text-muted mb-0">
+                                Los prefijos tradicionalmente NO cambian la categoría gramatical de la base 
+                                (ej: 'hacer' → 'rehacer' [ambos verbos]). Sin embargo, existen casos especiales 
+                                donde los prefijos SÍ pueden transformar la categoría, como en 'polisílabo' 
+                                (de 'sílaba' [sustantivo] → adjetivo). Este fenómeno ocurre principalmente con 
+                                prefijos cuantitativos y en contextos específicos.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tipos de prefijos -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100 hover-lift">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <div class="bg-primary bg-opacity-10 rounded-circle p-3 d-inline-block">
+                            <i class="bi bi-bar-chart-steps text-primary fs-1"></i>
+                        </div>
+                        <h4 class="mt-3 fw-bold">Prefijos Cuantitativos</h4>
+                    </div>
+                    <p class="text-muted mb-3">
+                        Indican cantidad, número o intensidad. Son los que más frecuentemente 
+                        producen cambios categoriales.
+                    </p>
+                    <div class="bg-light rounded-3 p-3 mb-3">
+                        <h6 class="fw-bold mb-2">Ejemplos:</h6>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <span class="badge bg-primary me-2">poli-</span>
+                                <span>sílaba → <strong>polisílabo</strong> (adj)</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="badge bg-primary me-2">multi-</span>
+                                <span>color → <strong>multicolor</strong> (adj)</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="badge bg-primary me-2">pluri-</span>
+                                <span>célula → <strong>pluricelular</strong> (adj)</span>
+                            </li>
+                            <li>
+                                <span class="badge bg-primary me-2">mono-</span>
+                                <span>cromo → <strong>monocromo</strong> (adj)</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="alert alert-info bg-opacity-10 py-2 mb-0">
+                        <i class="bi bi-info-circle-fill me-2"></i>
+                        <small>Estos prefijos suelen eliminar la necesidad de sufijos adjetivadores.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100 hover-lift">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <div class="bg-danger bg-opacity-10 rounded-circle p-3 d-inline-block">
+                            <i class="bi bi-x-circle text-danger fs-1"></i>
+                        </div>
+                        <h4 class="mt-3 fw-bold">Prefijos de Negación</h4>
+                    </div>
+                    <p class="text-muted mb-3">
+                        Expresan oposición, carencia o negación. Pueden crear adjetivos a partir 
+                        de sustantivos y adjetivos.
+                    </p>
+                    <div class="bg-light rounded-3 p-3 mb-3">
+                        <h6 class="fw-bold mb-2">Ejemplos:</h6>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <span class="badge bg-danger me-2">anti-</span>
+                                <span>natural → <strong>antinatural</strong> (adj)</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="badge bg-danger me-2">des-</span>
+                                <span>órbita → <strong>desorbitado</strong> (adj)</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="badge bg-danger me-2">in-</span>
+                                <span>constitucional → <strong>inconstitucional</strong> (adj)</span>
+                            </li>
+                            <li>
+                                <span class="badge bg-danger me-2">a-</span>
+                                <span>político → <strong>apolítico</strong> (adj)</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="alert alert-warning bg-opacity-10 py-2 mb-0">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <small>Pueden tener variantes según la letra inicial (in-, im-, i-).</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100 hover-lift">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <div class="bg-success bg-opacity-10 rounded-circle p-3 d-inline-block">
+                            <i class="bi bi-pin-map text-success fs-1"></i>
+                        </div>
+                        <h4 class="mt-3 fw-bold">Prefijos de Posición</h4>
+                    </div>
+                    <p class="text-muted mb-3">
+                        Indican ubicación en el espacio o el tiempo. Transforman sustantivos 
+                        en adjetivos relacionales.
+                    </p>
+                    <div class="bg-light rounded-3 p-3 mb-3">
+                        <h6 class="fw-bold mb-2">Ejemplos:</h6>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <span class="badge bg-success me-2">extra-</span>
+                                <span>terrestre → <strong>extraterrestre</strong> (adj)</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="badge bg-success me-2">sobre-</span>
+                                <span>natural → <strong>sobrenatural</strong> (adj)</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="badge bg-success me-2">sub-</span>
+                                <span>piel → <strong>subcutáneo</strong> (adj)</span>
+                            </li>
+                            <li>
+                                <span class="badge bg-success me-2">inter-</span>
+                                <span>raza → <strong>interracial</strong> (adj)</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="alert alert-success bg-opacity-10 py-2 mb-0">
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                        <small>Muy productivos en vocabulario técnico y académico.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla comparativa -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-table me-2 text-primary"></i>
+                        Comparación: Con y sin prefijo categorizador
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th scope="col" class="rounded-start">Base (Sustantivo)</th>
+                                    <th scope="col">Con sufijo adjetivador</th>
+                                    <th scope="col" class="rounded-end">Con prefijo categorizador</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>sílaba</strong></td>
+                                    <td><span class="text-muted">silábico</span> ✅</td>
+                                    <td><span class="text-success fw-bold">polisílabo</span> ✅</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>color</strong></td>
+                                    <td><span class="text-muted">colorido</span> ✅</td>
+                                    <td><span class="text-success fw-bold">multicolor</span> ✅</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>célula</strong></td>
+                                    <td><span class="text-muted">celular</span> ✅</td>
+                                    <td><span class="text-success fw-bold">pluricelular</span> ✅</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>naturaleza</strong></td>
+                                    <td><span class="text-muted">natural</span> ✅</td>
+                                    <td><span class="text-success fw-bold">antinatural</span> ✅</td>
+                                </tr>
+                                <tr class="border-bottom">
+                                    <td><strong>raza</strong></td>
+                                    <td><span class="text-muted">racial</span> ✅</td>
+                                    <td><span class="text-success fw-bold">interracial</span> ✅</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reglas y excepciones -->
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        Reglas Generales
+                    </h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item px-0 border-0">
+                            <i class="bi bi-check-lg text-success me-2"></i>
+                            Los prefijos NO cambian la categoría de la base en la mayoría de casos
+                        </li>
+                        <li class="list-group-item px-0 border-0">
+                            <i class="bi bi-check-lg text-success me-2"></i>
+                            Los sufijos SÍ cambian la categoría (son núcleos de derivación)
+                        </li>
+                        <li class="list-group-item px-0 border-0">
+                            <i class="bi bi-check-lg text-success me-2"></i>
+                            Los prefijos cuantitativos son los que más excepciones presentan
+                        </li>
+                        <li class="list-group-item px-0 border-0">
+                            <i class="bi bi-check-lg text-success me-2"></i>
+                            La concordancia de género/número es clave para identificar adjetivos
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4">
+                        <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>
+                        Excepciones y Casos Especiales
+                    </h5>
+                    <div class="bg-light rounded-3 p-4">
+                        <p class="mb-3">
+                            <strong>El caso de "polisílabo":</strong> 
+                            <span class="text-muted">De "sílaba" (sustantivo) a adjetivo sin sufijo</span>
+                        </p>
+                        <p class="mb-3">
+                            <strong>El caso de "multicolor":</strong> 
+                            <span class="text-muted">Concuerda en número: "banderas multicolores"</span>
+                        </p>
+                        <p class="mb-3">
+                            <strong>El caso de "antinatural":</strong> 
+                            <span class="text-muted">Adjetivo a partir de base nominal</span>
+                        </p>
+                        <p class="mb-0">
+                            <strong>El caso de "extraterrestre":</strong> 
+                            <span class="text-muted">Base adjetival con prefijo posicional</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cita académica -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card bg-light border-0">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-quote display-1 text-primary opacity-50 me-3"></i>
+                        <div>
+                            <p class="lead fst-italic mb-2">
+                                "Los prefijos categorizadores representan una frontera fascinante en la morfología 
+                                española, donde la excepción se convierte en regla y nos obliga a repensar 
+                                nuestras teorías gramaticales."
+                            </p>
+                            <footer class="blockquote-footer mt-2">
+                                Dr. Antonio Morales, <cite title="Source Title">Lingüística Computacional</cite>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Estilos adicionales -->
+<style>
+.hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+}
+
+.table thead th {
+    border-bottom: none;
+    padding: 1rem;
+}
+
+.table tbody td {
+    padding: 1rem;
+}
+
+.list-group-item {
+    padding: 0.8rem 0;
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.row > [class*="col-"] {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.row > [class*="col-"]:nth-child(1) { animation-delay: 0.1s; }
+.row > [class*="col-"]:nth-child(2) { animation-delay: 0.2s; }
+.row > [class*="col-"]:nth-child(3) { animation-delay: 0.3s; }
+</style>
+{% endblock %}

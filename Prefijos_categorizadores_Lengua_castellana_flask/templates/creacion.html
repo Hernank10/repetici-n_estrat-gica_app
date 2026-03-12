@@ -1,0 +1,391 @@
+{% extends "base.html" %}
+
+{% block title %}Creación - Ecosistema Morfología{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Encabezado -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-gradient-success text-white shadow-lg border-0">
+                <div class="card-body p-5">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <h1 class="display-4 fw-bold mb-3">
+                                <i class="bi bi-pencil-square me-2"></i>
+                                Laboratorio de Creación
+                            </h1>
+                            <p class="lead mb-0 opacity-75">
+                                Crea tus propios ejemplos con prefijos categorizadores y compártelos con la comunidad
+                            </p>
+                        </div>
+                        <div class="col-lg-4 text-lg-end">
+                            <div class="d-inline-block bg-white bg-opacity-25 rounded-4 p-4">
+                                <i class="bi bi-lightbulb display-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Formulario de creación -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-plus-circle-fill me-2 text-success"></i>
+                        Crear Nuevo Ejemplo
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST" action="{{ url_for('creacion') }}" id="formCreacion">
+                        <!-- Selector de palabra -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Selecciona un prefijo:</label>
+                            <select class="form-select form-select-lg" name="palabra_id" required>
+                                <option value="" selected disabled>-- Elige un prefijo para trabajar --</option>
+                                {% for palabra in palabras %}
+                                <option value="{{ palabra.id }}" 
+                                        data-prefijo="{{ palabra.palabra[:3] }}"
+                                        data-base="{{ palabra.base }}"
+                                        data-categoria="{{ palabra.categoria }}">
+                                    {{ palabra.palabra }} ({{ palabra.base }} → {{ palabra.categoria }})
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Vista prevía del prefijo seleccionado -->
+                        <div id="previewPrefijo" class="alert alert-info bg-opacity-10 d-none mb-4">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-info-circle-fill fs-4 me-3"></i>
+                                <div>
+                                    <strong>Prefijo:</strong> <span id="prefijoSeleccionado"></span><br>
+                                    <strong>Base:</strong> <span id="baseSeleccionada"></span><br>
+                                    <strong>Categoría resultante:</strong> <span id="categoriaSeleccionada"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Oración simple -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Oración simple:</label>
+                            <textarea class="form-control" name="oracion_simple" rows="3" 
+                                      placeholder="Ej: Los versos polisílabos tienen un ritmo especial..."
+                                      required></textarea>
+                            <div class="form-text text-muted">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Escribe una oración simple que incluya la palabra con prefijo.
+                            </div>
+                        </div>
+
+                        <!-- Oración compuesta -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Oración compuesta:</label>
+                            <textarea class="form-control" name="oracion_compuesta" rows="4" 
+                                      placeholder="Ej: Los poemas que utilizan versos polisílabos suelen tener un ritmo más complejo y elaborado..."
+                                      required></textarea>
+                            <div class="form-text text-muted">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Escribe una oración compuesta (con subordinadas, coordinadas, etc.)
+                            </div>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="d-flex gap-3">
+                            <button type="submit" class="btn btn-success btn-lg flex-grow-1">
+                                <i class="bi bi-check-circle me-2"></i>
+                                Guardar Ejemplo
+                            </button>
+                            <button type="reset" class="btn btn-outline-secondary btn-lg">
+                                <i class="bi bi-x-circle me-2"></i>
+                                Limpiar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Consejos y sugerencias -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-lightbulb-fill me-2 text-warning"></i>
+                        Consejos para crear buenos ejemplos
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item px-0 border-0">
+                            <div class="d-flex">
+                                <span class="badge bg-warning rounded-circle me-3" style="width: 30px; height: 30px;">1</span>
+                                <div>
+                                    <strong>Contexto claro</strong>
+                                    <p class="text-muted small mb-0">La oración debe hacer evidente el significado del prefijo</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item px-0 border-0">
+                            <div class="d-flex">
+                                <span class="badge bg-warning rounded-circle me-3" style="width: 30px; height: 30px;">2</span>
+                                <div>
+                                    <strong>Concordancia correcta</strong>
+                                    <p class="text-muted small mb-0">Asegura que el adjetivo concuerde en género y número</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item px-0 border-0">
+                            <div class="d-flex">
+                                <span class="badge bg-warning rounded-circle me-3" style="width: 30px; height: 30px;">3</span>
+                                <div>
+                                    <strong>Oración compuesta elaborada</strong>
+                                    <p class="text-muted small mb-0">Usa subordinadas o coordinadas para demostrar dominio</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item px-0 border-0">
+                            <div class="d-flex">
+                                <span class="badge bg-warning rounded-circle me-3" style="width: 30px; height: 30px;">4</span>
+                                <div>
+                                    <strong>Evita repeticiones</strong>
+                                    <p class="text-muted small mb-0">Usa sinónimos y variedad léxica</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-example-circle me-2 text-info"></i>
+                        Ejemplo de calidad
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="bg-light rounded-3 p-4">
+                        <p class="fw-bold mb-2">✅ Buen ejemplo:</p>
+                        <p class="mb-2">
+                            <span class="badge bg-info me-2">Simple</span>
+                            "Los organismos pluricelulares tienen estructuras complejas."
+                        </p>
+                        <p class="mb-3">
+                            <span class="badge bg-info me-2">Compuesta</span>
+                            "Los organismos pluricelulares, que evolucionaron a partir de ancestros unicelulares, 
+                            desarrollaron tejidos especializados para funciones específicas."
+                        </p>
+                        <p class="text-muted small mb-0">
+                            <i class="bi bi-check-circle-fill text-success me-1"></i>
+                            Contexto claro, concordancia correcta, oración compuesta elaborada.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tus ejemplos guardados -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-archive-fill me-2 text-primary"></i>
+                        Tus Ejemplos Guardados
+                        <span class="badge bg-primary ms-2">{{ ejemplos|length }}</span>
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    {% if ejemplos %}
+                    <div class="row g-4">
+                        {% for ejemplo in ejemplos %}
+                        <div class="col-md-6">
+                            <div class="card border-0 bg-light hover-lift">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <h6 class="fw-bold mb-0">
+                                            <span class="badge bg-primary me-2">{{ ejemplo.palabra.palabra }}</span>
+                                        </h6>
+                                        <small class="text-muted">
+                                            <i class="bi bi-calendar3 me-1"></i>
+                                            {{ ejemplo.fecha.strftime('%d/%m/%Y') }}
+                                        </small>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <span class="badge bg-success bg-opacity-10 text-success mb-2">
+                                            <i class="bi bi-check-circle me-1"></i> Simple
+                                        </span>
+                                        <p class="mb-2">{{ ejemplo.oracion_simple }}</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <span class="badge bg-info bg-opacity-10 text-info mb-2">
+                                            <i class="bi bi-diagram-3 me-1"></i> Compuesta
+                                        </span>
+                                        <p class="mb-0">{{ ejemplo.oracion_compuesta }}</p>
+                                    </div>
+
+                                    <div class="mt-3 text-end">
+                                        <span class="badge bg-warning bg-opacity-10 text-warning">
+                                            <i class="bi bi-star-fill me-1"></i>
+                                            {% if ejemplo.validado %}Validado{% else %}Pendiente{% endif %}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-5">
+                        <i class="bi bi-inbox display-1 text-muted"></i>
+                        <h5 class="mt-3 text-muted">No tienes ejemplos guardados</h5>
+                        <p class="text-muted">¡Crea tu primer ejemplo usando el formulario!</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación -->
+<div class="modal fade" id="modalConfirmacion" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0">
+            <div class="modal-header bg-success text-white border-0">
+                <h5 class="modal-title">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    Ejemplo Guardado
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p>Tu ejemplo ha sido guardado correctamente y está pendiente de validación por la comunidad.</p>
+                <p class="text-muted small mb-0">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Recibirás notificaciones cuando sea validado o reciba comentarios.
+                </p>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">
+                    Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Estilos adicionales -->
+<style>
+.hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+}
+
+.bg-gradient-success {
+    background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+}
+
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+}
+
+.form-select-lg, .form-control-lg {
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.form-select-lg:focus, .form-control-lg:focus {
+    border-color: #84fab0;
+    box-shadow: 0 0 0 0.25rem rgba(132, 250, 176, 0.25);
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.row > [class*="col-"] {
+    animation: fadeInUp 0.5s ease forwards;
+}
+</style>
+
+<script>
+// Mostrar vista previa del prefijo seleccionado
+document.querySelector('select[name="palabra_id"]').addEventListener('change', function() {
+    const option = this.options[this.selectedIndex];
+    if (option.value) {
+        document.getElementById('prefijoSeleccionado').textContent = option.dataset.prefijo;
+        document.getElementById('baseSeleccionada').textContent = option.dataset.base;
+        document.getElementById('categoriaSeleccionada').textContent = option.dataset.categoria;
+        document.getElementById('previewPrefijo').classList.remove('d-none');
+    } else {
+        document.getElementById('previewPrefijo').classList.add('d-none');
+    }
+});
+
+// Mostrar modal si hay éxito
+{% if request.args.get('success') %}
+document.addEventListener('DOMContentLoaded', function() {
+    new bootstrap.Modal(document.getElementById('modalConfirmacion')).show();
+});
+{% endif %}
+
+// Validación del formulario
+document.getElementById('formCreacion').addEventListener('submit', function(e) {
+    const palabraId = document.querySelector('select[name="palabra_id"]').value;
+    const simple = document.querySelector('textarea[name="oracion_simple"]').value.trim();
+    const compuesta = document.querySelector('textarea[name="oracion_compuesta"]').value.trim();
+    
+    if (!palabraId) {
+        e.preventDefault();
+        alert('Por favor, selecciona una palabra con prefijo');
+        return;
+    }
+    
+    if (simple.length < 10) {
+        e.preventDefault();
+        alert('La oración simple debe tener al menos 10 caracteres');
+        return;
+    }
+    
+    if (compuesta.length < 20) {
+        e.preventDefault();
+        alert('La oración compuesta debe tener al menos 20 caracteres');
+        return;
+    }
+    
+    if (!compuesta.includes(',') && !compuesta.includes('que') && !compuesta.includes('y') && !compuesta.includes('pero')) {
+        if (!confirm('¿Estás seguro de que es una oración compuesta? Debería incluir conectores como "que", "y", "pero", comas, etc.')) {
+            e.preventDefault();
+            return;
+        }
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,84 @@
+{
+  "logros": [
+    {
+      "id": "principiante",
+      "nombre": "Aprendiz Inicial",
+      "descripcion": "Completa tus primeros 10 ejercicios",
+      "icono": "🌟",
+      "requisito": 10,
+      "tipo": "ejercicios"
+    },
+    {
+      "id": "intermedio",
+      "nombre": "Explorador Morfológico",
+      "descripcion": "Completa 50 ejercicios correctamente",
+      "icono": "🏆",
+      "requisito": 50,
+      "tipo": "ejercicios"
+    },
+    {
+      "id": "avanzado",
+      "nombre": "Maestro de Prefijos",
+      "descripcion": "Completa 100 ejercicios correctamente",
+      "icono": "👑",
+      "requisito": 100,
+      "tipo": "ejercicios"
+    },
+    {
+      "id": "racha_7",
+      "nombre": "En Racha",
+      "descripcion": "7 respuestas correctas consecutivas",
+      "icono": "🔥",
+      "requisito": 7,
+      "tipo": "racha"
+    },
+    {
+      "id": "racha_15",
+      "nombre": "Imparable",
+      "descripcion": "15 respuestas correctas consecutivas",
+      "icono": "⚡",
+      "requisito": 15,
+      "tipo": "racha"
+    },
+    {
+      "id": "racha_30",
+      "nombre": "Leyenda",
+      "descripcion": "30 respuestas correctas consecutivas",
+      "icono": "💫",
+      "requisito": 30,
+      "tipo": "racha"
+    },
+    {
+      "id": "categoria_cuantitativos",
+      "nombre": "Cuantificador Experto",
+      "descripcion": "Domina 20 prefijos cuantitativos",
+      "icono": "📊",
+      "requisito": 20,
+      "tipo": "categoria"
+    },
+    {
+      "id": "categoria_negacion",
+      "nombre": "Negador Profesional",
+      "descripcion": "Domina 15 prefijos de negación",
+      "icono": "🚫",
+      "requisito": 15,
+      "tipo": "categoria"
+    },
+    {
+      "id": "categoria_posicion",
+      "nombre": "Maestro Espacial",
+      "descripcion": "Domina 15 prefijos de posición",
+      "icono": "📍",
+      "requisito": 15,
+      "tipo": "categoria"
+    },
+    {
+      "id": "creador",
+      "nombre": "Creador de Contenido",
+      "descripcion": "Crea 10 ejemplos propios validados",
+      "icono": "✍️",
+      "requisito": 10,
+      "tipo": "creacion"
+    }
+  ]
+}

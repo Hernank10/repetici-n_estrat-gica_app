@@ -1,0 +1,564 @@
+{% extends "base.html" %}
+
+{% block title %}Mi Perfil - Ecosistema Morfología{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Encabezado del perfil -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-gradient-primary text-white shadow-lg border-0">
+                <div class="card-body p-5">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <div class="d-flex align-items-center">
+                                <div class="user-avatar-large bg-white text-primary rounded-circle me-4 
+                                            d-flex align-items-center justify-content-center shadow"
+                                     style="width: 100px; height: 100px; font-size: 3rem;">
+                                    {{ current_user.username[0]|upper }}
+                                </div>
+                                <div>
+                                    <h1 class="display-4 fw-bold mb-2">{{ current_user.username }}</h1>
+                                    <p class="lead mb-2">{{ current_user.email }}</p>
+                                    <div class="d-flex gap-2">
+                                        <span class="badge bg-warning text-dark p-3">
+                                            <i class="bi bi-trophy-fill me-2"></i>Nivel {{ current_user.nivel }}
+                                        </span>
+                                        <span class="badge bg-info p-3">
+                                            <i class="bi bi-star-fill me-2"></i>{{ stats.total_puntos }} Puntos
+                                        </span>
+                                        <span class="badge bg-success p-3">
+                                            <i class="bi bi-calendar-check me-2"></i>Miembro desde {{ current_user.fecha_registro.strftime('%B %Y') }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 text-lg-end">
+                            <button class="btn btn-light btn-lg" onclick="editarPerfil()">
+                                <i class="bi bi-pencil-square me-2"></i>Editar Perfil
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estadísticas detalladas -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 hover-lift">
+                <div class="card-body text-center p-4">
+                    <div class="bg-primary bg-opacity-10 rounded-circle p-3 d-inline-block mb-3">
+                        <i class="bi bi-check-circle-fill text-primary fs-1"></i>
+                    </div>
+                    <h3 class="fw-bold mb-2">{{ stats.ejercicios_completados }}</h3>
+                    <p class="text-muted mb-0">Ejercicios Completados</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 hover-lift">
+                <div class="card-body text-center p-4">
+                    <div class="bg-success bg-opacity-10 rounded-circle p-3 d-inline-block mb-3">
+                        <i class="bi bi-check-all text-success fs-1"></i>
+                    </div>
+                    <h3 class="fw-bold mb-2">{{ stats.precision }}%</h3>
+                    <p class="text-muted mb-0">Precisión</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 hover-lift">
+                <div class="card-body text-center p-4">
+                    <div class="bg-warning bg-opacity-10 rounded-circle p-3 d-inline-block mb-3">
+                        <i class="bi bi-fire text-warning fs-1"></i>
+                    </div>
+                    <h3 class="fw-bold mb-2">{{ current_user.racha }}</h3>
+                    <p class="text-muted mb-0">Racha Actual</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 hover-lift">
+                <div class="card-body text-center p-4">
+                    <div class="bg-info bg-opacity-10 rounded-circle p-3 d-inline-block mb-3">
+                        <i class="bi bi-award-fill text-info fs-1"></i>
+                    </div>
+                    <h3 class="fw-bold mb-2">{{ stats.logros }}</h3>
+                    <p class="text-muted mb-0">Logros Obtenidos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Progreso por categoría -->
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-pie-chart-fill me-2 text-primary"></i>
+                        Progreso por Categoría
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-bold">Prefijos Cuantitativos</span>
+                            <span class="text-muted">{{ stats.cuantitativos }}%</span>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-primary" style="width: {{ stats.cuantitativos }}%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-bold">Prefijos de Negación</span>
+                            <span class="text-muted">{{ stats.negacion }}%</span>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-danger" style="width: {{ stats.negacion }}%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-bold">Prefijos de Posición</span>
+                            <span class="text-muted">{{ stats.posicion }}%</span>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-success" style="width: {{ stats.posicion }}%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logros recientes -->
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-trophy-fill me-2 text-warning"></i>
+                        Últimos Logros
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    {% if logros_recientes %}
+                    <div class="list-group list-group-flush">
+                        {% for logro in logros_recientes %}
+                        <div class="list-group-item px-0 border-0">
+                            <div class="d-flex align-items-center">
+                                <span class="display-6 me-3">{{ logro.icono }}</span>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1 fw-bold">{{ logro.nombre }}</h6>
+                                    <small class="text-muted">{{ logro.descripcion }}</small>
+                                </div>
+                                <small class="text-muted">{{ logro.fecha }}</small>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4">
+                        <i class="bi bi-star display-1 text-muted"></i>
+                        <p class="mt-3 text-muted">Aún no has obtenido logros</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actividad reciente -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-clock-history me-2 text-info"></i>
+                        Actividad Reciente
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Actividad</th>
+                                    <th>Detalle</th>
+                                    <th>Puntos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for actividad in actividad_reciente %}
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-light text-dark">
+                                            <i class="bi bi-calendar3 me-1"></i>
+                                            {{ actividad.fecha }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {% if actividad.tipo == 'ejercicio' %}
+                                        <span class="badge bg-success">
+                                            <i class="bi bi-check-circle me-1"></i>
+                                        {% elif actividad.tipo == 'logro' %}
+                                        <span class="badge bg-warning">
+                                            <i class="bi bi-trophy me-1"></i>
+                                        {% elif actividad.tipo == 'creacion' %}
+                                        <span class="badge bg-info">
+                                            <i class="bi bi-pencil me-1"></i>
+                                        {% endif %}
+                                            {{ actividad.tipo|capitalize }}
+                                        </span>
+                                    </td>
+                                    <td>{{ actividad.descripcion }}</td>
+                                    <td>
+                                        <span class="badge bg-primary">
+                                            +{{ actividad.puntos }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Configuración de la cuenta -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-gear-fill me-2 text-secondary"></i>
+                        Configuración de la Cuenta
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                                <i class="bi bi-envelope-fill fs-3 me-3 text-primary"></i>
+                                <div>
+                                    <small class="text-muted d-block">Email</small>
+                                    <strong>{{ current_user.email }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                                <i class="bi bi-shield-lock-fill fs-3 me-3 text-success"></i>
+                                <div>
+                                    <small class="text-muted d-block">Contraseña</small>
+                                    <strong>••••••••</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex align-items-center p-3 bg-light rounded-3">
+                                <i class="bi bi-bell-fill fs-3 me-3 text-warning"></i>
+                                <div>
+                                    <small class="text-muted d-block">Notificaciones</small>
+                                    <strong>Activadas</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 mt-4">
+                        <button class="btn btn-primary" onclick="cambiarEmail()">
+                            <i class="bi bi-envelope me-2"></i>Cambiar Email
+                        </button>
+                        <button class="btn btn-warning" onclick="cambiarPassword()">
+                            <i class="bi bi-key me-2"></i>Cambiar Contraseña
+                        </button>
+                        <button class="btn btn-outline-danger" onclick="eliminarCuenta()">
+                            <i class="bi bi-trash me-2"></i>Eliminar Cuenta
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de edición de perfil -->
+<div class="modal fade" id="modalEditarPerfil" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0">
+            <div class="modal-header bg-primary text-white border-0">
+                <h5 class="modal-title">
+                    <i class="bi bi-pencil-square me-2"></i>
+                    Editar Perfil
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="formEditarPerfil">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Nombre de usuario</label>
+                        <input type="text" class="form-control" id="editUsername" 
+                               value="{{ current_user.username }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Email</label>
+                        <input type="email" class="form-control" id="editEmail" 
+                               value="{{ current_user.email }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Avatar (iniciales)</label>
+                        <input type="text" class="form-control" id="editAvatar" 
+                               value="{{ current_user.username[0]|upper }}" maxlength="2">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Biografía</label>
+                        <textarea class="form-control" id="editBio" rows="3" 
+                                  placeholder="Cuéntanos sobre ti...">{{ current_user.bio or '' }}</textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="guardarPerfil()">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de cambio de contraseña -->
+<div class="modal fade" id="modalCambiarPassword" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0">
+            <div class="modal-header bg-warning text-white border-0">
+                <h5 class="modal-title">
+                    <i class="bi bi-key-fill me-2"></i>
+                    Cambiar Contraseña
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="formCambiarPassword">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Contraseña actual</label>
+                        <input type="password" class="form-control" id="currentPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Nueva contraseña</label>
+                        <input type="password" class="form-control" id="newPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Confirmar nueva contraseña</label>
+                        <input type="password" class="form-control" id="confirmPassword" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-warning" onclick="guardarPassword()">Cambiar Contraseña</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Estilos adicionales -->
+<style>
+.hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.user-avatar-large {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    border: 4px solid rgba(255,255,255,0.5);
+}
+
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.progress {
+    border-radius: 10px;
+    background-color: #f0f0f0;
+}
+
+.progress-bar {
+    transition: width 0.5s ease;
+    background-image: linear-gradient(45deg, 
+        rgba(255,255,255,.15) 25%, 
+        transparent 25%, 
+        transparent 50%, 
+        rgba(255,255,255,.15) 50%, 
+        rgba(255,255,255,.15) 75%, 
+        transparent 75%, 
+        transparent);
+    background-size: 1rem 1rem;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    border-bottom: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.table tbody td {
+    padding: 1rem 0.5rem;
+    vertical-align: middle;
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.row > [class*="col-"] {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.row > [class*="col-"]:nth-child(1) { animation-delay: 0.1s; }
+.row > [class*="col-"]:nth-child(2) { animation-delay: 0.2s; }
+.row > [class*="col-"]:nth-child(3) { animation-delay: 0.3s; }
+.row > [class*="col-"]:nth-child(4) { animation-delay: 0.4s; }
+</style>
+
+<script>
+function editarPerfil() {
+    new bootstrap.Modal(document.getElementById('modalEditarPerfil')).show();
+}
+
+function guardarPerfil() {
+    const username = document.getElementById('editUsername').value;
+    const email = document.getElementById('editEmail').value;
+    const avatar = document.getElementById('editAvatar').value;
+    const bio = document.getElementById('editBio').value;
+    
+    fetch('/api/actualizar-perfil', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: username,
+            email: email,
+            avatar: avatar,
+            bio: bio
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            alert('Error al actualizar el perfil');
+        }
+    });
+}
+
+function cambiarPassword() {
+    new bootstrap.Modal(document.getElementById('modalCambiarPassword')).show();
+}
+
+function guardarPassword() {
+    const current = document.getElementById('currentPassword').value;
+    const newPass = document.getElementById('newPassword').value;
+    const confirm = document.getElementById('confirmPassword').value;
+    
+    if (newPass !== confirm) {
+        alert('Las contraseñas no coinciden');
+        return;
+    }
+    
+    if (newPass.length < 6) {
+        alert('La contraseña debe tener al menos 6 caracteres');
+        return;
+    }
+    
+    fetch('/api/cambiar-password', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            current: current,
+            new: newPass
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Contraseña actualizada correctamente');
+            bootstrap.Modal.getInstance(document.getElementById('modalCambiarPassword')).hide();
+        } else {
+            alert('Error: ' + data.error);
+        }
+    });
+}
+
+function cambiarEmail() {
+    const nuevoEmail = prompt('Introduce tu nuevo email:');
+    if (nuevoEmail && nuevoEmail.includes('@')) {
+        fetch('/api/cambiar-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: nuevoEmail })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('Error al actualizar el email');
+            }
+        });
+    }
+}
+
+function eliminarCuenta() {
+    if (confirm('¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.')) {
+        const confirmacion = prompt('Escribe "ELIMINAR" para confirmar:');
+        if (confirmacion === 'ELIMINAR') {
+            fetch('/api/eliminar-cuenta', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/logout';
+                }
+            });
+        }
+    }
+}
+</script>
+{% endblock %}

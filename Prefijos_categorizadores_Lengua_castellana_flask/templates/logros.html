@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Logros - Ecosistema Morfología{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <h2>Mis Logros y Medallas</h2>
+        <p>Sigue progresando para desbloquear todos los logros</p>
+    </div>
+</div>
+
+<div class="row">
+    {% for logro in logros %}
+    <div class="col-md-4 mb-3">
+        <div class="card {% if logro.desbloqueado %}border-success{% endif %}">
+            <div class="card-body text-center">
+                <div class="display-1">{{ logro.icono }}</div>
+                <h5 class="card-title mt-3">{{ logro.nombre }}</h5>
+                <p class="card-text">{{ logro.descripcion }}</p>
+                {% if logro.desbloqueado %}
+                <span class="badge bg-success">✓ Desbloqueado</span>
+                {% else %}
+                <div class="progress mb-2">
+                    <div class="progress-bar" style="width: {{ logro.progreso }}%">
+                        {{ logro.progreso }}%
+                    </div>
+                </div>
+                <span class="badge bg-secondary">{{ logro.actual }}/{{ logro.requisito }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Tabla de Posiciones</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Usuario</th>
+                            <th>Puntos</th>
+                            <th>Nivel</th>
+                            <th>Logros</th>
+                            <th>Medallas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for usuario in ranking %}
+                        <tr {% if usuario.id == current_user.id %}class="table-primary"{% endif %}>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ usuario.username }}</td>
+                            <td>{{ usuario.puntos }}</td>
+                            <td>{{ usuario.nivel }}</td>
+                            <td>{{ usuario.logros }}</td>
+                            <td>
+                                {% for medalla in usuario.medallas %}
+                                <span class="display-6">{{ medalla }}</span>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

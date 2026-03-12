@@ -1,0 +1,547 @@
+{% extends "base.html" %}
+
+{% block title %}Comunidad - Ecosistema Morfología{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Encabezado -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-gradient-info text-white shadow-lg border-0">
+                <div class="card-body p-5">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <h1 class="display-4 fw-bold mb-3">
+                                <i class="bi bi-people-fill me-2"></i>
+                                Comunidad de Aprendizaje
+                            </h1>
+                            <p class="lead mb-0 opacity-75">
+                                Explora ejemplos creados por otros usuarios, comparte conocimientos y aprende en comunidad
+                            </p>
+                        </div>
+                        <div class="col-lg-4 text-lg-end">
+                            <div class="d-inline-block bg-white bg-opacity-25 rounded-4 p-4">
+                                <i class="bi bi-chat-dots-fill display-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtros y búsqueda -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0">
+                                    <i class="bi bi-search text-primary"></i>
+                                </span>
+                                <input type="text" class="form-control border-start-0" 
+                                       id="busquedaEjemplos" placeholder="Buscar ejemplos...">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" id="filtroCategoria">
+                                <option value="todos">Todas las categorías</option>
+                                <option value="cuantitativo">Cuantitativos</option>
+                                <option value="negación">Negación</option>
+                                <option value="posición">Posición</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" id="filtroOrden">
+                                <option value="recientes">Más recientes</option>
+                                <option value="populares">Más populares</option>
+                                <option value="validados">Solo validados</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary w-100" onclick="aplicarFiltros()">
+                                <i class="bi bi-funnel me-2"></i>Filtrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Lista de ejemplos de la comunidad -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-chat-square-text-fill me-2 text-primary"></i>
+                        Ejemplos de la Comunidad
+                        <span class="badge bg-primary ms-2">{{ ejemplos|length }}</span>
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-4" id="contenedorEjemplos">
+                        {% for ejemplo in ejemplos %}
+                        <div class="col-12 ejemplo-item" 
+                             data-categoria="{{ ejemplo.palabra.tipo_prefijo }}"
+                             data-popularidad="{{ ejemplo.likes }}">
+                            <div class="card border-0 bg-light hover-lift">
+                                <div class="card-body p-4">
+                                    <!-- Cabecera del ejemplo -->
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="user-avatar bg-primary text-white rounded-circle me-3 
+                                                        d-flex align-items-center justify-content-center" 
+                                                 style="width: 40px; height: 40px;">
+                                                {{ ejemplo.autor.username[0]|upper }}
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold mb-1">{{ ejemplo.autor.username }}</h6>
+                                                <small class="text-muted">
+                                                    <i class="bi bi-calendar3 me-1"></i>
+                                                    {{ ejemplo.fecha.strftime('%d/%m/%Y') }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <span class="badge bg-primary">{{ ejemplo.palabra.palabra }}</span>
+                                    </div>
+
+                                    <!-- Oraciones -->
+                                    <div class="ms-5 ps-2">
+                                        <div class="mb-3">
+                                            <span class="badge bg-success bg-opacity-10 text-success mb-2">
+                                                <i class="bi bi-check-circle me-1"></i> Oración Simple
+                                            </span>
+                                            <p class="mb-2">{{ ejemplo.oracion_simple }}</p>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <span class="badge bg-info bg-opacity-10 text-info mb-2">
+                                                <i class="bi bi-diagram-3 me-1"></i> Oración Compuesta
+                                            </span>
+                                            <p class="mb-0">{{ ejemplo.oracion_compuesta }}</p>
+                                        </div>
+
+                                        <!-- Etiquetas -->
+                                        <div class="d-flex flex-wrap gap-2 mt-3">
+                                            <span class="badge bg-light text-dark">
+                                                <i class="bi bi-tag me-1"></i>
+                                                {{ ejemplo.palabra.tipo_prefijo|capitalize }}
+                                            </span>
+                                            {% if ejemplo.validado %}
+                                            <span class="badge bg-success">
+                                                <i class="bi bi-check-circle-fill me-1"></i>Validado
+                                            </span>
+                                            {% else %}
+                                            <span class="badge bg-warning text-dark">
+                                                <i class="bi bi-clock-history me-1"></i>Pendiente
+                                            </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Acciones -->
+                                    <div class="d-flex justify-content-end gap-2 mt-3 pt-3 border-top">
+                                        <button class="btn btn-outline-primary btn-sm" 
+                                                onclick="likeEjemplo({{ ejemplo.id }})"
+                                                {% if not current_user.is_authenticated %}disabled{% endif %}>
+                                            <i class="bi bi-heart{% if current_user.is_authenticated %}-fill{% endif %} me-1"></i>
+                                            <span id="likes-{{ ejemplo.id }}">{{ ejemplo.likes }}</span>
+                                        </button>
+                                        <button class="btn btn-outline-secondary btn-sm" 
+                                                onclick="compartirEjemplo({{ ejemplo.id }})">
+                                            <i class="bi bi-share me-1"></i>Compartir
+                                        </button>
+                                        <button class="btn btn-outline-info btn-sm" 
+                                                onclick="comentarEjemplo({{ ejemplo.id }})">
+                                            <i class="bi bi-chat me-1"></i>Comentar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Paginación -->
+                    <nav class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#"><i class="bi bi-chevron-left"></i></a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">4</a></li>
+                            <li class="page-item"><a class="page-link" href="#">5</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Top usuarios -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-trophy-fill me-2 text-warning"></i>
+                        Top Contribuidores
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="list-group list-group-flush">
+                        {% for usuario in top_usuarios %}
+                        <div class="list-group-item px-0 border-0">
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-{{ ['gold', 'silver', 'bronze'][loop.index0] if loop.index <= 3 else 'light' }} 
+                                             text-{{ 'dark' if loop.index <= 3 else 'muted' }} 
+                                             rounded-circle me-3" 
+                                      style="width: 30px; height: 30px;">
+                                    {{ loop.index }}
+                                </span>
+                                <div class="user-avatar bg-primary text-white rounded-circle me-3 
+                                            d-flex align-items-center justify-content-center"
+                                     style="width: 40px; height: 40px;">
+                                    {{ usuario.username[0]|upper }}
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-0 fw-bold">{{ usuario.username }}</h6>
+                                    <small class="text-muted">{{ usuario.ejemplos|length }} ejemplos</small>
+                                </div>
+                                <span class="badge bg-warning text-dark">{{ usuario.puntos }} pts</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estadísticas de la comunidad -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-bar-chart-fill me-2 text-info"></i>
+                        Estadísticas
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row text-center g-3">
+                        <div class="col-6">
+                            <div class="bg-light rounded-3 p-3">
+                                <h3 class="fw-bold text-primary mb-1">{{ stats.total_ejemplos }}</h3>
+                                <small class="text-muted">Ejemplos totales</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="bg-light rounded-3 p-3">
+                                <h3 class="fw-bold text-success mb-1">{{ stats.usuarios_activos }}</h3>
+                                <small class="text-muted">Usuarios activos</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="bg-light rounded-3 p-3">
+                                <h3 class="fw-bold text-info mb-1">{{ stats.validados }}</h3>
+                                <small class="text-muted">Ejemplos validados</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="bg-light rounded-3 p-3">
+                                <h3 class="fw-bold text-warning mb-1">{{ stats.total_likes }}</h3>
+                                <small class="text-muted">Likes totales</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categorías populares -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-tags-fill me-2 text-success"></i>
+                        Categorías Populares
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="badge bg-primary p-3" onclick="filtrarCategoria('cuantitativo')" 
+                              style="cursor: pointer;">
+                            Cuantitativos <span class="badge bg-light text-dark ms-2">{{ stats.cuantitativos }}</span>
+                        </span>
+                        <span class="badge bg-danger p-3" onclick="filtrarCategoria('negación')"
+                              style="cursor: pointer;">
+                            Negación <span class="badge bg-light text-dark ms-2">{{ stats.negacion }}</span>
+                        </span>
+                        <span class="badge bg-success p-3" onclick="filtrarCategoria('posición')"
+                              style="cursor: pointer;">
+                            Posición <span class="badge bg-light text-dark ms-2">{{ stats.posicion }}</span>
+                        </span>
+                        <span class="badge bg-warning p-3" onclick="filtrarCategoria('todos')"
+                              style="cursor: pointer;">
+                            Todos <span class="badge bg-light text-dark ms-2">{{ stats.total_ejemplos }}</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actividad reciente -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-clock-history me-2 text-secondary"></i>
+                        Actividad Reciente
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="list-group list-group-flush">
+                        {% for actividad in actividad_reciente %}
+                        <div class="list-group-item px-0 border-0">
+                            <div class="d-flex">
+                                <span class="badge bg-{{ actividad.color }} bg-opacity-10 p-2 rounded-3 me-3">
+                                    <i class="bi bi-{{ actividad.icono }} text-{{ actividad.color }}"></i>
+                                </span>
+                                <div>
+                                    <p class="mb-1">{{ actividad.descripcion }}</p>
+                                    <small class="text-muted">{{ actividad.tiempo }}</small>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de comentarios -->
+<div class="modal fade" id="modalComentarios" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0">
+            <div class="modal-header bg-info text-white border-0">
+                <h5 class="modal-title">
+                    <i class="bi bi-chat-fill me-2"></i>
+                    Comentarios
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div id="contenedorComentarios" class="mb-4">
+                    <!-- Los comentarios se cargarán dinámicamente -->
+                </div>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="nuevoComentario" 
+                           placeholder="Escribe un comentario...">
+                    <button class="btn btn-primary" onclick="enviarComentario()">
+                        <i class="bi bi-send me-2"></i>Enviar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Estilos adicionales -->
+<style>
+.hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+}
+
+.bg-gradient-info {
+    background: linear-gradient(135deg, #6B73FF 0%, #000DFF 100%);
+}
+
+.bg-gold {
+    background: linear-gradient(135deg, #f1c40f, #f39c12);
+}
+
+.bg-silver {
+    background: linear-gradient(135deg, #bdc3c7, #95a5a6);
+}
+
+.bg-bronze {
+    background: linear-gradient(135deg, #e67e22, #d35400);
+}
+
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.badge:hover {
+    transform: scale(1.05);
+}
+
+.pagination .page-link {
+    border: none;
+    margin: 0 3px;
+    border-radius: 8px;
+    color: var(--primary);
+}
+
+.pagination .active .page-link {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ejemplo-item {
+    animation: fadeInUp 0.5s ease forwards;
+}
+</style>
+
+<script>
+let ejemploActualId = null;
+
+function likeEjemplo(ejemploId) {
+    fetch(`/api/like-ejemplo/${ejemploId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById(`likes-${ejemploId}`).textContent = data.likes;
+        // Animación del corazón
+        const btn = event.target.closest('button');
+        btn.classList.add('text-danger');
+        setTimeout(() => btn.classList.remove('text-danger'), 300);
+    });
+}
+
+function compartirEjemplo(ejemploId) {
+    const url = window.location.href;
+    const texto = '¡Mira este ejemplo de prefijo categorizador en Ecosistema Morfología!';
+    
+    if (navigator.share) {
+        navigator.share({
+            title: 'Ecosistema Morfología',
+            text: texto,
+            url: url
+        });
+    } else {
+        navigator.clipboard.writeText(url);
+        alert('¡Enlace copiado al portapapeles!');
+    }
+}
+
+function comentarEjemplo(ejemploId) {
+    ejemploActualId = ejemploId;
+    cargarComentarios(ejemploId);
+    new bootstrap.Modal(document.getElementById('modalComentarios')).show();
+}
+
+function cargarComentarios(ejemploId) {
+    fetch(`/api/comentarios/${ejemploId}`)
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('contenedorComentarios');
+            container.innerHTML = '';
+            data.comentarios.forEach(comentario => {
+                container.innerHTML += `
+                    <div class="d-flex mb-3">
+                        <div class="user-avatar bg-info text-white rounded-circle me-2 
+                                    d-flex align-items-center justify-content-center"
+                             style="width: 30px; height: 30px;">
+                            ${comentario.usuario[0]}
+                        </div>
+                        <div class="bg-light rounded-3 p-2 flex-grow-1">
+                            <small class="fw-bold">${comentario.usuario}</small>
+                            <p class="mb-0 small">${comentario.texto}</p>
+                            <small class="text-muted">${comentario.fecha}</small>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+}
+
+function enviarComentario() {
+    const texto = document.getElementById('nuevoComentario').value;
+    if (!texto.trim()) return;
+    
+    fetch('/api/comentar', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            ejemplo_id: ejemploActualId,
+            texto: texto
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('nuevoComentario').value = '';
+        cargarComentarios(ejemploActualId);
+    });
+}
+
+function aplicarFiltros() {
+    const busqueda = document.getElementById('busquedaEjemplos').value.toLowerCase();
+    const categoria = document.getElementById('filtroCategoria').value;
+    const orden = document.getElementById('filtroOrden').value;
+    
+    const ejemplos = document.querySelectorAll('.ejemplo-item');
+    
+    ejemplos.forEach(ejemplo => {
+        const texto = ejemplo.textContent.toLowerCase();
+        const cat = ejemplo.dataset.categoria;
+        let visible = true;
+        
+        if (busqueda && !texto.includes(busqueda)) visible = false;
+        if (categoria !== 'todos' && cat !== categoria) visible = false;
+        
+        ejemplo.style.display = visible ? 'block' : 'none';
+    });
+    
+    // Ordenar resultados
+    if (orden !== 'recientes') {
+        // Implementar ordenamiento
+    }
+}
+
+function filtrarCategoria(categoria) {
+    document.getElementById('filtroCategoria').value = categoria;
+    aplicarFiltros();
+}
+</script>
+{% endblock %}

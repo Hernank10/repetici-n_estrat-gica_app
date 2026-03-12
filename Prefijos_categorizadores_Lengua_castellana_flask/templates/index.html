@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Ecosistema Morfología{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 text-center mb-5">
+        <h1 class="display-4">🌐 Ecosistema Digital de Morfología</h1>
+        <p class="lead">Aprende, practica y comparte conocimientos sobre prefijos categorizadores del español</p>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-4">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="bi bi-book display-1 text-primary"></i>
+                <h3>Teoría</h3>
+                <p>Explora conceptos fundamentales sobre prefijos categorizadores con ejemplos interactivos</p>
+                <a href="{{ url_for('teoria') }}" class="btn btn-primary">Comenzar</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="bi bi-pencil-square display-1 text-success"></i>
+                <h3>Práctica</h3>
+                <p>Ejercicios adaptativos con sistema de niveles y recompensas</p>
+                <a href="{{ url_for('practica') }}" class="btn btn-success">Practicar</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="bi bi-people display-1 text-info"></i>
+                <h3>Comunidad</h3>
+                <p>Comparte ejemplos y aprende de otros usuarios</p>
+                <a href="{{ url_for('comunidad') }}" class="btn btn-info text-white">Explorar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Estadísticas de la Comunidad</h4>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <h2 class="display-4">{{ stats.usuarios }}</h2>
+                        <p>Usuarios Activos</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h2 class="display-4">{{ stats.ejemplos }}</h2>
+                        <p>Ejemplos Creados</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h2 class="display-4">{{ stats.palabras }}</h2>
+                        <p>Palabras Estudiadas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
