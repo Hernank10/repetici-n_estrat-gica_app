@@ -11,6 +11,12 @@
 # hlsearch on (H) or off (h):
 ~h
 # Command Line History (newest to oldest):
+:wq
+|2,0,1773186579,,"wq"
+:x
+|2,0,1773186560,,"x"
+:qw
+|2,0,1773186490,,"qw"
 
 # Search String History (newest to oldest):
 
@@ -21,22 +27,73 @@
 # Debug Line History (newest to oldest):
 
 # Registers:
+"0	CHAR	0
+	Merge
+|3,0,0,0,1,0,1773171537,"Merge"
+"-	CHAR	0
+	M
+|3,0,36,0,1,0,1773171537,"M"
 
 # File marks:
-'0  140  0  ~/.git/COMMIT_EDITMSG
-|4,48,140,0,1771615483,"~/.git/COMMIT_EDITMSG"
+'0  2  0  ~/spanish_trainer_app/.git/COMMIT_EDITMSG
+|4,48,2,0,1773186579,"~/spanish_trainer_app/.git/COMMIT_EDITMSG"
+'1  8  0  ~/aspectual_flask/.git/MERGE_MSG
+|4,49,8,0,1773186527,"~/aspectual_flask/.git/MERGE_MSG"
+'2  140  0  ~/.git/COMMIT_EDITMSG
+|4,50,140,0,1771615483,"~/.git/COMMIT_EDITMSG"
+'3  145  0  ~/.git/COMMIT_EDITMSG
+|4,51,145,0,1771615483,"~/.git/COMMIT_EDITMSG"
+'4  140  0  ~/.git/COMMIT_EDITMSG
+|4,52,140,0,1771615483,"~/.git/COMMIT_EDITMSG"
 
 # Jumplist (newest first):
+-'  2  0  ~/spanish_trainer_app/.git/COMMIT_EDITMSG
+|4,39,2,0,1773186579,"~/spanish_trainer_app/.git/COMMIT_EDITMSG"
+-'  1  0  ~/.git/COMMIT_EDITMSG
+|4,39,1,0,1773186560,"~/.git/COMMIT_EDITMSG"
+-'  8  0  ~/aspectual_flask/.git/MERGE_MSG
+|4,39,8,0,1773186527,"~/aspectual_flask/.git/MERGE_MSG"
+-'  6  5  ~/.git/COMMIT_EDITMSG
+|4,39,6,5,1773186409,"~/.git/COMMIT_EDITMSG"
+-'  20  6  ~/spanish_trainer_app/.git/COMMIT_EDITMSG
+|4,39,20,6,1773186066,"~/spanish_trainer_app/.git/COMMIT_EDITMSG"
+-'  1  0  ~/spanish_trainer_app/.git/COMMIT_EDITMSG
+|4,39,1,0,1773185875,"~/spanish_trainer_app/.git/COMMIT_EDITMSG"
+-'  1  0  ~/aspectual_flask/.git/MERGE_MSG
+|4,39,1,0,1773168706,"~/aspectual_flask/.git/MERGE_MSG"
 -'  140  0  ~/.git/COMMIT_EDITMSG
 |4,39,140,0,1771615483,"~/.git/COMMIT_EDITMSG"
+-'  145  0  ~/.git/COMMIT_EDITMSG
+|4,39,145,0,1771615483,"~/.git/COMMIT_EDITMSG"
+-'  140  0  ~/.git/COMMIT_EDITMSG
+|4,39,140,0,1771615483,"~/.git/COMMIT_EDITMSG"
+-'  1  0  ~/.git/COMMIT_EDITMSG
+|4,39,1,0,1771615116,"~/.git/COMMIT_EDITMSG"
 -'  1  0  ~/.git/COMMIT_EDITMSG
 |4,39,1,0,1771615116,"~/.git/COMMIT_EDITMSG"
 
 # History of marks within files (newest to oldest):
 
+> ~/spanish_trainer_app/.git/COMMIT_EDITMSG
+	*	1773186568	0
+	"	2	0
+	^	20	6
+	.	20	5
+	+	20	5
+
+> ~/aspectual_flask/.git/MERGE_MSG
+	*	1773186508	0
+	"	8	0
+	^	1	0
+	.	1	0
+	+	1	128
+	+	3	28
+	+	3	20
+	+	1	0
+
 > ~/.git/COMMIT_EDITMSG
-	*	1771615482	0
-	"	140	0
+	*	1773186084	0
+	"	1	0
 	^	140	2
 	.	140	1
 	+	140	1

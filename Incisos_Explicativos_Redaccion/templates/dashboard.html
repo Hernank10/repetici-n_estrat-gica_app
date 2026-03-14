@@ -1,0 +1,886 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Incisos Explicativos | Panel de Control{% endblock %}
+
+{% block og_title %}Mi progreso en Incisos Explicativos{% endblock %}
+
+{% block content %}
+<!-- ============================================
+     ENCABEZADO DEL DASHBOARD
+     ============================================ -->
+<div class="row mb-4" data-aos="fade-down">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm bg-gradient-primary text-white">
+            <div class="card-body p-4">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <div class="d-flex align-items-center mb-3 mb-md-0">
+                            <div class="avatar-circle bg-white bg-opacity-20 rounded-circle p-3 me-3">
+                                <i class="bi bi-person-circle fs-1 text-white"></i>
+                            </div>
+                            <div>
+                                <h2 class="fw-bold mb-1">¡Hola, {{ usuario.nombre }}! 👋</h2>
+                                <p class="lead mb-0 opacity-90">Bienvenido a tu panel de control personalizado</p>
+                                <small class="opacity-75">
+                                    <i class="bi bi-calendar me-1"></i>
+                                    Miembro desde: {{ usuario.fecha_registro[:10] if usuario.fecha_registro else 'Hoy' }}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-md-end">
+                            <div class="text-center text-md-end">
+                                <span class="badge bg-warning text-dark px-3 py-2 rounded-pill mb-2">
+                                    <i class="bi bi-stars me-1"></i> Rachas
+                                </span>
+                                <div class="d-flex align-items-center justify-content-md-end">
+                                    <div class="me-3">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-fire text-warning fs-4 me-1"></i>
+                                            <span class="h4 mb-0 fw-bold text-white">{{ usuario.estadisticas.rachas.actual }}</span>
+                                        </div>
+                                        <small class="opacity-75">Actual</small>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-trophy text-warning fs-4 me-1"></i>
+                                            <span class="h4 mb-0 fw-bold text-white">{{ usuario.estadisticas.rachas.maxima }}</span>
+                                        </div>
+                                        <small class="opacity-75">Máxima</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     TARJETAS DE ESTADÍSTICAS PRINCIPALES
+     ============================================ -->
+<div class="row g-4 mb-4">
+    <!-- Tarjeta de puntos -->
+    <div class="col-sm-6 col-xl-3" data-aos="fade-up" data-aos-delay="100">
+        <div class="card border-0 shadow-sm hover-lift stats-card">
+            <div class="card-body p-3">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h6 class="text-secondary text-uppercase mb-2">Puntos Totales</h6>
+                        <div class="d-flex align-items-baseline">
+                            <span class="h2 mb-0 fw-bold counter" data-target="{{ usuario.estadisticas.puntos }}">{{ usuario.estadisticas.puntos }}</span>
+                            <span class="ms-2 text-success small">
+                                <i class="bi bi-arrow-up"></i> +12%
+                            </span>
+                        </div>
+                        <div class="text-warning mt-2">
+                            {% for i in range(usuario.estadisticas.estrellas) %}
+                                <i class="bi bi-star-fill"></i>
+                            {% endfor %}
+                            {% if usuario.estadisticas.estrellas == 0 %}
+                                <small class="text-secondary">Sin estrellas aún</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-4 text-end">
+                        <div class="icon-circle bg-primary bg-opacity-10 p-3 rounded-3">
+                            <i class="bi bi-trophy-fill fs-2 text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress mt-3" style="height: 4px;">
+                    <div class="progress-bar bg-primary" role="progressbar" 
+                         style="width: {{ (usuario.estadisticas.puntos / 1000 * 100) if usuario.estadisticas.puntos > 0 else 0 }}%"></div>
+                </div>
+                <small class="text-secondary mt-2 d-block">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Meta: 1000 puntos
+                </small>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tarjeta de ejercicios -->
+    <div class="col-sm-6 col-xl-3" data-aos="fade-up" data-aos-delay="200">
+        <div class="card border-0 shadow-sm hover-lift stats-card">
+            <div class="card-body p-3">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h6 class="text-secondary text-uppercase mb-2">Ejercicios</h6>
+                        <div class="d-flex align-items-baseline">
+                            <span class="h2 mb-0 fw-bold counter" data-target="{{ usuario.estadisticas.ejercicios_completados }}">{{ usuario.estadisticas.ejercicios_completados }}</span>
+                            <span class="ms-2 text-secondary">/ 100</span>
+                        </div>
+                        <div class="mt-2">
+                            <span class="badge bg-success bg-opacity-10 text-success">
+                                <i class="bi bi-check-circle me-1"></i>
+                                {{ usuario.estadisticas.respuestas_correctas }} correctos
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-4 text-end">
+                        <div class="icon-circle bg-success bg-opacity-10 p-3 rounded-3">
+                            <i class="bi bi-puzzle-fill fs-2 text-success"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress mt-3" style="height: 4px;">
+                    <div class="progress-bar bg-success" role="progressbar" 
+                         style="width: {{ (usuario.estadisticas.ejercicios_completados / 100 * 100) }}%"></div>
+                </div>
+                <small class="text-secondary mt-2 d-block">
+                    <i class="bi bi-lightning-charge me-1"></i>
+                    {{ 100 - usuario.estadisticas.ejercicios_completados }} ejercicios restantes
+                </small>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tarjeta de flashcards -->
+    <div class="col-sm-6 col-xl-3" data-aos="fade-up" data-aos-delay="300">
+        <div class="card border-0 shadow-sm hover-lift stats-card">
+            <div class="card-body p-3">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h6 class="text-secondary text-uppercase mb-2">Flashcards</h6>
+                        <div class="d-flex align-items-baseline">
+                            <span class="h2 mb-0 fw-bold counter" data-target="{{ usuario.estadisticas.flashcards_completadas }}">{{ usuario.estadisticas.flashcards_completadas }}</span>
+                            <span class="ms-2 text-secondary">/ 50</span>
+                        </div>
+                        <div class="mt-2">
+                            <span class="badge bg-info bg-opacity-10 text-info">
+                                <i class="bi bi-lightning-charge me-1"></i>
+                                {{ (usuario.estadisticas.flashcards_completadas / 50 * 100)|round }}% completado
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-4 text-end">
+                        <div class="icon-circle bg-info bg-opacity-10 p-3 rounded-3">
+                            <i class="bi bi-card-list fs-2 text-info"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress mt-3" style="height: 4px;">
+                    <div class="progress-bar bg-info" role="progressbar" 
+                         style="width: {{ (usuario.estadisticas.flashcards_completadas / 50 * 100) }}%"></div>
+                </div>
+                <small class="text-secondary mt-2 d-block">
+                    <i class="bi bi-clock-history me-1"></i>
+                    Última: {{ usuario.historial[-1].fecha[:10] if usuario.historial else 'Nunca' }}
+                </small>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tarjeta de medallas -->
+    <div class="col-sm-6 col-xl-3" data-aos="fade-up" data-aos-delay="400">
+        <div class="card border-0 shadow-sm hover-lift stats-card">
+            <div class="card-body p-3">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h6 class="text-secondary text-uppercase mb-2">Medallas</h6>
+                        <div class="d-flex align-items-baseline">
+                            <span class="h2 mb-0 fw-bold counter" data-target="{{ usuario.estadisticas.medallas|length }}">{{ usuario.estadisticas.medallas|length }}</span>
+                            <span class="ms-2 text-secondary">/ 5</span>
+                        </div>
+                        <div class="mt-2 medallas-mini">
+                            {% for medalla in usuario.estadisticas.medallas %}
+                                {% if medalla == 'bronce' %}🥉{% endif %}
+                                {% if medalla == 'plata' %}🥈{% endif %}
+                                {% if medalla == 'oro' %}🥇{% endif %}
+                                {% if medalla == 'diamante' %}💎{% endif %}
+                                {% if medalla == 'maestro' %}🏆{% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-4 text-end">
+                        <div class="icon-circle bg-warning bg-opacity-10 p-3 rounded-3">
+                            <i class="bi bi-award-fill fs-2 text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress mt-3" style="height: 4px;">
+                    <div class="progress-bar bg-warning" role="progressbar" 
+                         style="width: {{ (usuario.estadisticas.medallas|length / 5 * 100) }}%"></div>
+                </div>
+                <small class="text-secondary mt-2 d-block">
+                    <i class="bi bi-gem me-1"></i>
+                    Siguiente: {{ ['bronce', 'plata', 'oro', 'diamante', 'maestro'][usuario.estadisticas.medallas|length] if usuario.estadisticas.medallas|length < 5 else '¡Completado!' }}
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     PROGRESO POR CATEGORÍA Y ACCIONES RÁPIDAS
+     ============================================ -->
+<div class="row g-4 mb-4">
+    <!-- Gráfico de progreso por categoría -->
+    <div class="col-xl-7" data-aos="fade-right">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white border-0 py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-pie-chart-fill text-primary me-2"></i>
+                        Progreso por Categoría
+                    </h5>
+                    <span class="badge bg-light text-secondary">
+                        <i class="bi bi-arrow-repeat me-1"></i>
+                        Actualizado hoy
+                    </span>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Canvas para gráfico -->
+                <canvas id="categoriaChart" height="250"></canvas>
+                
+                <!-- Leyenda y detalles -->
+                <div class="row mt-4" id="categoriaDetalles">
+                    {% for categoria, datos in usuario.estadisticas.por_categoria.items() %}
+                    <div class="col-6 col-md-4 mb-3">
+                        <div class="d-flex align-items-center">
+                            <span class="badge rounded-pill me-2" style="background-color: {{ ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b'][loop.index0] }};">&nbsp;</span>
+                            <div class="flex-grow-1">
+                                <small class="text-secondary d-block">{{ categoria }}</small>
+                                <div class="d-flex justify-content-between">
+                                    <strong>{{ datos.correctos }}/{{ datos.intentos }}</strong>
+                                    <small class="text-secondary">
+                                        {{ (datos.correctos / datos.intentos * 100)|round if datos.intentos > 0 else 0 }}%
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="card-footer bg-white border-0 py-3">
+                <a href="{{ url_for('estadisticas') }}" class="text-primary text-decoration-none">
+                    Ver estadísticas detalladas <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Acciones rápidas y logros recientes -->
+    <div class="col-xl-5" data-aos="fade-left">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white border-0 py-3">
+                <h5 class="fw-bold mb-0">
+                    <i class="bi bi-lightning-charge-fill text-warning me-2"></i>
+                    Acciones Rápidas
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <a href="{{ url_for('practica') }}" class="btn btn-outline-primary w-100 py-3 hover-lift">
+                            <i class="bi bi-controller fs-4 d-block mb-2"></i>
+                            <span class="small">Practicar</span>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="{{ url_for('flashcards') }}" class="btn btn-outline-success w-100 py-3 hover-lift">
+                            <i class="bi bi-card-list fs-4 d-block mb-2"></i>
+                            <span class="small">Flashcards</span>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="{{ url_for('teoria') }}" class="btn btn-outline-info w-100 py-3 hover-lift">
+                            <i class="bi bi-book fs-4 d-block mb-2"></i>
+                            <span class="small">Teoría</span>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="{{ url_for('crear') }}" class="btn btn-outline-warning w-100 py-3 hover-lift">
+                            <i class="bi bi-plus-circle fs-4 d-block mb-2"></i>
+                            <span class="small">Crear</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Logros recientes -->
+                <hr class="my-4">
+                <h6 class="fw-bold mb-3">
+                    <i class="bi bi-trophy-fill text-warning me-2"></i>
+                    Logros Recientes
+                </h6>
+                <div class="logros-recientes">
+                    {% if usuario.estadisticas.logros %}
+                        {% for logro in usuario.estadisticas.logros[-3:] %}
+                        <div class="d-flex align-items-center mb-3 p-2 bg-light rounded-3">
+                            <div class="bg-success bg-opacity-10 rounded-circle p-2 me-3">
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                            </div>
+                            <div>
+                                <span class="fw-bold">{{ logro }}</span>
+                                <small class="text-secondary d-block">
+                                    <i class="bi bi-clock me-1"></i>
+                                    Recientemente
+                                </small>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="bi bi-emoji-neutral fs-1 text-secondary mb-2"></i>
+                            <p class="text-secondary mb-0">Aún no tienes logros</p>
+                            <small>Comienza a practicar para desbloquearlos</small>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     MEDALLAS Y PRÓXIMOS DESAFÍOS
+     ============================================ -->
+<div class="row g-4 mb-4">
+    <!-- Medallas obtenidas -->
+    <div class="col-xl-6" data-aos="fade-up">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 py-3">
+                <h5 class="fw-bold mb-0">
+                    <i class="bi bi-award-fill text-warning me-2"></i>
+                    Mis Medallas
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-4">
+                    {% set medallas_config = {'bronce': {'icono': '🥉', 'color': '#cd7f32', 'requisitos': '10 ejercicios'}, 
+                                             'plata': {'icono': '🥈', 'color': '#c0c0c0', 'requisitos': '25 ejercicios'},
+                                             'oro': {'icono': '🥇', 'color': '#ffd700', 'requisitos': '50 ejercicios'},
+                                             'diamante': {'icono': '💎', 'color': '#b9f2ff', 'requisitos': '100 ejercicios'},
+                                             'maestro': {'icono': '🏆', 'color': '#ffd700', 'requisitos': '200 ejercicios'}} %}
+                    
+                    {% for medalla, config in medallas_config.items() %}
+                    <div class="col-md-4 col-6 text-center">
+                        <div class="medalla-item p-3 rounded-3 {% if medalla in usuario.estadisticas.medallas %}bg-light{% else %}bg-secondary bg-opacity-10{% endif %}">
+                            <div class="display-3 mb-2 {% if medalla in usuario.estadisticas.medallas %}animate__animated animate__pulse animate__infinite{% endif %}">
+                                {{ config.icono }}
+                            </div>
+                            <h6 class="fw-bold mb-1">{{ medalla|capitalize }}</h6>
+                            <small class="text-secondary">{{ config.requisitos }}</small>
+                            {% if medalla in usuario.estadisticas.medallas %}
+                                <div class="text-success mt-2">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    <small>Obtenida</small>
+                                </div>
+                            {% else %}
+                                <div class="progress mt-2" style="height: 4px;">
+                                    <div class="progress-bar" role="progressbar" 
+                                         style="width: {{ (usuario.estadisticas.ejercicios_completados / {'bronce':10,'plata':25,'oro':50,'diamante':100,'maestro':200}[medalla] * 100)|round }}%; background-color: {{ config.color }}"></div>
+                                </div>
+                                <small class="text-secondary">
+                                    {{ usuario.estadisticas.ejercicios_completados }}/{{ {'bronce':10,'plata':25,'oro':50,'diamante':100,'maestro':200}[medalla] }}
+                                </small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Próximos desafíos -->
+    <div class="col-xl-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 py-3">
+                <h5 class="fw-bold mb-0">
+                    <i class="bi bi-calendar-check-fill text-success me-2"></i>
+                    Próximos Desafíos
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    <!-- Desafío 1: Completar 10 ejercicios -->
+                    <div class="list-group-item px-0">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <span class="fw-bold">Completar 10 ejercicios</span>
+                            </div>
+                            <span class="badge bg-primary">+50 pts</span>
+                        </div>
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar bg-success" role="progressbar" 
+                                 style="width: {{ (usuario.estadisticas.ejercicios_completados / 10 * 100)|min }}%"></div>
+                        </div>
+                        <small class="text-secondary">{{ usuario.estadisticas.ejercicios_completados }}/10 completados</small>
+                    </div>
+                    
+                    <!-- Desafío 2: Racha de 3 días -->
+                    <div class="list-group-item px-0">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <i class="bi bi-fire text-warning me-2"></i>
+                                <span class="fw-bold">Mantener racha de 3 días</span>
+                            </div>
+                            <span class="badge bg-warning text-dark">+100 pts</span>
+                        </div>
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar bg-warning" role="progressbar" 
+                                 style="width: {{ (usuario.estadisticas.rachas.actual / 3 * 100)|min }}%"></div>
+                        </div>
+                        <small class="text-secondary">{{ usuario.estadisticas.rachas.actual }}/3 días</small>
+                    </div>
+                    
+                    <!-- Desafío 3: Categoría Comas -->
+                    <div class="list-group-item px-0">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <i class="bi bi-quote text-primary me-2"></i>
+                                <span class="fw-bold">10 correctos en Comas</span>
+                            </div>
+                            <span class="badge bg-info">Medalla Bronce</span>
+                        </div>
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar bg-info" role="progressbar" 
+                                 style="width: {{ (usuario.estadisticas.por_categoria.Comas.correctos / 10 * 100)|min }}%"></div>
+                        </div>
+                        <small class="text-secondary">{{ usuario.estadisticas.por_categoria.Comas.correctos }}/10 correctos</small>
+                    </div>
+                    
+                    <!-- Desafío 4: Flashcards -->
+                    <div class="list-group-item px-0">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <i class="bi bi-card-list text-success me-2"></i>
+                                <span class="fw-bold">25 flashcards</span>
+                            </div>
+                            <span class="badge bg-success">+75 pts</span>
+                        </div>
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar bg-success" role="progressbar" 
+                                 style="width: {{ (usuario.estadisticas.flashcards_completadas / 25 * 100)|min }}%"></div>
+                        </div>
+                        <small class="text-secondary">{{ usuario.estadisticas.flashcards_completadas }}/25 completadas</small>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('practica') }}" class="btn btn-primary rounded-pill px-4">
+                        <i class="bi bi-flag me-2"></i>
+                        Aceptar desafíos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     RANKING Y ACTIVIDAD RECIENTE
+     ============================================ -->
+<div class="row g-4">
+    <!-- Ranking global -->
+    <div class="col-xl-7" data-aos="fade-right">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-trophy-fill text-warning me-2"></i>
+                        Ranking Global
+                    </h5>
+                    <span class="badge bg-light text-secondary">
+                        <i class="bi bi-people me-1"></i>
+                        Top 10
+                    </span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="ranking-container">
+                    <div class="text-center py-4">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                        <p class="text-secondary mt-2">Cargando ranking...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-white border-0 py-3">
+                <small class="text-secondary">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Ranking actualizado cada hora
+                </small>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Actividad reciente -->
+    <div class="col-xl-5" data-aos="fade-left">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 py-3">
+                <h5 class="fw-bold mb-0">
+                    <i class="bi bi-clock-history text-info me-2"></i>
+                    Actividad Reciente
+                </h5>
+            </div>
+            <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                {% if usuario.historial %}
+                    {% for actividad in usuario.historial[-10:]|reverse %}
+                    <div class="d-flex align-items-center mb-3 p-2 bg-light rounded-3">
+                        <div class="bg-{{ 'success' if actividad.correcto else 'danger' }} bg-opacity-10 rounded-circle p-2 me-3">
+                            <i class="bi bi-{{ 'check-circle' if actividad.correcto else 'x-circle' }} text-{{ 'success' if actividad.correcto else 'danger' }}"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between">
+                                <span class="fw-bold">
+                                    {% if actividad.tipo == 'ejercicio' %}
+                                        Ejercicio de {{ actividad.categoria }}
+                                    {% elif actividad.tipo == 'flashcard' %}
+                                        Flashcard completada
+                                    {% else %}
+                                        {{ actividad.tipo }}
+                                    {% endif %}
+                                </span>
+                                <small class="text-secondary">{{ actividad.fecha[:10] }}</small>
+                            </div>
+                            <small class="text-secondary d-block">
+                                <i class="bi bi-star-fill text-warning me-1"></i>
+                                +{{ actividad.puntos_ganados }} puntos
+                            </small>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="bi bi-clock fs-1 text-secondary mb-3"></i>
+                        <p class="text-secondary mb-0">No hay actividad reciente</p>
+                        <small>Comienza a practicar para ver tu historial</small>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     MODAL DE BIENVENIDA (OPCIONAL)
+     ============================================ -->
+{% if not usuario.historial %}
+<div class="modal fade" id="welcomeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-emoji-smile me-2"></i>
+                    ¡Bienvenido a tu dashboard!
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center p-4">
+                <i class="bi bi-rocket-takeoff text-success display-1 mb-3"></i>
+                <h4 class="mb-3">¡Comienza tu viaje!</h4>
+                <p class="text-secondary mb-4">
+                    Este es tu panel personal. Aquí podrás seguir tu progreso, ver tus logros y acceder rápidamente a todas las funcionalidades.
+                </p>
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('practica') }}" class="btn btn-success">
+                        <i class="bi bi-controller me-2"></i>
+                        Ir a practicar ahora
+                    </a>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Explorar después
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- ============================================
+     ESTILOS ADICIONALES
+     ============================================ -->
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .bg-opacity-20 {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .opacity-90 {
+        opacity: 0.9;
+    }
+    
+    .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .stats-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .stats-card:hover {
+        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    }
+    
+    .icon-circle {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+    
+    .stats-card:hover .icon-circle {
+        transform: scale(1.1) rotate(5deg);
+    }
+    
+    .avatar-circle {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .medalla-item {
+        transition: all 0.3s ease;
+    }
+    
+    .medalla-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .medallas-mini {
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+    }
+    
+    .list-group-item {
+        border: none;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .list-group-item:last-child {
+        border-bottom: none;
+    }
+    
+    /* Animación para contadores */
+    @keyframes countUp {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .counter {
+        animation: countUp 1s ease forwards;
+    }
+    
+    /* Scroll personalizado */
+    .card-body::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .card-body::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+    
+    .card-body::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 10px;
+    }
+    
+    .card-body::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .avatar-circle {
+            width: 60px;
+            height: 60px;
+        }
+        
+        .avatar-circle i {
+            font-size: 2rem !important;
+        }
+        
+        .icon-circle {
+            width: 50px;
+            height: 50px;
+        }
+        
+        .icon-circle i {
+            font-size: 1.5rem !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // ============================================
+        // INICIALIZAR GRÁFICO DE CATEGORÍAS
+        // ============================================
+        const ctx = document.getElementById('categoriaChart').getContext('2d');
+        
+        const categorias = [
+            {% for categoria, datos in usuario.estadisticas.por_categoria.items() %}
+                '{{ categoria }}',
+            {% endfor %}
+        ];
+        
+        const correctos = [
+            {% for categoria, datos in usuario.estadisticas.por_categoria.items() %}
+                {{ datos.correctos }},
+            {% endfor %}
+        ];
+        
+        const intentos = [
+            {% for categoria, datos in usuario.estadisticas.por_categoria.items() %}
+                {{ datos.intentos }},
+            {% endfor %}
+        ];
+        
+        const porcentajes = correctos.map((c, i) => intentos[i] > 0 ? (c / intentos[i] * 100).toFixed(1) : 0);
+        
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: categorias,
+                datasets: [{
+                    label: 'Porcentaje de aciertos',
+                    data: porcentajes,
+                    backgroundColor: 'rgba(78, 115, 223, 0.2)',
+                    borderColor: 'rgba(78, 115, 223, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(78, 115, 223, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(78, 115, 223, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            stepSize: 20,
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: ${context.raw}% (${correctos[context.dataIndex]}/${intentos[context.dataIndex]})`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // ============================================
+        // CARGAR RANKING
+        // ============================================
+        $.get('/api/ranking', function(data) {
+            let html = '<div class="table-responsive"><table class="table table-hover align-middle">';
+            html += '<thead><tr><th>Posición</th><th>Usuario</th><th>Puntos</th><th>Medallas</th><th>Estrellas</th></tr></thead><tbody>';
+            
+            data.forEach(function(item, index) {
+                const medallaIcon = item.posicion === 1 ? '🥇' : (item.posicion === 2 ? '🥈' : (item.posicion === 3 ? '🥉' : ''));
+                const isCurrentUser = item.nombre === '{{ usuario.nombre }}';
+                
+                html += `<tr class="${isCurrentUser ? 'table-primary' : ''}">
+                    <td>
+                        <strong>${item.posicion}</strong> ${medallaIcon}
+                        ${isCurrentUser ? '<span class="badge bg-primary ms-2">Tú</span>' : ''}
+                    </td>
+                    <td>${item.nombre}</td>
+                    <td><span class="fw-bold">${item.puntos}</span> pts</td>
+                    <td>
+                        <span class="badge bg-warning text-dark">${item.medallas}</span>
+                    </td>
+                    <td>${'⭐'.repeat(item.estrellas)}</td>
+                </tr>`;
+            });
+            
+            html += '</tbody></table></div>';
+            $('#ranking-container').html(html);
+        }).fail(function() {
+            $('#ranking-container').html(`
+                <div class="text-center py-4">
+                    <i class="bi bi-exclamation-triangle text-warning fs-1 mb-3"></i>
+                    <p class="text-secondary">No se pudo cargar el ranking</p>
+                    <button class="btn btn-sm btn-outline-primary" onclick="location.reload()">
+                        Reintentar
+                    </button>
+                </div>
+            `);
+        });
+        
+        // ============================================
+        // ANIMACIÓN DE CONTADORES
+        // ============================================
+        $('.counter').each(function() {
+            const $this = $(this);
+            const target = parseInt($this.attr('data-target'));
+            
+            $this.prop('Counter', 0).animate({
+                Counter: target
+            }, {
+                duration: 2000,
+                easing: 'swing',
+                step: function(now) {
+                    $this.text(Math.ceil(now));
+                }
+            });
+        });
+        
+        // ============================================
+        // MOSTRAR MODAL DE BIENVENIDA
+        // ============================================
+        {% if not usuario.historial %}
+        const welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal'));
+        setTimeout(() => {
+            welcomeModal.show();
+        }, 1000);
+        {% endif %}
+        
+        // ============================================
+        // TOOLTIPS PARA MEDALLAS
+        // ============================================
+        $('.medalla-item').each(function() {
+            const tooltip = new bootstrap.Tooltip(this, {
+                title: $(this).find('small').text(),
+                placement: 'top'
+            });
+        });
+    });
+</script>
+{% endblock %}

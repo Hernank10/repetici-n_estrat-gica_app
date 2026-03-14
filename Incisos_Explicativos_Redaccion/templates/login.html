@@ -1,0 +1,513 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar Sesión - Incisos Explicativos{% endblock %}
+
+{% block og_title %}Inicia sesión en Incisos Explicativos{% endblock %}
+
+{% block content %}
+<!-- ============================================
+     SECCIÓN DE LOGIN MEJORADA
+     ============================================ -->
+<div class="row justify-content-center align-items-center min-vh-75 py-4">
+    <div class="col-lg-10">
+        <div class="row g-0 shadow-lg rounded-4 overflow-hidden bg-white">
+            
+            <!-- Columna izquierda - Formulario de login -->
+            <div class="col-md-6 p-5" data-aos="fade-right" data-aos-duration="800">
+                <div class="text-center mb-5">
+                    <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
+                        <i class="bi bi-box-arrow-in-right fs-1 text-primary"></i>
+                    </div>
+                    <h2 class="fw-bold mb-2">¡Bienvenido de vuelta!</h2>
+                    <p class="text-secondary">Ingresa tus credenciales para continuar</p>
+                </div>
+                
+                <!-- Formulario de login -->
+                <form method="POST" action="{{ url_for('login') }}" class="needs-validation" novalidate>
+                    <!-- Campo email -->
+                    <div class="mb-4">
+                        <label for="email" class="form-label fw-semibold">
+                            <i class="bi bi-envelope me-2"></i>Correo electrónico
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">
+                                <i class="bi bi-envelope-fill text-primary"></i>
+                            </span>
+                            <input type="email" 
+                                   class="form-control border-start-0 ps-0" 
+                                   id="email" 
+                                   name="email" 
+                                   placeholder="nombre@ejemplo.com" 
+                                   required 
+                                   autofocus>
+                            <div class="invalid-feedback">
+                                Por favor, ingresa un email válido.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Campo contraseña -->
+                    <div class="mb-4">
+                        <label for="password" class="form-label fw-semibold">
+                            <i class="bi bi-lock me-2"></i>Contraseña
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">
+                                <i class="bi bi-lock-fill text-primary"></i>
+                            </span>
+                            <input type="password" 
+                                   class="form-control border-start-0 ps-0" 
+                                   id="password" 
+                                   name="password" 
+                                   placeholder="••••••••" 
+                                   required>
+                            <button class="btn btn-outline-secondary border-start-0" 
+                                    type="button" 
+                                    id="togglePassword">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <div class="invalid-feedback">
+                                Por favor, ingresa tu contraseña.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recordar contraseña y olvidé mi contraseña -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="remember" name="remember">
+                            <label class="form-check-label text-secondary" for="remember">
+                                Recordar sesión
+                            </label>
+                        </div>
+                        <a href="#" class="text-decoration-none small" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">
+                            ¿Olvidaste tu contraseña?
+                        </a>
+                    </div>
+                    
+                    <!-- Botón de login -->
+                    <button type="submit" class="btn btn-primary w-100 py-3 mb-3 rounded-pill fw-bold hover-lift" id="loginBtn">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>
+                        Iniciar Sesión
+                    </button>
+                    
+                    <!-- Separador -->
+                    <div class="position-relative my-4">
+                        <hr class="bg-secondary">
+                        <span class="position-absolute top-50 start-50 translate-middle px-3 bg-white text-secondary">
+                            o continúa con
+                        </span>
+                    </div>
+                    
+                    <!-- Botones de redes sociales -->
+                    <div class="row g-2 mb-4">
+                        <div class="col-6">
+                            <button class="btn btn-outline-danger w-100 py-2" type="button" id="googleLogin">
+                                <i class="bi bi-google me-2"></i> Google
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-primary w-100 py-2" type="button" id="facebookLogin">
+                                <i class="bi bi-facebook me-2"></i> Facebook
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Enlace a registro -->
+                    <p class="text-center text-secondary mb-0">
+                        ¿No tienes una cuenta? 
+                        <a href="{{ url_for('registro') }}" class="text-primary fw-bold text-decoration-none hover-underline">
+                            Regístrate gratis <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </p>
+                </form>
+            </div>
+            
+            <!-- Columna derecha - Contenido atractivo -->
+            <div class="col-md-6 bg-gradient-primary text-white p-5 d-flex flex-column justify-content-center" 
+                 data-aos="fade-left" data-aos-duration="800">
+                <div class="text-center mb-4">
+                    <i class="bi bi-pencil-square display-1 mb-3"></i>
+                    <h3 class="fw-bold mb-3">¡Únete a nuestra comunidad!</h3>
+                    <p class="lead mb-4">Accede a todas las funcionalidades y mejora tu gramática</p>
+                </div>
+                
+                <!-- Lista de beneficios -->
+                <div class="benefits-list mb-5">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-white bg-opacity-20 rounded-circle p-2 me-3">
+                            <i class="bi bi-check-circle-fill text-white fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-1">100+ ejercicios interactivos</h6>
+                            <small class="opacity-75">Practica con ejercicios de diferentes niveles</small>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-white bg-opacity-20 rounded-circle p-2 me-3">
+                            <i class="bi bi-check-circle-fill text-white fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-1">50 flashcards explicativas</h6>
+                            <small class="opacity-75">Repasa conceptos clave de forma visual</small>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-white bg-opacity-20 rounded-circle p-2 me-3">
+                            <i class="bi bi-check-circle-fill text-white fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Sistema de logros y medallas</h6>
+                            <small class="opacity-75">Gana puntos y desbloquea logros</small>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-white bg-opacity-20 rounded-circle p-2 me-3">
+                            <i class="bi bi-check-circle-fill text-white fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Estadísticas personalizadas</h6>
+                            <small class="opacity-75">Sigue tu progreso en tiempo real</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonio rápido -->
+                <div class="bg-white bg-opacity-10 rounded-3 p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://placehold.co/50x50/ffffff/4e73df?text=User" 
+                             alt="Usuario" 
+                             class="rounded-circle me-3" 
+                             width="50" height="50">
+                        <div>
+                            <h6 class="fw-bold mb-1">Ana Martínez</h6>
+                            <small class="opacity-75">Estudiante</small>
+                        </div>
+                    </div>
+                    <p class="fst-italic mb-0">
+                        <i class="bi bi-quote me-1"></i>
+                        La mejor plataforma para aprender incisos explicativos. ¡He mejorado muchísimo!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     MODAL PARA RECUPERAR CONTRASEÑA
+     ============================================ -->
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="forgotPasswordModalLabel">
+                    <i class="bi bi-question-circle me-2"></i>
+                    Recuperar contraseña
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p class="text-secondary mb-4">
+                    Ingresa tu correo electrónico y te enviaremos instrucciones para restablecer tu contraseña.
+                </p>
+                <form id="forgotPasswordForm">
+                    <div class="mb-3">
+                        <label for="resetEmail" class="form-label fw-semibold">Correo electrónico</label>
+                        <input type="email" class="form-control" id="resetEmail" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-send me-2"></i>
+                        Enviar instrucciones
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     MODAL DE BIENVENIDA PARA NUEVOS USUARIOS
+     ============================================ -->
+{% if request.args.get('registered') %}
+<div class="modal fade" id="welcomeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-check-circle me-2"></i>
+                    ¡Registro exitoso!
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center p-4">
+                <i class="bi bi-emoji-smile-fill text-success display-1 mb-3"></i>
+                <h4 class="mb-3">¡Bienvenido a Incisos Explicativos!</h4>
+                <p class="text-secondary mb-4">
+                    Tu cuenta ha sido creada exitosamente. Ahora puedes iniciar sesión y comenzar a aprender.
+                </p>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">
+                    <i class="bi bi-check-circle me-2"></i>
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- ============================================
+     ESTILOS ADICIONALES
+     ============================================ -->
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .bg-opacity-20 {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    .hover-underline {
+        position: relative;
+    }
+    
+    .hover-underline::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        transition: width 0.3s ease;
+    }
+    
+    .hover-underline:hover::after {
+        width: 100%;
+    }
+    
+    .min-vh-75 {
+        min-height: 75vh;
+    }
+    
+    /* Animación para el formulario */
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    
+    /* Efecto de brillo para el botón de login */
+    .btn-primary {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
+    }
+    
+    .btn-primary:hover::before {
+        opacity: 1;
+    }
+    
+    /* Estilos para los botones de redes sociales */
+    .btn-outline-danger:hover,
+    .btn-outline-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .bg-gradient-primary {
+            padding: 3rem 1.5rem !important;
+        }
+        
+        .min-vh-75 {
+            min-height: auto;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // ============================================
+        // VALIDACIÓN DE FORMULARIO CON BOOTSTRAP
+        // ============================================
+        const forms = document.querySelectorAll('.needs-validation');
+        
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    
+                    // Animación de shake para campos inválidos
+                    $('.is-invalid').each(function() {
+                        $(this).addClass('animate__animated animate__shakeX');
+                        setTimeout(() => {
+                            $(this).removeClass('animate__animated animate__shakeX');
+                        }, 500);
+                    });
+                }
+                
+                form.classList.add('was-validated');
+            }, false);
+        });
+        
+        // ============================================
+        // MOSTRAR/OCULTAR CONTRASEÑA
+        // ============================================
+        $('#togglePassword').click(function() {
+            const passwordInput = $('#password');
+            const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
+            passwordInput.attr('type', type);
+            
+            // Cambiar icono
+            $(this).find('i').toggleClass('bi-eye bi-eye-slash');
+        });
+        
+        // ============================================
+        // ANIMACIÓN DE CARGANDO AL ENVIAR FORMULARIO
+        // ============================================
+        $('form').submit(function() {
+            const btn = $(this).find('button[type="submit"]');
+            const originalText = btn.html();
+            
+            btn.prop('disabled', true)
+               .html('<span class="spinner-border spinner-border-sm me-2"></span>Iniciando sesión...');
+            
+            // Si hay error, restaurar botón (manejado por el servidor)
+            setTimeout(() => {
+                btn.prop('disabled', false).html(originalText);
+            }, 3000);
+        });
+        
+        // ============================================
+        // AUTOCOMPLETAR EMAIL (DEMO)
+        // ============================================
+        $('#email').on('input', function() {
+            const email = $(this).val();
+            if (email.includes('@') && email.includes('.')) {
+                $(this).removeClass('is-invalid').addClass('is-valid');
+            } else {
+                $(this).removeClass('is-valid');
+            }
+        });
+        
+        // ============================================
+        // MOSTRAR MODAL DE BIENVENIDA SI ES NECESARIO
+        // ============================================
+        {% if request.args.get('registered') %}
+        const welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal'));
+        welcomeModal.show();
+        {% endif %}
+        
+        // ============================================
+        // FORMULARIO DE RECUPERAR CONTRASEÑA
+        // ============================================
+        $('#forgotPasswordForm').submit(function(e) {
+            e.preventDefault();
+            
+            const email = $('#resetEmail').val();
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                Notificaciones.error('Por favor, ingresa un email válido');
+                return;
+            }
+            
+            // Simular envío (en producción sería AJAX)
+            const btn = $(this).find('button[type="submit"]');
+            const originalText = btn.html();
+            
+            btn.prop('disabled', true)
+               .html('<span class="spinner-border spinner-border-sm me-2"></span>Enviando...');
+            
+            setTimeout(() => {
+                btn.prop('disabled', false).html(originalText);
+                
+                // Cerrar modal y mostrar mensaje
+                const modal = bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal'));
+                modal.hide();
+                
+                Notificaciones.exito('Se han enviado instrucciones a tu correo electrónico');
+                
+                // Limpiar campo
+                $('#resetEmail').val('');
+            }, 2000);
+        });
+        
+        // ============================================
+        // LOGIN CON REDES SOCIALES (DEMO)
+        // ============================================
+        $('#googleLogin').click(function() {
+            Notificaciones.info('Redirigiendo a Google...');
+            setTimeout(() => {
+                Notificaciones.exito('Demo: Login con Google exitoso');
+            }, 1500);
+        });
+        
+        $('#facebookLogin').click(function() {
+            Notificaciones.info('Redirigiendo a Facebook...');
+            setTimeout(() => {
+                Notificaciones.exito('Demo: Login con Facebook exitoso');
+            }, 1500);
+        });
+        
+        // ============================================
+        // EFECTOS DE ENFOQUE EN CAMPOS
+        // ============================================
+        $('.form-control').focus(function() {
+            $(this).closest('.input-group').find('.input-group-text').addClass('text-primary');
+        }).blur(function() {
+            $(this).closest('.input-group').find('.input-group-text').removeClass('text-primary');
+        });
+        
+        // ============================================
+        // PREVENIR DOBLE ENVÍO DEL FORMULARIO
+        // ============================================
+        let formSubmitted = false;
+        $('form').on('submit', function() {
+            if (formSubmitted) {
+                return false;
+            }
+            formSubmitted = true;
+        });
+    });
+</script>
+{% endblock %}

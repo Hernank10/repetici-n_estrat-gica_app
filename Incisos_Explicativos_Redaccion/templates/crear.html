@@ -1,0 +1,721 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Ejemplos - Incisos Explicativos | Contribuye a la comunidad{% endblock %}
+
+{% block og_title %}Crea y comparte tus propios ejemplos de incisos explicativos{% endblock %}
+
+{% block content %}
+<!-- ============================================
+     ENCABEZADO DE LA PÁGINA
+     ============================================ -->
+<div class="row mb-4" data-aos="fade-down">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm bg-gradient-warning text-white">
+            <div class="card-body p-4">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <div class="d-flex align-items-center mb-3 mb-md-0">
+                            <div class="bg-white bg-opacity-20 rounded-circle p-3 me-3">
+                                <i class="bi bi-plus-circle fs-1"></i>
+                            </div>
+                            <div>
+                                <h1 class="display-5 fw-bold mb-2">Crea tus propios ejemplos</h1>
+                                <p class="lead mb-0 opacity-90">Comparte ejemplos con la comunidad y gana puntos extra</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-md-end">
+                            <div class="text-center text-md-end">
+                                <span class="badge bg-white text-warning px-3 py-2 rounded-pill mb-2">
+                                    <i class="bi bi-star-fill me-1"></i> Tus contribuciones
+                                </span>
+                                <div class="d-flex align-items-center justify-content-md-end">
+                                    <div class="me-3">
+                                        <span class="h3 mb-0 fw-bold text-white" id="contadorEjemplos">{{ ejemplos|length }}</span>
+                                        <small class="d-block opacity-75">ejemplos</small>
+                                    </div>
+                                    <div>
+                                        <span class="h3 mb-0 fw-bold text-white" id="puntosContribucion">{{ usuario.estadisticas.ejemplos_creados * 15 if usuario else 0 }}</span>
+                                        <small class="d-block opacity-75">puntos</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     BARRA DE PROGRESO DE CONTRIBUCIONES
+     ============================================ -->
+<div class="row mb-4" data-aos="fade-up">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-bold">
+                        <i class="bi bi-arrow-up-circle-fill text-warning me-2"></i>
+                        Límite de contribuciones
+                    </span>
+                    <span id="limiteTexto">{{ ejemplos|length }}/{{ max_ejemplos }} ejemplos</span>
+                </div>
+                <div class="progress mb-2" style="height: 10px;">
+                    <div id="limiteBar" class="progress-bar bg-warning" role="progressbar" 
+                         style="width: {{ (ejemplos|length / max_ejemplos * 100)|round }}%"></div>
+                </div>
+                <small class="text-secondary">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Cada ejemplo creado te da 15 puntos. ¡Comparte tu conocimiento!
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     FORMULARIO DE CREACIÓN
+     ============================================ -->
+<div class="row g-4">
+    <!-- Columna izquierda - Formulario -->
+    <div class="col-lg-7" data-aos="fade-right">
+        <div class="card border-0 shadow-lg">
+            <div class="card-header bg-white border-0 py-3">
+                <h4 class="fw-bold mb-0">
+                    <i class="bi bi-pencil-square text-warning me-2"></i>
+                    Nuevo ejemplo
+                </h4>
+            </div>
+            <div class="card-body p-4">
+                <form id="crearForm" class="needs-validation" novalidate>
+                    <!-- Oración base -->
+                    <div class="mb-4">
+                        <label for="base" class="form-label fw-semibold">
+                            <i class="bi bi-quote me-2 text-primary"></i>
+                            Oración base <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">
+                                <i class="bi bi-type"></i>
+                            </span>
+                            <input type="text" 
+                                   class="form-control border-start-0" 
+                                   id="base" 
+                                   name="base" 
+                                   placeholder="Ej: El presidente {} anunció nuevas medidas"
+                                   value="{}"
+                                   required>
+                        </div>
+                        <div class="form-text">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Usa <code>{}</code> para indicar dónde va el inciso
+                        </div>
+                        <div class="invalid-feedback">
+                            Por favor, ingresa la oración base.
+                        </div>
+                    </div>
+                    
+                    <!-- Inciso -->
+                    <div class="mb-4">
+                        <label for="inciso" class="form-label fw-semibold">
+                            <i class="bi bi-chat-quote me-2 text-success"></i>
+                            Inciso <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">
+                                <i class="bi bi-quote"></i>
+                            </span>
+                            <input type="text" 
+                                   class="form-control border-start-0" 
+                                   id="inciso" 
+                                   name="inciso" 
+                                   placeholder="Ej: electo democráticamente"
+                                   required>
+                        </div>
+                        <div class="invalid-feedback">
+                            Por favor, ingresa el inciso.
+                        </div>
+                    </div>
+                    
+                    <!-- Categoría -->
+                    <div class="mb-4">
+                        <label for="categoria" class="form-label fw-semibold">
+                            <i class="bi bi-tag-fill me-2 text-info"></i>
+                            Categoría <span class="text-danger">*</span>
+                        </label>
+                        <select class="form-select" id="categoria" name="categoria" required>
+                            <option value="">Selecciona una categoría</option>
+                            <option value="Comas">🔖 Comas explicativas</option>
+                            <option value="Paréntesis">📌 Paréntesis</option>
+                            <option value="Rayas">➖ Rayas</option>
+                            <option value="Geográficos">🌍 Contexto geográfico</option>
+                            <option value="Siglas">🔤 Siglas</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Por favor, selecciona una categoría.
+                        </div>
+                    </div>
+                    
+                    <!-- Tipo de puntuación -->
+                    <div class="mb-4">
+                        <label for="puntuacion" class="form-label fw-semibold">
+                            <i class="bi bi-pip me-2 text-warning"></i>
+                            Tipo de puntuación <span class="text-danger">*</span>
+                        </label>
+                        <div class="row g-2">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="puntuacion" id="puntComas" value="comas" required>
+                                    <label class="form-check-label" for="puntComas">
+                                        <span class="badge bg-primary">, ,</span> Comas
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="puntuacion" id="puntParentesis" value="paréntesis" required>
+                                    <label class="form-check-label" for="puntParentesis">
+                                        <span class="badge bg-success">( )</span> Paréntesis
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="puntuacion" id="puntRayas" value="rayas" required>
+                                    <label class="form-check-label" for="puntRayas">
+                                        <span class="badge bg-warning text-dark">— —</span> Rayas
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback">
+                            Por favor, selecciona un tipo de puntuación.
+                        </div>
+                    </div>
+                    
+                    <!-- Vista previa en tiempo real -->
+                    <div class="card bg-light border-0 mb-4">
+                        <div class="card-body">
+                            <h6 class="fw-bold mb-3">
+                                <i class="bi bi-eye-fill me-2"></i>
+                                Vista previa
+                            </h6>
+                            <div id="vistaPrevia" class="p-3 bg-white rounded-3">
+                                <p class="mb-0 text-secondary">Completa los campos para ver la vista previa</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Botones de acción -->
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-warning btn-lg flex-grow-1" id="guardarBtn">
+                            <i class="bi bi-save me-2"></i>
+                            Guardar ejemplo (+15 pts)
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-lg" id="limpiarBtn">
+                            <i class="bi bi-eraser me-2"></i>
+                            Limpiar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Columna derecha - Información y consejos -->
+    <div class="col-lg-5" data-aos="fade-left">
+        <!-- Guía rápida -->
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white border-0 py-3">
+                <h5 class="fw-bold mb-0">
+                    <i class="bi bi-question-circle-fill text-primary me-2"></i>
+                    Guía rápida
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="accordion" id="guiaAccordion">
+                    <div class="accordion-item border-0 mb-2">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed bg-light rounded-3" type="button" 
+                                    data-bs-toggle="collapse" data-bs-target="#collapse1">
+                                <i class="bi bi-1-circle-fill me-2 text-primary"></i>
+                                ¿Cómo escribir la oración base?
+                            </button>
+                        </h2>
+                        <div id="collapse1" class="accordion-collapse collapse" data-bs-parent="#guiaAccordion">
+                            <div class="accordion-body">
+                                <p>La oración base debe ser una frase completa donde usarás <code>{}</code> para indicar la posición del inciso.</p>
+                                <div class="bg-light p-2 rounded-3">
+                                    <small class="text-success">✅ Correcto: "El presidente {} anunció medidas"</small><br>
+                                    <small class="text-danger">❌ Incorrecto: "El presidente anunció medidas" (sin {})</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item border-0 mb-2">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed bg-light rounded-3" type="button" 
+                                    data-bs-toggle="collapse" data-bs-target="#collapse2">
+                                <i class="bi bi-2-circle-fill me-2 text-success"></i>
+                                ¿Qué es un inciso?
+                            </button>
+                        </h2>
+                        <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#guiaAccordion">
+                            <div class="accordion-body">
+                                <p>El inciso es la información adicional que va entre signos de puntuación. Debe poder eliminarse sin que la oración pierda sentido.</p>
+                                <div class="bg-light p-2 rounded-3">
+                                    <small>Ejemplo: "electo democráticamente", "capital de Francia", "(1945)", etc.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item border-0 mb-2">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed bg-light rounded-3" type="button" 
+                                    data-bs-toggle="collapse" data-bs-target="#collapse3">
+                                <i class="bi bi-3-circle-fill me-2 text-warning"></i>
+                                Tipos de puntuación
+                            </button>
+                        </h2>
+                        <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#guiaAccordion">
+                            <div class="accordion-body">
+                                <ul class="mb-0">
+                                    <li><span class="badge bg-primary me-2">, ,</span> Comas: información relacionada</li>
+                                    <li><span class="badge bg-success me-2">( )</span> Paréntesis: datos técnicos</li>
+                                    <li><span class="badge bg-warning text-dark me-2">— —</span> Rayas: énfasis</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Estadísticas de contribuciones -->
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white border-0 py-3">
+                <h5 class="fw-bold mb-0">
+                    <i class="bi bi-graph-up-arrow text-success me-2"></i>
+                    Tu impacto
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3 text-center">
+                    <div class="col-4">
+                        <div class="bg-light rounded-3 p-3">
+                            <i class="bi bi-pencil-square fs-2 text-warning mb-2"></i>
+                            <h4 class="fw-bold mb-0">{{ ejemplos|length }}</h4>
+                            <small class="text-secondary">Creados</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="bg-light rounded-3 p-3">
+                            <i class="bi bi-star-fill fs-2 text-warning mb-2"></i>
+                            <h4 class="fw-bold mb-0">{{ usuario.estadisticas.ejemplos_creados * 15 if usuario else 0 }}</h4>
+                            <small class="text-secondary">Puntos</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="bg-light rounded-3 p-3">
+                            <i class="bi bi-people-fill fs-2 text-primary mb-2"></i>
+                            <h4 class="fw-bold mb-0">{{ ejemplos|length * 3 }}</h4>
+                            <small class="text-secondary">Impacto</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ejemplos de la comunidad -->
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-people-fill text-info me-2"></i>
+                        Ejemplos de la comunidad
+                    </h5>
+                    <span class="badge bg-info" id="ejemplosCount">{{ ejemplos|length }}</span>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush" id="listaEjemplos" style="max-height: 300px; overflow-y: auto;">
+                    {% if ejemplos %}
+                        {% for ejemplo in ejemplos %}
+                        <div class="list-group-item d-flex justify-content-between align-items-center ejemplo-item" 
+                             data-id="{{ ejemplo.id }}">
+                            <div class="flex-grow-1 me-3">
+                                <div class="d-flex align-items-center mb-1">
+                                    <span class="badge bg-primary me-2">{{ ejemplo.categoria }}</span>
+                                    <small class="text-secondary">ID: {{ ejemplo.id }}</small>
+                                </div>
+                                <p class="mb-1 small">{{ ejemplo.base }}</p>
+                                <small class="text-secondary">
+                                    <i class="bi bi-chat-quote me-1"></i>
+                                    "{{ ejemplo.inciso }}" 
+                                    <span class="badge bg-{{ 'primary' if ejemplo.puntuacion == 'comas' else ('success' if ejemplo.puntuacion == 'paréntesis' else 'warning') }} ms-2">
+                                        {{ ejemplo.puntuacion }}
+                                    </span>
+                                </small>
+                            </div>
+                            <button class="btn btn-sm btn-outline-danger eliminar-ejemplo" 
+                                    data-id="{{ ejemplo.id }}"
+                                    data-bs-toggle="tooltip" 
+                                    title="Eliminar ejemplo">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="bi bi-emoji-neutral fs-1 text-secondary mb-3"></i>
+                            <p class="text-secondary mb-0">No hay ejemplos aún</p>
+                            <small>Sé el primero en contribuir</small>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-footer bg-white border-0 py-3">
+                <small class="text-secondary">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Los ejemplos serán revisados antes de aparecer en la práctica
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     MODAL DE CONFIRMACIÓN
+     ============================================ -->
+<div class="modal fade" id="confirmarModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title text-dark">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    Confirmar eliminación
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p>¿Estás seguro de que deseas eliminar este ejemplo?</p>
+                <p class="text-danger small">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Esta acción no se puede deshacer.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmarEliminarBtn">
+                    <i class="bi bi-trash me-2"></i>
+                    Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     ESTILOS ADICIONALES
+     ============================================ -->
+<style>
+    .bg-gradient-warning {
+        background: linear-gradient(135deg, #f6c23e 0%, #dda20a 100%);
+    }
+    
+    .bg-opacity-20 {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .opacity-90 {
+        opacity: 0.9;
+    }
+    
+    .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    /* Estilo para items de ejemplo */
+    .ejemplo-item {
+        transition: all 0.3s ease;
+        border-left: 4px solid transparent;
+    }
+    
+    .ejemplo-item:hover {
+        background-color: #f8f9fa;
+        border-left-color: #f6c23e;
+    }
+    
+    /* Animación para nuevo ejemplo */
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    .ejemplo-nuevo {
+        animation: slideIn 0.3s ease forwards;
+    }
+    
+    /* Scroll personalizado */
+    #listaEjemplos::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    #listaEjemplos::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    
+    #listaEjemplos::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #f6c23e 0%, #dda20a 100%);
+        border-radius: 3px;
+    }
+    
+    #listaEjemplos::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #dda20a 0%, #f6c23e 100%);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .bg-gradient-warning {
+            padding: 2rem 1rem;
+        }
+        
+        .btn-lg {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // ============================================
+        // CONFIGURACIÓN INICIAL
+        // ============================================
+        let ejemploEliminarId = null;
+        
+        // Inicializar tooltips
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function(tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+        
+        // ============================================
+        // VISTA PREVIA EN TIEMPO REAL
+        // ============================================
+        function actualizarVistaPrevia() {
+            const base = $('#base').val();
+            const inciso = $('#inciso').val();
+            const puntuacion = $('input[name="puntuacion"]:checked').val();
+            
+            if (!base || !inciso || !puntuacion) {
+                $('#vistaPrevia').html('<p class="mb-0 text-secondary">Completa los campos para ver la vista previa</p>');
+                return;
+            }
+            
+            let oracionCompleta = base.replace('{}', '');
+            let previewHtml = '';
+            
+            if (puntuacion === 'comas') {
+                oracionCompleta = base.replace('{}', `, ${inciso},`);
+                previewHtml = oracionCompleta.replace(`, ${inciso},`, `<span class="text-primary fw-bold">, ${inciso},</span>`);
+            } else if (puntuacion === 'paréntesis') {
+                oracionCompleta = base.replace('{}', `(${inciso})`);
+                previewHtml = oracionCompleta.replace(`(${inciso})`, `<span class="text-success fw-bold">(${inciso})</span>`);
+            } else if (puntuacion === 'rayas') {
+                oracionCompleta = base.replace('{}', `—${inciso}—`);
+                previewHtml = oracionCompleta.replace(`—${inciso}—`, `<span class="text-warning fw-bold">—${inciso}—</span>`);
+            }
+            
+            $('#vistaPrevia').html(`
+                <p class="mb-0">${previewHtml}</p>
+                <hr class="my-2">
+                <small class="text-success">
+                    <i class="bi bi-check-circle me-1"></i>
+                    Sin inciso: ${base.replace('{}', '')}
+                </small>
+            `);
+        }
+        
+        $('#base, #inciso, input[name="puntuacion"]').on('input change', actualizarVistaPrevia);
+        
+        // ============================================
+        // VALIDACIÓN DEL FORMULARIO
+        // ============================================
+        const forms = document.querySelectorAll('.needs-validation');
+        
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    
+                    // Scroll al primer error
+                    $('.is-invalid:first').get(0).scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+        
+        // ============================================
+        // GUARDAR NUEVO EJEMPLO
+        // ============================================
+        $('#crearForm').submit(function(e) {
+            e.preventDefault();
+            
+            if (!$(this)[0].checkValidity()) {
+                $(this)[0].classList.add('was-validated');
+                return;
+            }
+            
+            {% if ejemplos|length >= max_ejemplos %}
+                Notificaciones.warning('Has alcanzado el límite de {{ max_ejemplos }} ejemplos');
+                return;
+            {% endif %}
+            
+            const nuevoEjemplo = {
+                base: $('#base').val(),
+                inciso: $('#inciso').val(),
+                categoria: $('#categoria').val(),
+                puntuacion: $('input[name="puntuacion"]:checked').val()
+            };
+            
+            // Deshabilitar botón
+            const btn = $('#guardarBtn');
+            const originalText = btn.html();
+            btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Guardando...');
+            
+            $.ajax({
+                url: '/api/ejemplos',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(nuevoEjemplo),
+                success: function(response) {
+                    Notificaciones.exito('¡Ejemplo guardado! +15 puntos');
+                    
+                    // Animar puntos
+                    Puntos.animar(15, '#guardarBtn');
+                    
+                    // Recargar la página después de un breve delay
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                },
+                error: function(xhr) {
+                    const error = xhr.responseJSON?.error || 'Error al guardar';
+                    Notificaciones.error(error);
+                    
+                    // Restaurar botón
+                    btn.prop('disabled', false).html(originalText);
+                }
+            });
+        });
+        
+        // ============================================
+        // ELIMINAR EJEMPLO
+        // ============================================
+        $('.eliminar-ejemplo').click(function() {
+            ejemploEliminarId = $(this).data('id');
+            const modal = new bootstrap.Modal(document.getElementById('confirmarModal'));
+            modal.show();
+        });
+        
+        $('#confirmarEliminarBtn').click(function() {
+            if (!ejemploEliminarId) return;
+            
+            $.ajax({
+                url: `/api/ejemplos/${ejemploEliminarId}`,
+                method: 'DELETE',
+                success: function() {
+                    Notificaciones.exito('Ejemplo eliminado correctamente');
+                    
+                    // Recargar la página
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                },
+                error: function() {
+                    Notificaciones.error('Error al eliminar el ejemplo');
+                }
+            });
+        });
+        
+        // ============================================
+        // LIMPIAR FORMULARIO
+        // ============================================
+        $('#limpiarBtn').click(function() {
+            $('#crearForm')[0].reset();
+            $('#crearForm').removeClass('was-validated');
+            $('#vistaPrevia').html('<p class="mb-0 text-secondary">Completa los campos para ver la vista previa</p>');
+            
+            // Restaurar el {} en la oración base
+            $('#base').val('{}');
+        });
+        
+        // ============================================
+        // AUTOCOMPLETAR CON EJEMPLO
+        // ============================================
+        $('.ejemplo-item').dblclick(function() {
+            const base = $(this).find('p').text();
+            const incisoTexto = $(this).find('small').text();
+            const match = incisoTexto.match(/"([^"]+)"/);
+            const inciso = match ? match[1] : '';
+            
+            const categoria = $(this).find('.badge.bg-primary').text();
+            const puntuacion = $(this).find('.badge:last').text().trim();
+            
+            $('#base').val(base);
+            $('#inciso').val(inciso);
+            $('#categoria').val(categoria);
+            
+            if (puntuacion === 'comas') $('#puntComas').prop('checked', true);
+            else if (puntuacion === 'paréntesis') $('#puntParentesis').prop('checked', true);
+            else if (puntuacion === 'rayas') $('#puntRayas').prop('checked', true);
+            
+            actualizarVistaPrevia();
+            
+            // Scroll al formulario
+            $('html, body').animate({
+                scrollTop: $('#crearForm').offset().top - 100
+            }, 500);
+            
+            Notificaciones.info('Ejemplo cargado para edición');
+        });
+        
+        // ============================================
+        // ACTUALIZAR CONTADORES
+        // ============================================
+        function actualizarContadores() {
+            const total = parseInt($('#contadorEjemplos').text());
+            const limite = {{ max_ejemplos }};
+            const porcentaje = (total / limite * 100).toFixed(1);
+            
+            $('#limiteBar').css('width', porcentaje + '%');
+            $('#limiteTexto').text(`${total}/${limite} ejemplos`);
+        }
+        
+        actualizarContadores();
+    });
+</script>
+{% endblock %}

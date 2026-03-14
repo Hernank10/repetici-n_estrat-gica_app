@@ -1,0 +1,748 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Incisos Explicativos | Plataforma de Aprendizaje{% endblock %}
+
+{% block og_title %}Incisos Explicativos - Aprende y Practica Gramática{% endblock %}
+
+{% block content %}
+<!-- ============================================
+     HERO SECTION - PRINCIPAL
+     ============================================ -->
+<div class="row min-vh-75 align-items-center py-5">
+    <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
+        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 mb-3 rounded-pill">
+            <i class="bi bi-stars me-2"></i>Plataforma Educativa Interactiva
+        </span>
+        <h1 class="display-3 fw-bold mb-4">
+            Domina los <span class="text-gradient-primary">incisos explicativos</span> en español
+        </h1>
+        <p class="lead text-secondary mb-4">
+            Aprende a utilizar correctamente comas, paréntesis y rayas con nuestra plataforma gamificada. 
+            Más de 100 ejercicios interactivos y 50 flashcards para dominar la gramática española.
+        </p>
+        
+        <!-- Estadísticas rápidas -->
+        <div class="row g-3 mb-5">
+            <div class="col-md-4">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 bg-primary bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="bi bi-puzzle fs-3 text-primary"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0">100+</h4>
+                        <small class="text-secondary">Ejercicios</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 bg-success bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="bi bi-card-list fs-3 text-success"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0">50</h4>
+                        <small class="text-secondary">Flashcards</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 bg-warning bg-opacity-10 p-3 rounded-circle me-3">
+                        <i class="bi bi-trophy fs-3 text-warning"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0">5</h4>
+                        <small class="text-secondary">Medallas</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Botones de acción -->
+        <div class="d-flex flex-wrap gap-3">
+            {% if not session.usuario_id %}
+                <a href="{{ url_for('registro') }}" class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow-lg hover-lift">
+                    <i class="bi bi-person-plus me-2"></i>
+                    Comenzar Gratis
+                </a>
+                <a href="{{ url_for('teoria') }}" class="btn btn-outline-primary btn-lg px-5 py-3 rounded-pill hover-lift">
+                    <i class="bi bi-book me-2"></i>
+                    Explorar Teoría
+                </a>
+            {% else %}
+                <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow-lg hover-lift">
+                    <i class="bi bi-speedometer2 me-2"></i>
+                    Ir al Dashboard
+                </a>
+                <a href="{{ url_for('practica') }}" class="btn btn-success btn-lg px-5 py-3 rounded-pill hover-lift">
+                    <i class="bi bi-controller me-2"></i>
+                    Practicar Ahora
+                </a>
+            {% endif %}
+        </div>
+        
+        <!-- Trust badges -->
+        <div class="mt-5 d-flex align-items-center gap-4">
+            <small class="text-secondary">
+                <i class="bi bi-check-circle-fill text-success me-1"></i>
+                Sin compromiso
+            </small>
+            <small class="text-secondary">
+                <i class="bi bi-check-circle-fill text-success me-1"></i>
+                Acceso ilimitado
+            </small>
+            <small class="text-secondary">
+                <i class="bi bi-check-circle-fill text-success me-1"></i>
+                Actualizaciones gratis
+            </small>
+        </div>
+    </div>
+    
+    <div class="col-lg-6 mt-5 mt-lg-0" data-aos="fade-left" data-aos-duration="1000">
+        <div class="position-relative">
+            <!-- Imagen principal con efecto flotante -->
+            <div class="floating">
+                <img src="https://placehold.co/600x400/4e73df/white?text=Incisos+Explicativos" 
+                     alt="Incisos Explicativos" 
+                     class="img-fluid rounded-4 shadow-2xl">
+            </div>
+            
+            <!-- Tarjetas flotantes decorativas -->
+            <div class="position-absolute top-0 start-0 translate-middle bg-white p-3 rounded-4 shadow-lg d-none d-lg-block animate__animated animate__fadeInLeft" style="z-index: 10;">
+                <i class="bi bi-quote text-primary fs-1"></i>
+                <p class="mb-0 fw-bold">"Aprendí más en un día"</p>
+                <small class="text-secondary">- María G.</small>
+            </div>
+            
+            <div class="position-absolute bottom-0 end-0 bg-white p-3 rounded-4 shadow-lg d-none d-lg-block animate__animated animate__fadeInRight" style="z-index: 10;">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <i class="bi bi-star-fill text-warning"></i>
+                </div>
+                <p class="mb-0 fw-bold">4.9/5 valoración</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     SECCIÓN DE CARACTERÍSTICAS
+     ============================================ -->
+<div class="row mt-6 pt-5">
+    <div class="col-12 text-center mb-5" data-aos="fade-up">
+        <h2 class="display-5 fw-bold mb-3">
+            ¿Por qué aprender con <span class="text-gradient-primary">nosotros</span>?
+        </h2>
+        <p class="lead text-secondary mx-auto" style="max-width: 600px;">
+            Una plataforma completa diseñada para que domines los incisos explicativos de forma efectiva y divertida
+        </p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Característica 1 -->
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="card h-100 border-0 shadow-sm hover-lift">
+            <div class="card-body text-center p-4">
+                <div class="feature-icon bg-primary bg-opacity-10 text-primary rounded-circle mx-auto mb-4" 
+                     style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-controller fs-1"></i>
+                </div>
+                <h4 class="fw-bold mb-3">Aprendizaje Interactivo</h4>
+                <p class="text-secondary">
+                    Practica con 100 ejercicios interactivos diseñados para reforzar tu comprensión de los incisos explicativos en diferentes contextos.
+                </p>
+                <div class="mt-3">
+                    <span class="badge bg-primary me-1">Completar</span>
+                    <span class="badge bg-primary me-1">Corregir</span>
+                    <span class="badge bg-primary">Aleatorio</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Característica 2 -->
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="card h-100 border-0 shadow-sm hover-lift">
+            <div class="card-body text-center p-4">
+                <div class="feature-icon bg-success bg-opacity-10 text-success rounded-circle mx-auto mb-4" 
+                     style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-card-list fs-1"></i>
+                </div>
+                <h4 class="fw-bold mb-3">Flashcards Visuales</h4>
+                <p class="text-secondary">
+                    50 flashcards con explicaciones claras y ejemplos prácticos para memorizar los conceptos clave de forma rápida y efectiva.
+                </p>
+                <div class="mt-3">
+                    <span class="badge bg-success me-1">Conceptos</span>
+                    <span class="badge bg-success me-1">Ejemplos</span>
+                    <span class="badge bg-success">Reglas</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Característica 3 -->
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="card h-100 border-0 shadow-sm hover-lift">
+            <div class="card-body text-center p-4">
+                <div class="feature-icon bg-warning bg-opacity-10 text-warning rounded-circle mx-auto mb-4" 
+                     style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-trophy fs-1"></i>
+                </div>
+                <h4 class="fw-bold mb-3">Gamificación</h4>
+                <p class="text-secondary">
+                    Gana puntos, desbloquea medallas y compite en el ranking mientras mejoras tus habilidades gramaticales.
+                </p>
+                <div class="mt-3">
+                    <span class="badge bg-warning text-dark me-1">🏆 Medallas</span>
+                    <span class="badge bg-warning text-dark me-1">⭐ Estrellas</span>
+                    <span class="badge bg-warning text-dark">🔥 Rachas</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     SECCIÓN DE CATEGORÍAS
+     ============================================ -->
+<div class="row mt-6 pt-5">
+    <div class="col-12 text-center mb-5" data-aos="fade-up">
+        <h2 class="display-5 fw-bold mb-3">
+            Aprende todas las <span class="text-gradient-primary">categorías</span>
+        </h2>
+        <p class="lead text-secondary mx-auto" style="max-width: 600px;">
+            Ejercicios organizados por tipo de inciso para un aprendizaje estructurado
+        </p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Categoría 1: Comas -->
+    <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="100">
+        <div class="card h-100 border-0 shadow-sm category-card">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="category-icon bg-primary bg-opacity-10 p-3 rounded-3 me-3">
+                        <i class="bi bi-quote fs-2 text-primary"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0">Comas Explicativas</h4>
+                </div>
+                <p class="text-secondary mb-3">
+                    Información relacionada o aclaratoria dentro de la oración. El inciso más común y versátil.
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="badge bg-light text-dark">
+                        <i class="bi bi-puzzle me-1"></i> 25 ejercicios
+                    </span>
+                    <a href="{{ url_for('practica') }}?categoria=Comas" class="btn btn-outline-primary btn-sm">
+                        Practicar <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Categoría 2: Paréntesis -->
+    <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200">
+        <div class="card h-100 border-0 shadow-sm category-card">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="category-icon bg-success bg-opacity-10 p-3 rounded-3 me-3">
+                        <i class="bi bi-braces fs-2 text-success"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0">Paréntesis</h4>
+                </div>
+                <p class="text-secondary mb-3">
+                    Datos técnicos, fechas, siglas o información secundaria que complementa sin interrumpir.
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="badge bg-light text-dark">
+                        <i class="bi bi-puzzle me-1"></i> 25 ejercicios
+                    </span>
+                    <a href="{{ url_for('practica') }}?categoria=Paréntesis" class="btn btn-outline-success btn-sm">
+                        Practicar <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Categoría 3: Rayas -->
+    <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">
+        <div class="card h-100 border-0 shadow-sm category-card">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="category-icon bg-warning bg-opacity-10 p-3 rounded-3 me-3">
+                        <i class="bi bi-dash-lg fs-2 text-warning"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0">Rayas</h4>
+                </div>
+                <p class="text-secondary mb-3">
+                    Énfasis, interrupciones o citas textuales. Aportan dramatismo y énfasis a la oración.
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="badge bg-light text-dark">
+                        <i class="bi bi-puzzle me-1"></i> 25 ejercicios
+                    </span>
+                    <a href="{{ url_for('practica') }}?categoria=Rayas" class="btn btn-outline-warning btn-sm">
+                        Practicar <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Categoría 4: Geográficos -->
+    <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="400">
+        <div class="card h-100 border-0 shadow-sm category-card">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="category-icon bg-info bg-opacity-10 p-3 rounded-3 me-3">
+                        <i class="bi bi-geo-alt fs-2 text-info"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0">Contexto Geográfico</h4>
+                </div>
+                <p class="text-secondary mb-3">
+                    Información sobre ubicaciones, características geográficas y datos de lugares específicos.
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="badge bg-light text-dark">
+                        <i class="bi bi-puzzle me-1"></i> 25 ejercicios
+                    </span>
+                    <a href="{{ url_for('practica') }}?categoria=Geográficos" class="btn btn-outline-info btn-sm">
+                        Practicar <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Categoría 5: Siglas -->
+    <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="500">
+        <div class="card h-100 border-0 shadow-sm category-card">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="category-icon bg-danger bg-opacity-10 p-3 rounded-3 me-3">
+                        <i class="bi bi-type fs-2 text-danger"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0">Siglas y Acrónimos</h4>
+                </div>
+                <p class="text-secondary mb-3">
+                    Explicación de siglas mediante paréntesis para clarificar términos abreviados.
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="badge bg-light text-dark">
+                        <i class="bi bi-puzzle me-1"></i> 25 ejercicios
+                    </span>
+                    <a href="{{ url_for('practica') }}?categoria=Siglas" class="btn btn-outline-danger btn-sm">
+                        Practicar <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Categoría 6: Teoría -->
+    <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="600">
+        <div class="card h-100 border-0 shadow-sm category-card bg-light">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="category-icon bg-dark bg-opacity-10 p-3 rounded-3 me-3">
+                        <i class="bi bi-book fs-2 text-dark"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0">Teoría General</h4>
+                </div>
+                <p class="text-secondary mb-3">
+                    Repasa los conceptos fundamentales con diapositivas interactivas y ejemplos claros.
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="badge bg-light text-dark">
+                        <i class="bi bi-easel me-1"></i> 3 diapositivas
+                    </span>
+                    <a href="{{ url_for('teoria') }}" class="btn btn-outline-dark btn-sm">
+                        Ver teoría <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     SECCIÓN DE TESTIMONIOS
+     ============================================ -->
+<div class="row mt-6 pt-5">
+    <div class="col-12 text-center mb-5" data-aos="fade-up">
+        <h2 class="display-5 fw-bold mb-3">
+            Lo que dicen nuestros <span class="text-gradient-primary">estudiantes</span>
+        </h2>
+        <p class="lead text-secondary mx-auto" style="max-width: 600px;">
+            Miles de estudiantes ya mejoraron su gramática con nuestra plataforma
+        </p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Testimonio 1 -->
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body p-4">
+                <div class="d-flex gap-1 text-warning mb-3">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                </div>
+                <p class="mb-4 fst-italic">
+                    "Los ejercicios interactivos me ayudaron mucho a entender la diferencia entre comas y paréntesis. ¡Las flashcards son geniales!"
+                </p>
+                <div class="d-flex align-items-center">
+                    <div class="bg-primary bg-opacity-10 rounded-circle p-3 me-3">
+                        <i class="bi bi-person-circle fs-4 text-primary"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-1">Ana Martínez</h6>
+                        <small class="text-secondary">Estudiante de Filología</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Testimonio 2 -->
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body p-4">
+                <div class="d-flex gap-1 text-warning mb-3">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                </div>
+                <p class="mb-4 fst-italic">
+                    "Me encanta el sistema de medallas y puntos. Me motiva a seguir practicando cada día. Ya tengo 3 medallas 🥉🥈🥇"
+                </p>
+                <div class="d-flex align-items-center">
+                    <div class="bg-success bg-opacity-10 rounded-circle p-3 me-3">
+                        <i class="bi bi-person-circle fs-4 text-success"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-1">Carlos Rodríguez</h6>
+                        <small class="text-secondary">Profesor de Lengua</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Testimonio 3 -->
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body p-4">
+                <div class="d-flex gap-1 text-warning mb-3">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
+                </div>
+                <p class="mb-4 fst-italic">
+                    "Muy útil para preparar mis clases. Mis alumnos están mejorando mucho con los ejercicios interactivos."
+                </p>
+                <div class="d-flex align-items-center">
+                    <div class="bg-warning bg-opacity-10 rounded-circle p-3 me-3">
+                        <i class="bi bi-person-circle fs-4 text-warning"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-1">Laura Sánchez</h6>
+                        <small class="text-secondary">Profesora de Español</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     SECCIÓN DE CALL TO ACTION (CTA)
+     ============================================ -->
+<div class="row mt-6 pt-5">
+    <div class="col-12">
+        <div class="card bg-gradient-primary text-white border-0 rounded-5 shadow-lg overflow-hidden" data-aos="zoom-in">
+            <div class="card-body p-5 text-center position-relative">
+                <!-- Elementos decorativos -->
+                <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10">
+                    <i class="bi bi-quote position-absolute top-0 start-0 fs-1 m-5"></i>
+                    <i class="bi bi-quote position-absolute bottom-0 end-0 fs-1 m-5"></i>
+                </div>
+                
+                <h2 class="display-5 fw-bold mb-4">
+                    ¿Listo para dominar los incisos explicativos?
+                </h2>
+                <p class="lead mb-4 mx-auto" style="max-width: 600px;">
+                    Únete a miles de estudiantes que ya están mejorando su gramática con nuestra plataforma
+                </p>
+                
+                {% if not session.usuario_id %}
+                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                        <a href="{{ url_for('registro') }}" class="btn btn-light btn-lg px-5 py-3 rounded-pill shadow-lg hover-lift">
+                            <i class="bi bi-person-plus me-2"></i>
+                            Crear cuenta gratis
+                        </a>
+                        <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill hover-lift">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>
+                            Iniciar sesión
+                        </a>
+                    </div>
+                    <p class="mt-3 mb-0 small opacity-75">
+                        <i class="bi bi-shield-check me-1"></i>
+                        No requiere tarjeta de crédito. Cancela cuando quieras.
+                    </p>
+                {% else %}
+                    <a href="{{ url_for('practica') }}" class="btn btn-light btn-lg px-5 py-3 rounded-pill shadow-lg hover-lift">
+                        <i class="bi bi-controller me-2"></i>
+                        Continuar practicando
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     SECCIÓN DE PREGUNTAS FRECUENTES (FAQ)
+     ============================================ -->
+<div class="row mt-6 pt-5">
+    <div class="col-12 text-center mb-5" data-aos="fade-up">
+        <h2 class="display-5 fw-bold mb-3">
+            Preguntas <span class="text-gradient-primary">frecuentes</span>
+        </h2>
+        <p class="lead text-secondary mx-auto" style="max-width: 600px;">
+            Resolvemos tus dudas sobre los incisos explicativos y la plataforma
+        </p>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="accordion" id="faqAccordion">
+            <!-- FAQ 1 -->
+            <div class="accordion-item border-0 mb-3 shadow-sm" data-aos="fade-up">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed rounded-3" type="button" 
+                            data-bs-toggle="collapse" data-bs-target="#faq1">
+                        ¿Qué son los incisos explicativos?
+                    </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Son elementos sintácticos que añaden información adicional dentro de una oración, 
+                        encerrados entre comas, paréntesis o rayas. No son esenciales para el sentido principal 
+                        y si se eliminan, la oración mantiene su coherencia.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- FAQ 2 -->
+            <div class="accordion-item border-0 mb-3 shadow-sm" data-aos="fade-up" data-aos-delay="100">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed rounded-3" type="button" 
+                            data-bs-toggle="collapse" data-bs-target="#faq2">
+                        ¿Cómo funciona el sistema de puntos y medallas?
+                    </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Ganas puntos por cada ejercicio completado (10 pts) y respuesta correcta (20 pts adicionales). 
+                        Las medallas se desbloquean al alcanzar hitos: bronce (10 ejercicios), plata (25), oro (50), 
+                        diamante (100) y maestro (200). También hay logros especiales por rachas y dominar categorías.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- FAQ 3 -->
+            <div class="accordion-item border-0 mb-3 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed rounded-3" type="button" 
+                            data-bs-toggle="collapse" data-bs-target="#faq3">
+                        ¿Puedo usar la plataforma sin registrarme?
+                    </button>
+                </h2>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Puedes acceder a la sección de teoría sin registro, pero para practicar ejercicios, 
+                        usar flashcards y guardar tu progreso necesitas crear una cuenta gratuita.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- FAQ 4 -->
+            <div class="accordion-item border-0 mb-3 shadow-sm" data-aos="fade-up" data-aos-delay="300">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed rounded-3" type="button" 
+                            data-bs-toggle="collapse" data-bs-target="#faq4">
+                        ¿Los ejercicios tienen diferentes niveles de dificultad?
+                    </button>
+                </h2>
+                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Sí, nuestros 100 ejercicios están clasificados en tres niveles: fácil, medio y difícil. 
+                        Puedes filtrar por dificultad para adaptar la práctica a tu nivel.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     ESTILOS ADICIONALES ESPECÍFICOS
+     ============================================ -->
+<style>
+    .text-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .hover-lift {
+        transition: transform 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-5px);
+    }
+    
+    .floating {
+        animation: floating 3s ease-in-out infinite;
+    }
+    
+    @keyframes floating {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
+    }
+    
+    .category-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .category-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important;
+    }
+    
+    .feature-icon {
+        transition: all 0.3s ease;
+    }
+    
+    .category-card:hover .feature-icon,
+    .card:hover .feature-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+    
+    .shadow-2xl {
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    
+    .mt-6 {
+        margin-top: 5rem;
+    }
+    
+    .min-vh-75 {
+        min-height: 75vh;
+    }
+    
+    /* Animaciones para las tarjetas de categorías */
+    .category-card:nth-child(1) { animation-delay: 0.1s; }
+    .category-card:nth-child(2) { animation-delay: 0.2s; }
+    .category-card:nth-child(3) { animation-delay: 0.3s; }
+    .category-card:nth-child(4) { animation-delay: 0.4s; }
+    .category-card:nth-child(5) { animation-delay: 0.5s; }
+    .category-card:nth-child(6) { animation-delay: 0.6s; }
+    
+    /* Efecto de brillo en hover para CTA */
+    .bg-gradient-primary {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .bg-gradient-primary::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
+    }
+    
+    .bg-gradient-primary:hover::before {
+        opacity: 1;
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Script adicional específico para la página de inicio
+    $(document).ready(function() {
+        // Animar contadores de estadísticas cuando son visibles
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counters = entry.target.querySelectorAll('.counter');
+                    counters.forEach(counter => {
+                        const target = parseInt(counter.getAttribute('data-target'));
+                        let current = 0;
+                        const increment = target / 50;
+                        const timer = setInterval(() => {
+                            current += increment;
+                            counter.textContent = Math.round(current);
+                            if (current >= target) {
+                                counter.textContent = target;
+                                clearInterval(timer);
+                            }
+                        }, 30);
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.stats-row').forEach(el => observer.observe(el));
+        
+        // Smooth scroll para enlaces internos
+        $('a[href^="#"]').on('click', function(e) {
+            e.preventDefault();
+            const target = $(this.getAttribute('href'));
+            if (target.length) {
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 100
+                }, 500);
+            }
+        });
+    });
+</script>
+{% endblock %}

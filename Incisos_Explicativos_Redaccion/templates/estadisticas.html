@@ -1,0 +1,874 @@
+{% extends "base.html" %}
+
+{% block title %}Estadísticas - Incisos Explicativos | Tu progreso personal{% endblock %}
+
+{% block og_title %}Estadísticas y logros en Incisos Explicativos{% endblock %}
+
+{% block content %}
+<!-- ============================================
+     ENCABEZADO DE LA PÁGINA
+     ============================================ -->
+<div class="row mb-4" data-aos="fade-down">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm bg-gradient-stats text-white">
+            <div class="card-body p-4">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <div class="d-flex align-items-center mb-3 mb-md-0">
+                            <div class="bg-white bg-opacity-20 rounded-circle p-3 me-3">
+                                <i class="bi bi-graph-up-arrow fs-1"></i>
+                            </div>
+                            <div>
+                                <h1 class="display-5 fw-bold mb-2">Tus Estadísticas</h1>
+                                <p class="lead mb-0 opacity-90">Sigue tu progreso y celebra tus logros</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-md-end">
+                            <div class="text-center text-md-end">
+                                <span class="badge bg-white text-primary px-3 py-2 rounded-pill mb-2">
+                                    <i class="bi bi-calendar-check me-1"></i> Miembro desde
+                                </span>
+                                <div>
+                                    <span class="h5 mb-0 fw-bold text-white">
+                                        {{ usuario.fecha_registro[:10] if usuario.fecha_registro else 'Hoy' }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     TARJETAS DE ESTADÍSTICAS PRINCIPALES
+     ============================================ -->
+<div class="row g-4 mb-4">
+    <!-- Puntos Totales -->
+    <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="card border-0 shadow-sm hover-lift stats-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 bg-primary bg-opacity-10 rounded-circle p-3 me-3">
+                        <i class="bi bi-trophy-fill fs-2 text-primary"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-secondary text-uppercase mb-1">Puntos Totales</h6>
+                        <h3 class="fw-bold mb-0 counter" data-target="{{ usuario.estadisticas.puntos }}">{{ usuario.estadisticas.puntos }}</h3>
+                        <div class="text-warning mt-1">
+                            {% for i in range(usuario.estadisticas.estrellas) %}
+                                <i class="bi bi-star-fill"></i>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ejercicios Completados -->
+    <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="card border-0 shadow-sm hover-lift stats-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 bg-success bg-opacity-10 rounded-circle p-3 me-3">
+                        <i class="bi bi-puzzle-fill fs-2 text-success"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-secondary text-uppercase mb-1">Ejercicios</h6>
+                        <h3 class="fw-bold mb-0 counter" data-target="{{ usuario.estadisticas.ejercicios_completados }}">{{ usuario.estadisticas.ejercicios_completados }}</h3>
+                        <small class="text-secondary">{{ usuario.estadisticas.respuestas_correctas }} correctos</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Flashcards Completadas -->
+    <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="card border-0 shadow-sm hover-lift stats-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 bg-info bg-opacity-10 rounded-circle p-3 me-3">
+                        <i class="bi bi-card-list fs-2 text-info"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-secondary text-uppercase mb-1">Flashcards</h6>
+                        <h3 class="fw-bold mb-0 counter" data-target="{{ usuario.estadisticas.flashcards_completadas }}">{{ usuario.estadisticas.flashcards_completadas }}</h3>
+                        <small class="text-secondary">de 50 totales</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ejemplos Creados -->
+    <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="card border-0 shadow-sm hover-lift stats-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 bg-warning bg-opacity-10 rounded-circle p-3 me-3">
+                        <i class="bi bi-plus-circle-fill fs-2 text-warning"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-secondary text-uppercase mb-1">Ejemplos Creados</h6>
+                        <h3 class="fw-bold mb-0 counter" data-target="{{ usuario.estadisticas.ejemplos_creados }}">{{ usuario.estadisticas.ejemplos_creados }}</h3>
+                        <small class="text-secondary">+{{ usuario.estadisticas.ejemplos_creados * 15 }} puntos</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     GRÁFICOS Y PROGRESO DETALLADO
+     ============================================ -->
+<div class="row g-4 mb-4">
+    <!-- Gráfico de progreso por categoría -->
+    <div class="col-xl-8" data-aos="fade-right">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white border-0 py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-pie-chart-fill text-primary me-2"></i>
+                        Progreso por Categoría
+                    </h5>
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-primary active" id="graficoBarrasBtn">
+                            <i class="bi bi-bar-chart"></i>
+                        </button>
+                        <button class="btn btn-outline-primary" id="graficoLineasBtn">
+                            <i class="bi bi-graph-up"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <canvas id="categoriaChart" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Rachas y precisión -->
+    <div class="col-xl-4" data-aos="fade-left">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white border-0 py-3">
+                <h5 class="fw-bold mb-0">
+                    <i class="bi bi-fire text-danger me-2"></i>
+                    Rachas y Precisión
+                </h5>
+            </div>
+            <div class="card-body">
+                <!-- Racha actual -->
+                <div class="text-center mb-4">
+                    <div class="display-1 fw-bold text-danger">{{ usuario.estadisticas.rachas.actual }}</div>
+                    <p class="text-secondary">Racha actual</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <span class="badge bg-light text-dark px-3 py-2">
+                            <i class="bi bi-fire me-1"></i> Máxima: {{ usuario.estadisticas.rachas.maxima }}
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Precisión -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Precisión</span>
+                        <span class="fw-bold">
+                            {% if usuario.estadisticas.ejercicios_completados > 0 %}
+                                {{ (usuario.estadisticas.respuestas_correctas / usuario.estadisticas.ejercicios_completados * 100)|round(1) }}%
+                            {% else %}
+                                0%
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="progress" style="height: 10px;">
+                        {% set precision = (usuario.estadisticas.respuestas_correctas / usuario.estadisticas.ejercicios_completados * 100) if usuario.estadisticas.ejercicios_completados > 0 else 0 %}
+                        <div class="progress-bar bg-success" role="progressbar" 
+                             style="width: {{ precision }}%"></div>
+                    </div>
+                </div>
+                
+                <!-- Estadísticas rápidas -->
+                <div class="row g-2">
+                    <div class="col-6">
+                        <div class="bg-light rounded-3 p-2 text-center">
+                            <small class="text-secondary">Correctos</small>
+                            <h5 class="mb-0">{{ usuario.estadisticas.respuestas_correctas }}</h5>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="bg-light rounded-3 p-2 text-center">
+                            <small class="text-secondary">Incorrectos</small>
+                            <h5 class="mb-0">{{ usuario.estadisticas.ejercicios_completados - usuario.estadisticas.respuestas_correctas }}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     MEDALLAS Y LOGROS
+     ============================================ -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 py-3">
+                <h5 class="fw-bold mb-0">
+                    <i class="bi bi-award-fill text-warning me-2"></i>
+                    Medallas y Logros
+                </h5>
+            </div>
+            <div class="card-body">
+                <!-- Medallas -->
+                <div class="row g-4 mb-4">
+                    {% set medallas_config = {
+                        'bronce': {'icono': '🥉', 'color': '#cd7f32', 'nombre': 'Bronce', 'req': '10 ejercicios', 'puntos': 50},
+                        'plata': {'icono': '🥈', 'color': '#c0c0c0', 'nombre': 'Plata', 'req': '25 ejercicios', 'puntos': 100},
+                        'oro': {'icono': '🥇', 'color': '#ffd700', 'nombre': 'Oro', 'req': '50 ejercicios', 'puntos': 200},
+                        'diamante': {'icono': '💎', 'color': '#b9f2ff', 'nombre': 'Diamante', 'req': '100 ejercicios', 'puntos': 500},
+                        'maestro': {'icono': '🏆', 'color': '#ffd700', 'nombre': 'Maestro', 'req': '200 ejercicios', 'puntos': 1000}
+                    } %}
+                    
+                    {% for medalla, config in medallas_config.items() %}
+                    <div class="col-md-2 col-4">
+                        <div class="medalla-card text-center p-3 rounded-3 {% if medalla in usuario.estadisticas.medallas %}obtenida bg-light{% else %}bg-secondary bg-opacity-10{% endif %}"
+                             data-medalla="{{ medalla }}"
+                             data-bs-toggle="tooltip"
+                             title="{{ config.req }} - {{ config.puntos }} pts">
+                            <div class="display-3 mb-2 {% if medalla in usuario.estadisticas.medallas %}animate__animated animate__pulse animate__infinite{% endif %}">
+                                {{ config.icono }}
+                            </div>
+                            <h6 class="fw-bold mb-1">{{ config.nombre }}</h6>
+                            <small class="text-secondary">{{ config.req }}</small>
+                            {% if medalla in usuario.estadisticas.medallas %}
+                                <div class="text-success mt-2">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                </div>
+                            {% else %}
+                                <div class="progress mt-2" style="height: 4px;">
+                                    <div class="progress-bar" role="progressbar" 
+                                         style="width: {{ (usuario.estadisticas.ejercicios_completados / {'bronce':10,'plata':25,'oro':50,'diamante':100,'maestro':200}[medalla] * 100)|round }}%;
+                                                background-color: {{ config.color }}"></div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Logros especiales -->
+                <h6 class="fw-bold mb-3">
+                    <i class="bi bi-trophy-fill text-warning me-2"></i>
+                    Logros Especiales
+                </h6>
+                <div class="row g-3" id="logrosContainer">
+                    <!-- Racha 3 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="logro-card p-3 rounded-3 {% if 'racha_3' in usuario.estadisticas.logros %}obtenido bg-success bg-opacity-10{% else %}bg-light{% endif %}">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 me-3">
+                                    <i class="bi bi-fire fs-1 {% if 'racha_3' in usuario.estadisticas.logros %}text-success{% else %}text-secondary{% endif %}"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Racha de 3</h6>
+                                    <small class="text-secondary">Mantén 3 días de racha</small>
+                                    {% if 'racha_3' in usuario.estadisticas.logros %}
+                                        <div class="text-success mt-1">
+                                            <i class="bi bi-check-circle-fill"></i> Obtenido
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Racha 5 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="logro-card p-3 rounded-3 {% if 'racha_5' in usuario.estadisticas.logros %}obtenido bg-success bg-opacity-10{% else %}bg-light{% endif %}">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 me-3">
+                                    <i class="bi bi-fire fs-1 {% if 'racha_5' in usuario.estadisticas.logros %}text-success{% else %}text-secondary{% endif %}"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Racha de 5</h6>
+                                    <small class="text-secondary">Mantén 5 días de racha</small>
+                                    {% if 'racha_5' in usuario.estadisticas.logros %}
+                                        <div class="text-success mt-1">
+                                            <i class="bi bi-check-circle-fill"></i> Obtenido
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Racha 10 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="logro-card p-3 rounded-3 {% if 'racha_10' in usuario.estadisticas.logros %}obtenido bg-success bg-opacity-10{% else %}bg-light{% endif %}">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 me-3">
+                                    <i class="bi bi-fire fs-1 {% if 'racha_10' in usuario.estadisticas.logros %}text-success{% else %}text-secondary{% endif %}"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Racha de 10</h6>
+                                    <small class="text-secondary">Mantén 10 días de racha</small>
+                                    {% if 'racha_10' in usuario.estadisticas.logros %}
+                                        <div class="text-success mt-1">
+                                            <i class="bi bi-check-circle-fill"></i> Obtenido
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Maestro por categorías -->
+                    {% for cat in ['Comas', 'Paréntesis', 'Rayas', 'Geográficos', 'Siglas'] %}
+                        {% set logro = 'maestro_' + cat.lower() %}
+                        <div class="col-lg-3 col-md-6">
+                            <div class="logro-card p-3 rounded-3 {% if logro in usuario.estadisticas.logros %}obtenido bg-info bg-opacity-10{% else %}bg-light{% endif %}">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0 me-3">
+                                        <i class="bi bi-star fs-1 {% if logro in usuario.estadisticas.logros %}text-info{% else %}text-secondary{% endif %}"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Maestro en {{ cat }}</h6>
+                                        <small class="text-secondary">10 ejercicios correctos</small>
+                                        {% if logro in usuario.estadisticas.logros %}
+                                            <div class="text-success mt-1">
+                                                <i class="bi bi-check-circle-fill"></i> Obtenido
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     PROGRESO DETALLADO POR CATEGORÍA
+     ============================================ -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 py-3">
+                <h5 class="fw-bold mb-0">
+                    <i class="bi bi-table text-primary me-2"></i>
+                    Detalle por Categoría
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>Categoría</th>
+                                <th>Intentos</th>
+                                <th>Correctos</th>
+                                <th>Incorrectos</th>
+                                <th>Precisión</th>
+                                <th>Progreso</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for categoria, datos in usuario.estadisticas.por_categoria.items() %}
+                            {% set incorrectos = datos.intentos - datos.correctos %}
+                            {% set precision = (datos.correctos / datos.intentos * 100) if datos.intentos > 0 else 0 %}
+                            <tr>
+                                <td>
+                                    <span class="fw-bold">{{ categoria }}</span>
+                                </td>
+                                <td>{{ datos.intentos }}</td>
+                                <td class="text-success">{{ datos.correctos }}</td>
+                                <td class="text-danger">{{ incorrectos }}</td>
+                                <td>
+                                    <span class="badge bg-{{ 'success' if precision >= 70 else ('warning' if precision >= 40 else 'danger') }}">
+                                        {{ precision|round(1) }}%
+                                    </span>
+                                </td>
+                                <td style="min-width: 150px;">
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-success" role="progressbar" 
+                                             style="width: {{ precision }}%"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if precision >= 80 %}
+                                        <span class="badge bg-success">Dominado</span>
+                                    {% elif precision >= 50 %}
+                                        <span class="badge bg-warning text-dark">En progreso</span>
+                                    {% elif datos.intentos > 0 %}
+                                        <span class="badge bg-danger">Practicar más</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">Sin empezar</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     HISTORIAL DE ACTIVIDAD
+     ============================================ -->
+<div class="row">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-clock-history text-info me-2"></i>
+                        Historial de Actividad
+                    </h5>
+                    <button class="btn btn-sm btn-outline-primary" id="exportarHistorial">
+                        <i class="bi bi-download me-2"></i>
+                        Exportar
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="timeline">
+                    {% if usuario.historial %}
+                        {% for actividad in usuario.historial[-20:]|reverse %}
+                        <div class="timeline-item mb-3">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <small class="text-secondary">{{ actividad.fecha[:16] }}</small>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="d-flex align-items-center">
+                                        <div class="bg-{{ 'success' if actividad.correcto else 'danger' }} bg-opacity-10 rounded-circle p-2 me-3">
+                                            <i class="bi bi-{{ 'check-circle' if actividad.correcto else 'x-circle' }} text-{{ 'success' if actividad.correcto else 'danger' }}"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <span class="fw-bold">
+                                                {% if actividad.tipo == 'ejercicio' %}
+                                                    Ejercicio de {{ actividad.categoria }}
+                                                {% elif actividad.tipo == 'flashcard' %}
+                                                    Flashcard completada
+                                                {% else %}
+                                                    {{ actividad.tipo }}
+                                                {% endif %}
+                                            </span>
+                                            <br>
+                                            <small class="text-secondary">
+                                                <i class="bi bi-star-fill text-warning me-1"></i>
+                                                +{{ actividad.puntos_ganados }} puntos
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="bi bi-clock fs-1 text-secondary mb-3"></i>
+                            <p class="text-secondary mb-0">No hay actividad registrada aún</p>
+                            <small>Comienza a practicar para ver tu historial</small>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-footer bg-white border-0 py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-secondary">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Mostrando las últimas 20 actividades
+                    </small>
+                    <button class="btn btn-danger btn-sm" id="resetStatsBtn" data-bs-toggle="modal" data-bs-target="#resetModal">
+                        <i class="bi bi-arrow-counterclockwise me-2"></i>
+                        Reiniciar estadísticas
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     MODAL DE REINICIO
+     ============================================ -->
+<div class="modal fade" id="resetModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    Reiniciar Estadísticas
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p class="fw-bold mb-3">¿Estás completamente seguro?</p>
+                <p>Esta acción eliminará permanentemente:</p>
+                <ul class="text-danger">
+                    <li>Todos tus puntos y progreso</li>
+                    <li>Todas las medallas y logros</li>
+                    <li>Tu historial de actividad</li>
+                    <li>Las estadísticas por categoría</li>
+                </ul>
+                <p class="mb-0">Esta acción no se puede deshacer.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmarResetBtn">
+                    <i class="bi bi-trash me-2"></i>
+                    Sí, reiniciar todo
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     ESTILOS ADICIONALES
+     ============================================ -->
+<style>
+    .bg-gradient-stats {
+        background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+    }
+    
+    .bg-opacity-20 {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .stats-card {
+        transition: all 0.3s ease;
+    }
+    
+    .medalla-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .medalla-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .medalla-card.obtenida {
+        border: 2px solid #ffd700;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+    
+    .logro-card {
+        transition: all 0.3s ease;
+        border-left: 4px solid transparent;
+    }
+    
+    .logro-card.obtenido {
+        border-left-color: #28a745;
+    }
+    
+    .logro-card:hover {
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .timeline-item {
+        position: relative;
+        padding-left: 30px;
+        border-left: 2px solid #e9ecef;
+    }
+    
+    .timeline-item:before {
+        content: '';
+        position: absolute;
+        left: -6px;
+        top: 0;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #4e73df;
+    }
+    
+    .timeline-item:last-child {
+        border-left-color: transparent;
+    }
+    
+    .counter {
+        animation: countUp 1s ease forwards;
+    }
+    
+    @keyframes countUp {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .timeline-item {
+            padding-left: 15px;
+        }
+        
+        .medalla-card {
+            padding: 1rem 0.5rem;
+        }
+        
+        .medalla-card .display-3 {
+            font-size: 2.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // ============================================
+        // INICIALIZAR GRÁFICO
+        // ============================================
+        const ctx = document.getElementById('categoriaChart').getContext('2d');
+        
+        const categorias = [
+            {% for categoria, datos in usuario.estadisticas.por_categoria.items() %}
+                '{{ categoria }}',
+            {% endfor %}
+        ];
+        
+        const correctos = [
+            {% for categoria, datos in usuario.estadisticas.por_categoria.items() %}
+                {{ datos.correctos }},
+            {% endfor %}
+        ];
+        
+        const intentos = [
+            {% for categoria, datos in usuario.estadisticas.por_categoria.items() %}
+                {{ datos.intentos }},
+            {% endfor %}
+        ];
+        
+        const porcentajes = correctos.map((c, i) => intentos[i] > 0 ? (c / intentos[i] * 100).toFixed(1) : 0);
+        
+        let chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: categorias,
+                datasets: [{
+                    label: 'Porcentaje de aciertos',
+                    data: porcentajes,
+                    backgroundColor: [
+                        'rgba(78, 115, 223, 0.8)',
+                        'rgba(28, 200, 138, 0.8)',
+                        'rgba(54, 185, 204, 0.8)',
+                        'rgba(246, 194, 62, 0.8)',
+                        'rgba(231, 74, 59, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgb(78, 115, 223)',
+                        'rgb(28, 200, 138)',
+                        'rgb(54, 185, 204)',
+                        'rgb(246, 194, 62)',
+                        'rgb(231, 74, 59)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.raw}% (${correctos[context.dataIndex]}/${intentos[context.dataIndex]})`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // ============================================
+        // CAMBIAR TIPO DE GRÁFICO
+        // ============================================
+        $('#graficoBarrasBtn').click(function() {
+            $(this).addClass('active');
+            $('#graficoLineasBtn').removeClass('active');
+            chart.destroy();
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: categorias,
+                    datasets: [{
+                        label: 'Porcentaje de aciertos',
+                        data: porcentajes,
+                        backgroundColor: 'rgba(78, 115, 223, 0.8)',
+                        borderColor: 'rgb(78, 115, 223)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+        
+        $('#graficoLineasBtn').click(function() {
+            $(this).addClass('active');
+            $('#graficoBarrasBtn').removeClass('active');
+            chart.destroy();
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: categorias,
+                    datasets: [{
+                        label: 'Porcentaje de aciertos',
+                        data: porcentajes,
+                        borderColor: 'rgb(78, 115, 223)',
+                        backgroundColor: 'rgba(78, 115, 223, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: 'rgb(78, 115, 223)',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+        
+        // ============================================
+        // ANIMACIÓN DE CONTADORES
+        // ============================================
+        $('.counter').each(function() {
+            const $this = $(this);
+            const target = parseInt($this.attr('data-target'));
+            
+            $this.prop('Counter', 0).animate({
+                Counter: target
+            }, {
+                duration: 2000,
+                easing: 'swing',
+                step: function(now) {
+                    $this.text(Math.ceil(now));
+                }
+            });
+        });
+        
+        // ============================================
+        // REINICIAR ESTADÍSTICAS
+        // ============================================
+        $('#confirmarResetBtn').click(function() {
+            $.post('/api/estadisticas/reset', function() {
+                Notificaciones.exito('Estadísticas reiniciadas correctamente');
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+            }).fail(function() {
+                Notificaciones.error('Error al reiniciar las estadísticas');
+            });
+        });
+        
+        // ============================================
+        // EXPORTAR HISTORIAL
+        // ============================================
+        $('#exportarHistorial').click(function() {
+            const historial = {{ usuario.historial|tojson }};
+            const dataStr = JSON.stringify(historial, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = 'historial_incisos.json';
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            Notificaciones.exito('Historial exportado correctamente');
+        });
+        
+        // ============================================
+        // TOOLTIPS
+        // ============================================
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function(tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+        
+        // ============================================
+        // ANIMACIÓN DE LOGROS
+        // ============================================
+        {% if usuario.estadisticas.logros %}
+        // Resaltar nuevos logros
+        $('.logro-card.obtenido').each(function() {
+            $(this).addClass('animate__animated animate__pulse');
+        });
+        {% endif %}
+    });
+</script>
+{% endblock %}

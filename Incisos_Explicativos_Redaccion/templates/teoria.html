@@ -1,0 +1,882 @@
+{% extends "base.html" %}
+
+{% block title %}Teoría - Incisos Explicativos | Aprende los fundamentos{% endblock %}
+
+{% block og_title %}Teoría de incisos explicativos - Guía completa{% endblock %}
+
+{% block content %}
+<!-- ============================================
+     ENCABEZADO DE LA PÁGINA
+     ============================================ -->
+<div class="row mb-4" data-aos="fade-down">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm bg-gradient-primary text-white">
+            <div class="card-body p-4 text-center">
+                <div class="d-inline-block bg-white bg-opacity-20 rounded-circle p-3 mb-3">
+                    <i class="bi bi-journal-bookmark-fill fs-1"></i>
+                </div>
+                <h1 class="display-5 fw-bold mb-3">Aprende sobre Incisos Explicativos</h1>
+                <p class="lead mb-0 mx-auto" style="max-width: 700px;">
+                    Domina el arte de utilizar correctamente comas, paréntesis y rayas para enriquecer tus textos
+                </p>
+                <div class="mt-4">
+                    <span class="badge bg-white text-primary px-3 py-2 rounded-pill me-2">
+                        <i class="bi bi-book me-1"></i> 3 lecciones
+                    </span>
+                    <span class="badge bg-white text-primary px-3 py-2 rounded-pill">
+                        <i class="bi bi-clock me-1"></i> 15 min de lectura
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     BARRA DE PROGRESO DE LECTURA
+     ============================================ -->
+<div class="position-sticky top-0" style="z-index: 1000; margin-top: -1rem;">
+    <div class="progress" style="height: 5px; border-radius: 0;">
+        <div id="readingProgress" class="progress-bar bg-primary" role="progressbar" style="width: 0%"></div>
+    </div>
+</div>
+
+<!-- ============================================
+     CONTENIDO PRINCIPAL
+     ============================================ -->
+<div class="row">
+    <!-- Barra lateral de navegación -->
+    <div class="col-lg-3 mb-4" data-aos="fade-right">
+        <div class="card border-0 shadow-sm sticky-top" style="top: 100px;">
+            <div class="card-header bg-white border-0 py-3">
+                <h5 class="fw-bold mb-0">
+                    <i class="bi bi-list-ul text-primary me-2"></i>
+                    Contenido
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush" id="contenido-tabs" role="tablist">
+                    <a class="list-group-item list-group-item-action d-flex align-items-center active" 
+                       id="intro-tab" data-bs-toggle="list" href="#intro" role="tab">
+                        <span class="badge bg-primary rounded-circle me-3">1</span>
+                        <div>
+                            <span class="fw-bold">Introducción</span>
+                            <small class="text-secondary d-block">¿Qué son los incisos?</small>
+                        </div>
+                    </a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" 
+                       id="comas-tab" data-bs-toggle="list" href="#comas" role="tab">
+                        <span class="badge bg-success rounded-circle me-3">2</span>
+                        <div>
+                            <span class="fw-bold">Comas explicativas</span>
+                            <small class="text-secondary d-block">Información relacionada</small>
+                        </div>
+                    </a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" 
+                       id="parentesis-tab" data-bs-toggle="list" href="#parentesis" role="tab">
+                        <span class="badge bg-info rounded-circle me-3">3</span>
+                        <div>
+                            <span class="fw-bold">Paréntesis</span>
+                            <small class="text-secondary d-block">Datos técnicos</small>
+                        </div>
+                    </a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" 
+                       id="rayas-tab" data-bs-toggle="list" href="#rayas" role="tab">
+                        <span class="badge bg-warning rounded-circle me-3">4</span>
+                        <div>
+                            <span class="fw-bold">Rayas</span>
+                            <small class="text-secondary d-block">Énfasis e interrupciones</small>
+                        </div>
+                    </a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" 
+                       id="ejemplos-tab" data-bs-toggle="list" href="#ejemplos" role="tab">
+                        <span class="badge bg-danger rounded-circle me-3">5</span>
+                        <div>
+                            <span class="fw-bold">Ejemplos prácticos</span>
+                            <small class="text-secondary d-block">Casos de uso</small>
+                        </div>
+                    </a>
+                    <a class="list-group-item list-group-item-action d-flex align-items-center" 
+                       id="ejercicios-tab" data-bs-toggle="list" href="#ejercicios" role="tab">
+                        <span class="badge bg-dark rounded-circle me-3">6</span>
+                        <div>
+                            <span class="fw-bold">Ejercicios</span>
+                            <small class="text-secondary d-block">Pon a prueba lo aprendido</small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="card-footer bg-white border-0 py-3">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-download text-primary me-2"></i>
+                    <a href="#" class="text-decoration-none small" id="downloadPDF">
+                        Descargar guía en PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido principal de teoría -->
+    <div class="col-lg-9" data-aos="fade-left">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4 p-lg-5">
+                <div class="tab-content" id="teoriaContent">
+                    
+                    <!-- ============================================
+                         INTRODUCCIÓN
+                         ============================================ -->
+                    <div class="tab-pane fade show active" id="intro" role="tabpanel">
+                        <h2 class="fw-bold mb-4">
+                            <i class="bi bi-question-circle-fill text-primary me-2"></i>
+                            ¿Qué son los incisos explicativos?
+                        </h2>
+                        
+                        <div class="alert alert-primary bg-opacity-10 border-0 rounded-4 p-4 mb-4">
+                            <div class="d-flex">
+                                <i class="bi bi-lightbulb-fill fs-1 text-primary me-3"></i>
+                                <div>
+                                    <h5 class="fw-bold">Definición rápida</h5>
+                                    <p class="mb-0">Los incisos explicativos son elementos sintácticos que añaden información adicional dentro de una oración, encerrados entre comas, paréntesis o rayas. No son esenciales para el sentido principal y si se eliminan, la oración mantiene su coherencia.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 shadow-sm hover-lift">
+                                    <div class="card-body text-center p-4">
+                                        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
+                                            <i class="bi bi-quote fs-2 text-primary"></i>
+                                        </div>
+                                        <h5 class="fw-bold">Comas</h5>
+                                        <p class="text-secondary small">Información relacionada o aclaratoria</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 shadow-sm hover-lift">
+                                    <div class="card-body text-center p-4">
+                                        <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
+                                            <i class="bi bi-braces fs-2 text-success"></i>
+                                        </div>
+                                        <h5 class="fw-bold">Paréntesis</h5>
+                                        <p class="text-secondary small">Datos técnicos o secundarios</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 shadow-sm hover-lift">
+                                    <div class="card-body text-center p-4">
+                                        <div class="bg-warning bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
+                                            <i class="bi bi-dash-lg fs-2 text-warning"></i>
+                                        </div>
+                                        <h5 class="fw-bold">Rayas</h5>
+                                        <p class="text-secondary small">Énfasis o interrupciones</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card bg-light border-0 rounded-4 mb-4">
+                            <div class="card-body p-4">
+                                <h5 class="fw-bold mb-3">Ejemplo fundamental</h5>
+                                <div class="p-3 bg-white rounded-3">
+                                    <p class="mb-2">"Londres, capital del Reino Unido, tiene 9 millones de habitantes"</p>
+                                    <div class="d-flex align-items-center mt-3">
+                                        <span class="badge bg-primary me-2">Inciso</span>
+                                        <code class="text-primary">"capital del Reino Unido"</code>
+                                    </div>
+                                    <div class="mt-2 text-secondary">
+                                        <small><i class="bi bi-check-circle text-success me-1"></i> Si eliminamos el inciso: "Londres tiene 9 millones de habitantes" (la oración sigue teniendo sentido)</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ============================================
+                         COMAS EXPLICATIVAS
+                         ============================================ -->
+                    <div class="tab-pane fade" id="comas" role="tabpanel">
+                        <h2 class="fw-bold mb-4">
+                            <i class="bi bi-quote text-primary me-2"></i>
+                            Comas Explicativas
+                        </h2>
+                        
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
+                                <p class="lead">Las comas explicativas se utilizan para introducir información relacionada o aclaratoria dentro de la oración.</p>
+                                
+                                <h5 class="fw-bold mt-4 mb-3">Reglas de uso:</h5>
+                                <ul class="list-group list-group-flush mb-4">
+                                    <li class="list-group-item bg-light">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                        Van siempre al inicio y final del inciso
+                                    </li>
+                                    <li class="list-group-item bg-light">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                        La oración debe mantener coherencia al eliminar el inciso
+                                    </li>
+                                    <li class="list-group-item bg-light">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                        Máximo 2 incisos por oración
+                                    </li>
+                                </ul>
+                                
+                                <h5 class="fw-bold mb-3">Ejemplos:</h5>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="card border-0 bg-light">
+                                            <div class="card-body">
+                                                <p class="mb-2">"El director, <span class="text-primary fw-bold">Sr. Rodríguez</span>, anunció cambios importantes."</p>
+                                                <small class="text-secondary">Inciso: Sr. Rodríguez</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card border-0 bg-light">
+                                            <div class="card-body">
+                                                <p class="mb-2">"La ciudad, <span class="text-primary fw-bold">fundada en 1538</span>, conserva su arquitectura colonial."</p>
+                                                <small class="text-secondary">Inciso: fundada en 1538</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card border-0 bg-light">
+                                            <div class="card-body">
+                                                <p class="mb-2">"El café, <span class="text-primary fw-bold">bebida universal</span>, se consume en todo el mundo."</p>
+                                                <small class="text-secondary">Inciso: bebida universal</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card border-0 bg-light">
+                                            <div class="card-body">
+                                                <p class="mb-2">"El profesor, <span class="text-primary fw-bold">experto en lingüística</span>, publicó un nuevo libro."</p>
+                                                <small class="text-secondary">Inciso: experto en lingüística</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ============================================
+                         PARÉNTESIS
+                         ============================================ -->
+                    <div class="tab-pane fade" id="parentesis" role="tabpanel">
+                        <h2 class="fw-bold mb-4">
+                            <i class="bi bi-braces text-success me-2"></i>
+                            Paréntesis
+                        </h2>
+                        
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
+                                <p class="lead">Los paréntesis se utilizan para datos técnicos, fechas, siglas o información secundaria.</p>
+                                
+                                <h5 class="fw-bold mt-4 mb-3">Usos principales:</h5>
+                                <div class="row g-4 mb-4">
+                                    <div class="col-md-6">
+                                        <div class="d-flex">
+                                            <div class="bg-success bg-opacity-10 rounded-circle p-3 me-3">
+                                                <i class="bi bi-calendar text-success"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold">Fechas</h6>
+                                                <p class="text-secondary mb-0">"El COVID-19 (2019) cambió el mundo"</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex">
+                                            <div class="bg-success bg-opacity-10 rounded-circle p-3 me-3">
+                                                <i class="bi bi-type text-success"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold">Siglas</h6>
+                                                <p class="text-secondary mb-0">"La NASA (National Aeronautics...)"</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex">
+                                            <div class="bg-success bg-opacity-10 rounded-circle p-3 me-3">
+                                                <i class="bi bi-info-circle text-success"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold">Aclaraciones</h6>
+                                                <p class="text-secondary mb-0">"El proyecto (iniciado en 2020) finalizó"</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex">
+                                            <div class="bg-success bg-opacity-10 rounded-circle p-3 me-3">
+                                                <i class="bi bi-translate text-success"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold">Traducciones</h6>
+                                                <p class="text-secondary mb-0">"Hello (hola) en español"</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <h5 class="fw-bold mb-3">Ejemplos destacados:</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle">
+                                        <thead class="bg-light">
+                                            <tr>
+                                                <th>Oración</th>
+                                                <th>Inciso</th>
+                                                <th>Función</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>"El telescopio Hubble (lanzado en 1990) revolucionó la astronomía"</td>
+                                                <td><code>lanzado en 1990</code></td>
+                                                <td><span class="badge bg-success">Fecha</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>"La OMS (Organización Mundial de la Salud) declaró la emergencia"</td>
+                                                <td><code>Organización Mundial de la Salud</code></td>
+                                                <td><span class="badge bg-info">Sigla</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>"El tratado (firmado en 1945) puso fin a la guerra"</td>
+                                                <td><code>firmado en 1945</code></td>
+                                                <td><span class="badge bg-warning">Aclaración</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ============================================
+                         RAYAS
+                         ============================================ -->
+                    <div class="tab-pane fade" id="rayas" role="tabpanel">
+                        <h2 class="fw-bold mb-4">
+                            <i class="bi bi-dash-lg text-warning me-2"></i>
+                            Rayas
+                        </h2>
+                        
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
+                                <p class="lead">Las rayas se emplean para dar énfasis, introducir interrupciones o citas textuales.</p>
+                                
+                                <div class="alert alert-warning bg-opacity-10 border-0 rounded-4 mb-4">
+                                    <div class="d-flex">
+                                        <i class="bi bi-exclamation-triangle-fill fs-3 text-warning me-3"></i>
+                                        <div>
+                                            <h6 class="fw-bold">Diferencia con el guion</h6>
+                                            <p class="mb-0">La raya (—) es más larga que el guion (-) y se usa específicamente para incisos. En español, se escribe pegada a la palabra que la precede y separada por espacio de la que sigue.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <h5 class="fw-bold mb-3">Casos de uso:</h5>
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="card h-100 border-0 bg-light">
+                                            <div class="card-body">
+                                                <h6 class="fw-bold">Énfasis</h6>
+                                                <p>"El resultado <span class="text-warning fw-bold">—totalmente inesperado—</span> sorprendió a todos"</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card h-100 border-0 bg-light">
+                                            <div class="card-body">
+                                                <h6 class="fw-bold">Interrupción</h6>
+                                                <p>"La decisión <span class="text-warning fw-bold">—tomada tras largas deliberaciones—</span> fue controversial"</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card h-100 border-0 bg-light">
+                                            <div class="card-body">
+                                                <h6 class="fw-bold">Cita textual</h6>
+                                                <p>"El discurso <span class="text-warning fw-bold">—pronunciado con pasión—</span> conmovió a la audiencia"</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card h-100 border-0 bg-light">
+                                            <div class="card-body">
+                                                <h6 class="fw-bold">Aclaración enfática</h6>
+                                                <p>"El descubrimiento <span class="text-warning fw-bold">—realizado por accidente—</span> cambió la ciencia"</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ============================================
+                         EJEMPLOS PRÁCTICOS
+                         ============================================ -->
+                    <div class="tab-pane fade" id="ejemplos" role="tabpanel">
+                        <h2 class="fw-bold mb-4">
+                            <i class="bi bi-file-text text-danger me-2"></i>
+                            Ejemplos Prácticos
+                        </h2>
+                        
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
+                                <div class="row g-4">
+                                    <!-- Ejemplo 1 -->
+                                    <div class="col-md-6">
+                                        <div class="card h-100 border-0 bg-light hover-lift">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between mb-3">
+                                                    <span class="badge bg-primary">Comas</span>
+                                                    <i class="bi bi-quote text-primary"></i>
+                                                </div>
+                                                <p class="mb-3">"El presidente, <span class="text-primary fw-bold">electo por mayoría absoluta</span>, tomará posesión mañana."</p>
+                                                <small class="text-secondary">Inciso: "electo por mayoría absoluta"</small>
+                                                <hr>
+                                                <p class="text-success small mb-0">
+                                                    <i class="bi bi-check-circle me-1"></i>
+                                                    Sin inciso: "El presidente tomará posesión mañana"
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Ejemplo 2 -->
+                                    <div class="col-md-6">
+                                        <div class="card h-100 border-0 bg-light hover-lift">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between mb-3">
+                                                    <span class="badge bg-success">Paréntesis</span>
+                                                    <i class="bi bi-braces text-success"></i>
+                                                </div>
+                                                <p class="mb-3">"El proyecto Manhattan <span class="text-success fw-bold">(1942-1946)</span> desarrolló las primeras armas nucleares."</p>
+                                                <small class="text-secondary">Inciso: "(1942-1946)"</small>
+                                                <hr>
+                                                <p class="text-success small mb-0">
+                                                    <i class="bi bi-check-circle me-1"></i>
+                                                    Sin inciso: "El proyecto Manhattan desarrolló las primeras armas nucleares"
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Ejemplo 3 -->
+                                    <div class="col-md-6">
+                                        <div class="card h-100 border-0 bg-light hover-lift">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between mb-3">
+                                                    <span class="badge bg-warning">Rayas</span>
+                                                    <i class="bi bi-dash-lg text-warning"></i>
+                                                </div>
+                                                <p class="mb-3">"El discurso <span class="text-warning fw-bold">—pronunciado con gran emoción—</span> conmovió a todos."</p>
+                                                <small class="text-secondary">Inciso: "—pronunciado con gran emoción—"</small>
+                                                <hr>
+                                                <p class="text-success small mb-0">
+                                                    <i class="bi bi-check-circle me-1"></i>
+                                                    Sin inciso: "El discurso conmovió a todos"
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Ejemplo 4 -->
+                                    <div class="col-md-6">
+                                        <div class="card h-100 border-0 bg-light hover-lift">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between mb-3">
+                                                    <span class="badge bg-info">Geográfico</span>
+                                                    <i class="bi bi-geo-alt text-info"></i>
+                                                </div>
+                                                <p class="mb-3">"París, <span class="text-info fw-bold">capital de Francia</span>, es conocida como la Ciudad Luz."</p>
+                                                <small class="text-secondary">Inciso: "capital de Francia"</small>
+                                                <hr>
+                                                <p class="text-success small mb-0">
+                                                    <i class="bi bi-check-circle me-1"></i>
+                                                    Sin inciso: "París es conocida como la Ciudad Luz"
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ============================================
+                         EJERCICIOS
+                         ============================================ -->
+                    <div class="tab-pane fade" id="ejercicios" role="tabpanel">
+                        <h2 class="fw-bold mb-4">
+                            <i class="bi bi-puzzle-fill text-dark me-2"></i>
+                            Pon a prueba lo aprendido
+                        </h2>
+                        
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
+                                <div class="alert alert-info border-0 rounded-4 mb-4">
+                                    <div class="d-flex">
+                                        <i class="bi bi-info-circle-fill fs-3 me-3"></i>
+                                        <div>
+                                            <h6 class="fw-bold">Ejercicio interactivo</h6>
+                                            <p class="mb-0">Identifica el tipo de inciso en cada oración. Haz clic en la opción correcta.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div id="ejercicioContainer" class="mb-4">
+                                    <!-- Ejercicio 1 -->
+                                    <div class="card bg-light border-0 mb-3 ejercicio" data-correcto="comas">
+                                        <div class="card-body">
+                                            <p class="fw-bold mb-3">1. "El director, Sr. Rodríguez, anunció cambios importantes."</p>
+                                            <div class="btn-group w-100" role="group">
+                                                <button type="button" class="btn btn-outline-primary ejercicio-btn">Comas</button>
+                                                <button type="button" class="btn btn-outline-success ejercicio-btn">Paréntesis</button>
+                                                <button type="button" class="btn btn-outline-warning ejercicio-btn">Rayas</button>
+                                            </div>
+                                            <div class="ejercicio-feedback mt-2"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Ejercicio 2 -->
+                                    <div class="card bg-light border-0 mb-3 ejercicio" data-correcto="parentesis">
+                                        <div class="card-body">
+                                            <p class="fw-bold mb-3">2. "La NASA (National Aeronautics and Space Administration) lanzó una misión."</p>
+                                            <div class="btn-group w-100" role="group">
+                                                <button type="button" class="btn btn-outline-primary ejercicio-btn">Comas</button>
+                                                <button type="button" class="btn btn-outline-success ejercicio-btn">Paréntesis</button>
+                                                <button type="button" class="btn btn-outline-warning ejercicio-btn">Rayas</button>
+                                            </div>
+                                            <div class="ejercicio-feedback mt-2"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Ejercicio 3 -->
+                                    <div class="card bg-light border-0 mb-3 ejercicio" data-correcto="rayas">
+                                        <div class="card-body">
+                                            <p class="fw-bold mb-3">3. "El resultado —totalmente inesperado— sorprendió a todos."</p>
+                                            <div class="btn-group w-100" role="group">
+                                                <button type="button" class="btn btn-outline-primary ejercicio-btn">Comas</button>
+                                                <button type="button" class="btn btn-outline-success ejercicio-btn">Paréntesis</button>
+                                                <button type="button" class="btn btn-outline-warning ejercicio-btn">Rayas</button>
+                                            </div>
+                                            <div class="ejercicio-feedback mt-2"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Ejercicio 4 -->
+                                    <div class="card bg-light border-0 mb-3 ejercicio" data-correcto="comas">
+                                        <div class="card-body">
+                                            <p class="fw-bold mb-3">4. "París, capital de Francia, es conocida como la Ciudad Luz."</p>
+                                            <div class="btn-group w-100" role="group">
+                                                <button type="button" class="btn btn-outline-primary ejercicio-btn">Comas</button>
+                                                <button type="button" class="btn btn-outline-success ejercicio-btn">Paréntesis</button>
+                                                <button type="button" class="btn btn-outline-warning ejercicio-btn">Rayas</button>
+                                            </div>
+                                            <div class="ejercicio-feedback mt-2"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center mt-4">
+                                    <button class="btn btn-primary" id="verificarTodos">
+                                        <i class="bi bi-check-all me-2"></i>
+                                        Verificar todas las respuestas
+                                    </button>
+                                    <button class="btn btn-outline-secondary ms-2" id="reiniciarEjercicios">
+                                        <i class="bi bi-arrow-counterclockwise me-2"></i>
+                                        Reiniciar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body text-center p-4">
+                                <h5 class="fw-bold mb-3">¿Listo para practicar más?</h5>
+                                <p class="text-secondary mb-4">Accede a nuestra sección de práctica con 100 ejercicios interactivos</p>
+                                <a href="{{ url_for('practica') }}" class="btn btn-success btn-lg rounded-pill px-5">
+                                    <i class="bi bi-controller me-2"></i>
+                                    Ir a práctica
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     MODAL DE EJEMPLO DESTACADO
+     ============================================ -->
+<div class="modal fade" id="ejemploModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-star-fill me-2"></i>
+                    Ejemplo destacado
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="text-center mb-4">
+                    <span class="badge bg-primary mb-3">Inciso con comas</span>
+                    <p class="lead">"Gabriel García Márquez, <span class="text-primary fw-bold">Premio Nobel de Literatura 1982</span>, es el autor de Cien años de soledad."</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card bg-light border-0">
+                            <div class="card-body">
+                                <h6 class="fw-bold">Con inciso</h6>
+                                <p class="small">"Gabriel García Márquez, Premio Nobel de Literatura 1982, es el autor de Cien años de soledad."</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card bg-light border-0">
+                            <div class="card-body">
+                                <h6 class="fw-bold">Sin inciso</h6>
+                                <p class="small">"Gabriel García Márquez es el autor de Cien años de soledad."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     ESTILOS ADICIONALES
+     ============================================ -->
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .bg-opacity-20 {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .list-group-item {
+        border: none;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+    }
+    
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+        transform: translateX(5px);
+    }
+    
+    .list-group-item.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+    }
+    
+    .list-group-item.active .badge {
+        background-color: white !important;
+        color: #667eea !important;
+    }
+    
+    .sticky-top {
+        top: 100px;
+        z-index: 1020;
+    }
+    
+    /* Animación para los ejercicios */
+    .ejercicio {
+        transition: all 0.3s ease;
+    }
+    
+    .ejercicio.correcto {
+        background-color: rgba(40, 167, 69, 0.1) !important;
+        border-left: 4px solid #28a745;
+    }
+    
+    .ejercicio.incorrecto {
+        background-color: rgba(220, 53, 69, 0.1) !important;
+        border-left: 4px solid #dc3545;
+    }
+    
+    /* Tooltips personalizados */
+    [data-tooltip] {
+        position: relative;
+        cursor: pointer;
+    }
+    
+    [data-tooltip]:before {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 5px 10px;
+        background: #333;
+        color: white;
+        border-radius: 5px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    [data-tooltip]:hover:before {
+        opacity: 1;
+        visibility: visible;
+        bottom: 120%;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .sticky-top {
+            position: relative !important;
+            top: 0;
+        }
+        
+        .btn-group {
+            flex-direction: column;
+        }
+        
+        .btn-group .btn {
+            border-radius: 0.375rem !important;
+            margin-bottom: 0.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // ============================================
+        // BARRA DE PROGRESO DE LECTURA
+        // ============================================
+        $(window).scroll(function() {
+            const winScroll = $(this).scrollTop();
+            const height = $(document).height() - $(window).height();
+            const scrolled = (winScroll / height) * 100;
+            $('#readingProgress').css('width', scrolled + '%');
+        });
+        
+        // ============================================
+        // EJERCICIOS INTERACTIVOS
+        // ============================================
+        $('.ejercicio-btn').click(function() {
+            const btn = $(this);
+            const ejercicio = btn.closest('.ejercicio');
+            const correcto = ejercicio.data('correcto');
+            const seleccion = btn.text().trim().toLowerCase();
+            
+            // Deshabilitar todos los botones del ejercicio
+            ejercicio.find('.ejercicio-btn').prop('disabled', true);
+            
+            if (seleccion === correcto) {
+                // Respuesta correcta
+                ejercicio.removeClass('incorrecto').addClass('correcto');
+                ejercicio.find('.ejercicio-feedback').html(`
+                    <div class="alert alert-success py-2">
+                        <i class="bi bi-check-circle me-2"></i>
+                        ¡Correcto! Es un inciso con ${correcto}.
+                    </div>
+                `);
+                
+                // Animar puntos (simulado)
+                Notificaciones.exito('+10 puntos');
+            } else {
+                // Respuesta incorrecta
+                ejercicio.removeClass('correcto').addClass('incorrecto');
+                ejercicio.find('.ejercicio-feedback').html(`
+                    <div class="alert alert-danger py-2">
+                        <i class="bi bi-exclamation-circle me-2"></i>
+                        Incorrecto. El inciso usa ${correcto}.
+                    </div>
+                `);
+            }
+        });
+        
+        // ============================================
+        // VERIFICAR TODAS LAS RESPUESTAS
+        // ============================================
+        $('#verificarTodos').click(function() {
+            $('.ejercicio').each(function() {
+                const ejercicio = $(this);
+                const correcto = ejercicio.data('correcto');
+                
+                // Simular click en la respuesta correcta
+                ejercicio.find(`.btn-outline-${correcto === 'comas' ? 'primary' : (correcto === 'parentesis' ? 'success' : 'warning')}`).click();
+            });
+            
+            Notificaciones.exito('¡Ejercicios verificados!');
+        });
+        
+        // ============================================
+        // REINICIAR EJERCICIOS
+        // ============================================
+        $('#reiniciarEjercicios').click(function() {
+            $('.ejercicio').removeClass('correcto incorrecto');
+            $('.ejercicio-btn').prop('disabled', false);
+            $('.ejercicio-feedback').empty();
+            
+            Notificaciones.info('Ejercicios reiniciados');
+        });
+        
+        // ============================================
+        // SCROLL SUAVE PARA LOS TABS
+        // ============================================
+        $('#contenido-tabs a').click(function(e) {
+            e.preventDefault();
+            $(this).tab('show');
+            
+            // Scroll suave hacia arriba
+            $('html, body').animate({
+                scrollTop: $('.tab-content').offset().top - 100
+            }, 500);
+        });
+        
+        // ============================================
+        // DESCARGAR PDF (SIMULADO)
+        // ============================================
+        $('#downloadPDF').click(function(e) {
+            e.preventDefault();
+            Notificaciones.info('Preparando descarga...');
+            
+            setTimeout(() => {
+                Notificaciones.exito('PDF descargado exitosamente');
+            }, 1500);
+        });
+        
+        // ============================================
+        // ACTIVAR PRIMER TAB AUTOMÁTICAMENTE
+        // ============================================
+        $('#intro-tab').tab('show');
+        
+        // ============================================
+        // TOOLTIPS PARA EJEMPLOS
+        // ============================================
+        $('[data-tooltip]').tooltip();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plataforma interactiva para aprender y practicar incisos explicativos en español">
+    <meta name="keywords" content="incisos explicativos, gramática, español, aprendizaje, práctica">
+    <meta name="author" content="Incisos Explicativos">
+    
+    <!-- Open Graph / Redes Sociales -->
+    <meta property="og:title" content="{% block og_title %}Incisos Explicativos - Aprende y Practica{% endblock %}">
+    <meta property="og:description" content="Domina los incisos explicativos con ejercicios interactivos, flashcards y sistema de logros">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ url_for('static', filename='img/og-image.png') }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%234e73df'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial'%3E✎%3C/text%3E%3C/svg%3E">
+    
+    <title>{% block title %}Incisos Explicativos - Plataforma de Aprendizaje{% endblock %}</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <!-- AOS (Animate on Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    {% block extra_css %}{% endblock %}
+    
+    <style>
+        /* Estilos de respaldo por si no carga el CSS */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container-main {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         BARRA DE NAVEGACIÓN MEJORADA
+         ============================================ -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background: linear-gradient(90deg, #4e73df 0%, #224abe 100%); box-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+        <div class="container">
+            <!-- Logo y marca -->
+            <a class="navbar-brand animate__animated animate__fadeIn" href="{{ url_for('index') }}">
+                <i class="bi bi-pencil-square me-2"></i>
+                <span class="fw-bold">Incisos Explicativos</span>
+            </a>
+            
+            <!-- Botón hamburguesa para móvil -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" 
+                    aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Menú de navegación -->
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    
+                    <!-- Usuario no autenticado -->
+                    {% if not session.usuario_id %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'teoria' %}active{% endif %}" 
+                               href="{{ url_for('teoria') }}" data-bs-toggle="tooltip" title="Aprende los conceptos">
+                                <i class="bi bi-book me-1"></i> Teoría
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'login' %}active{% endif %}" 
+                               href="{{ url_for('login') }}">
+                                <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-light rounded-pill px-3 mx-1 {% if request.endpoint == 'registro' %}active{% endif %}" 
+                               href="{{ url_for('registro') }}">
+                                <i class="bi bi-person-plus me-1"></i> Registro
+                            </a>
+                        </li>
+                    
+                    <!-- Usuario autenticado -->
+                    {% else %}
+                        <!-- Menú principal -->
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}" 
+                               href="{{ url_for('dashboard') }}" data-bs-toggle="tooltip" title="Panel principal">
+                                <i class="bi bi-speedometer2 me-1"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'teoria' %}active{% endif %}" 
+                               href="{{ url_for('teoria') }}">
+                                <i class="bi bi-journal-bookmark-fill me-1"></i> Teoría
+                            </a>
+                        </li>
+                        
+                        <!-- Dropdown para Práctica y Flashcards -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle {% if request.endpoint in ['practica', 'flashcards'] %}active{% endif %}" 
+                               href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-controller me-1"></i> Practicar
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end animate__animated animate__fadeIn">
+                                <li>
+                                    <a class="dropdown-item {% if request.endpoint == 'practica' %}active{% endif %}" 
+                                       href="{{ url_for('practica') }}">
+                                        <i class="bi bi-puzzle me-2"></i>Ejercicios Interactivos
+                                        <span class="badge bg-primary ms-2">100</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item {% if request.endpoint == 'flashcards' %}active{% endif %}" 
+                                       href="{{ url_for('flashcards') }}">
+                                        <i class="bi bi-card-list me-2"></i>Flashcards
+                                        <span class="badge bg-success ms-2">50</span>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item {% if request.endpoint == 'crear' %}active{% endif %}" 
+                                       href="{{ url_for('crear') }}">
+                                        <i class="bi bi-plus-circle me-2"></i>Crear Ejemplos
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        <!-- Estadísticas -->
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'estadisticas' %}active{% endif %}" 
+                               href="{{ url_for('estadisticas') }}" data-bs-toggle="tooltip" title="Tu progreso">
+                                <i class="bi bi-graph-up me-1"></i> Estadísticas
+                            </a>
+                        </li>
+                        
+                        <!-- Dropdown de usuario -->
+                        <li class="nav-item dropdown ms-2">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" 
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="position-relative">
+                                    <i class="bi bi-person-circle fs-5 me-1"></i>
+                                    {% if session.usuario_nombre %}
+                                        <span class="position-absolute top-0 start-100 translate-middle">
+                                            <span class="badge bg-success rounded-pill" style="font-size: 0.6rem;">✓</span>
+                                        </span>
+                                    {% endif %}
+                                </div>
+                                <span class="ms-1">{{ session.usuario_nombre|truncate(15) }}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end animate__animated animate__fadeIn">
+                                <li>
+                                    <a class="dropdown-item" href="{{ url_for('dashboard') }}">
+                                        <i class="bi bi-person-vcard me-2"></i>Mi Perfil
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ url_for('estadisticas') }}">
+                                        <i class="bi bi-trophy me-2"></i>Mis Logros
+                                        <span class="badge bg-warning ms-2" id="medallas-count">0</span>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="{{ url_for('logout') }}">
+                                        <i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                    
+                    <!-- Botón de cambio de tema (visible para todos) -->
+                    <li class="nav-item ms-2">
+                        <a class="nav-link" href="#" id="theme-toggle" data-bs-toggle="tooltip" title="Cambiar tema">
+                            <i class="bi bi-moon-fill" id="theme-icon"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================
+         BARRA DE PROGRESO SUPERIOR (OPCIONAL)
+         ============================================ -->
+    {% if session.usuario_id %}
+    <div class="progress fixed-top" style="height: 3px; top: 76px; z-index: 1020; border-radius: 0;">
+        <div id="progresso-general" class="progress-bar progress-bar-striped progress-bar-animated" 
+             role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    {% endif %}
+
+    <!-- ============================================
+         MIGAS DE PAN (BREADCRUMBS)
+         ============================================ -->
+    {% if request.endpoint not in ['index', 'login', 'registro'] %}
+    <div class="container mt-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-light p-3 rounded-3 shadow-sm">
+                <li class="breadcrumb-item"><a href="{{ url_for('index') }}" class="text-decoration-none">
+                    <i class="bi bi-house-door me-1"></i>Inicio
+                </a></li>
+                
+                {% if request.endpoint == 'dashboard' %}
+                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                {% elif request.endpoint == 'teoria' %}
+                    <li class="breadcrumb-item active" aria-current="page">Teoría</li>
+                {% elif request.endpoint == 'practica' %}
+                    <li class="breadcrumb-item active" aria-current="page">Práctica</li>
+                {% elif request.endpoint == 'flashcards' %}
+                    <li class="breadcrumb-item active" aria-current="page">Flashcards</li>
+                {% elif request.endpoint == 'crear' %}
+                    <li class="breadcrumb-item active" aria-current="page">Crear Ejemplos</li>
+                {% elif request.endpoint == 'estadisticas' %}
+                    <li class="breadcrumb-item active" aria-current="page">Estadísticas</li>
+                {% endif %}
+            </ol>
+        </nav>
+    </div>
+    {% endif %}
+
+    <!-- ============================================
+         MENSAJES FLASH MEJORADOS
+         ============================================ -->
+    <div class="container mt-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    {% set category_map = {'success': 'success', 'error': 'danger', 'warning': 'warning', 'info': 'info'} %}
+                    {% set bs_category = category_map.get(category, 'info') %}
+                    <div class="alert alert-{{ bs_category }} alert-dismissible fade show animate__animated animate__fadeInDown" 
+                         role="alert">
+                        <div class="d-flex align-items-center">
+                            {% if bs_category == 'success' %}
+                                <i class="bi bi-check-circle-fill me-2 fs-4"></i>
+                            {% elif bs_category == 'danger' %}
+                                <i class="bi bi-exclamation-triangle-fill me-2 fs-4"></i>
+                            {% elif bs_category == 'warning' %}
+                                <i class="bi bi-exclamation-circle-fill me-2 fs-4"></i>
+                            {% else %}
+                                <i class="bi bi-info-circle-fill me-2 fs-4"></i>
+                            {% endif %}
+                            <div class="flex-grow-1">
+                                <strong>
+                                    {% if bs_category == 'success' %}¡Éxito!{% 
+                                       elif bs_category == 'danger' %}¡Error!{% 
+                                       elif bs_category == 'warning' %}¡Atención!{% 
+                                       else %}Información:{% endif %}
+                                </strong> {{ message }}
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- ============================================
+         CONTENIDO PRINCIPAL
+         ============================================ -->
+    <main class="container-main" data-aos="fade-up" data-aos-duration="800">
+        {% block content %}
+        <!-- El contenido específico de cada página va aquí -->
+        {% endblock %}
+    </main>
+
+    <!-- ============================================
+         FOOTER MEJORADO
+         ============================================ -->
+    <footer class="bg-dark text-white-50 py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <!-- Columna 1: Info -->
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="text-white mb-3">
+                        <i class="bi bi-pencil-square me-2"></i>
+                        Incisos Explicativos
+                    </h5>
+                    <p class="small">
+                        Plataforma educativa interactiva para aprender y practicar 
+                        el uso correcto de los incisos explicativos en español.
+                    </p>
+                    <div class="mt-3">
+                        <span class="badge bg-primary me-1">100+ ejercicios</span>
+                        <span class="badge bg-success me-1">50 flashcards</span>
+                        <span class="badge bg-info">🚀 Gamificación</span>
+                    </div>
+                </div>
+                
+                <!-- Columna 2: Enlaces rápidos -->
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h6 class="text-white mb-3">Enlaces</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="{{ url_for('teoria') }}" class="text-white-50 text-decoration-none">📚 Teoría</a></li>
+                        <li class="mb-2"><a href="{{ url_for('practica') }}" class="text-white-50 text-decoration-none">🎯 Práctica</a></li>
+                        <li class="mb-2"><a href="{{ url_for('flashcards') }}" class="text-white-50 text-decoration-none">🃏 Flashcards</a></li>
+                        <li class="mb-2"><a href="{{ url_for('estadisticas') }}" class="text-white-50 text-decoration-none">📊 Estadísticas</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Columna 3: Ayuda -->
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h6 class="text-white mb-3">Ayuda</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">❓ FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">📖 Tutorial</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">📞 Contacto</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">📝 Reportar error</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Columna 4: Redes sociales -->
+                <div class="col-md-4">
+                    <h6 class="text-white mb-3">Síguenos</h6>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white-50 fs-4"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white-50 fs-4"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="text-white-50 fs-4"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-white-50 fs-4"><i class="bi bi-github"></i></a>
+                        <a href="#" class="text-white-50 fs-4"><i class="bi bi-youtube"></i></a>
+                    </div>
+                    
+                    <!-- Newsletter -->
+                    <div class="mt-4">
+                        <form id="newsletter-form" class="input-group">
+                            <input type="email" class="form-control form-control-sm" 
+                                   placeholder="Tu email" aria-label="Newsletter">
+                            <button class="btn btn-primary btn-sm" type="submit">
+                                <i class="bi bi-send"></i>
+                            </button>
+                        </form>
+                        <small class="text-white-50">Recibe novedades y consejos</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Línea divisoria -->
+            <hr class="my-4 border-secondary">
+            
+            <!-- Copyright -->
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="small mb-0">
+                        &copy; 2024 Incisos Explicativos. Todos los derechos reservados.
+                    </p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="small mb-0">
+                        Hecho con <i class="bi bi-heart-fill text-danger"></i> para la educación
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================
+         SCRIPTS
+         ============================================ -->
+    
+    <!-- jQuery primero -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    
+    <!-- Bootstrap 5 JS con Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS (Animate on Scroll) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Chart.js para gráficos (opcional) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Canvas Confetti para efectos -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+    
+    <!-- Script personalizado -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    <!-- Scripts específicos de cada página -->
+    {% block scripts %}{% endblock %}
+    
+    <!-- ============================================
+         SCRIPT DE INICIALIZACIÓN GLOBAL
+         ============================================ -->
+    <script>
+        (function() {
+            'use strict';
+            
+            // Inicializar AOS
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 100
+            });
+            
+            // Inicializar tooltips de Bootstrap
+            document.addEventListener('DOMContentLoaded', function() {
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                tooltipTriggerList.map(function(tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+                
+                // Inicializar popovers
+                var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+                popoverTriggerList.map(function(popoverTriggerEl) {
+                    return new bootstrap.Popover(popoverTriggerEl);
+                });
+                
+                // Calcular progreso general (si hay usuario)
+                {% if session.usuario_id %}
+                $.get('/api/estadisticas', function(data) {
+                    if (data) {
+                        // Actualizar contador de medallas
+                        $('#medallas-count').text(data.medallas?.length || 0);
+                        
+                        // Calcular progreso (ejemplo: basado en 100 ejercicios)
+                        const progreso = Math.min(100, Math.round((data.ejercicios_completados / 100) * 100));
+                        $('#progresso-general').css('width', progreso + '%')
+                                              .attr('aria-valuenow', progreso)
+                                              .text(progreso + '%');
+                    }
+                });
+                {% endif %}
+                
+                // Newsletter form handler
+                $('#newsletter-form').submit(function(e) {
+                    e.preventDefault();
+                    const email = $(this).find('input[type="email"]').val();
+                    if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                        alert('¡Gracias por suscribirte! Pronto recibirás nuestras novedades.');
+                        $(this).find('input[type="email"]').val('');
+                    } else {
+                        alert('Por favor, introduce un email válido.');
+                    }
+                });
+            });
+        })();
+    </script>
+    
+    <!-- Botón flotante "volver arriba" -->
+    <button id="back-to-top" class="btn btn-primary btn-lg rounded-circle position-fixed" 
+            style="bottom: 20px; right: 20px; width: 50px; height: 50px; display: none; z-index: 9999;"
+            onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+    
+    <script>
+        // Mostrar/ocultar botón de volver arriba
+        window.onscroll = function() {
+            const btn = document.getElementById('back-to-top');
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                btn.style.display = 'block';
+            } else {
+                btn.style.display = 'none';
+            }
+        };
+    </script>
+    
+</body>
+</html>

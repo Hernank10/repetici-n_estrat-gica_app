@@ -1,0 +1,810 @@
+{% extends "base.html" %}
+
+{% block title %}Práctica - Incisos Explicativos | 100 Ejercicios Interactivos{% endblock %}
+
+{% block og_title %}Practica con 100 ejercicios de incisos explicativos{% endblock %}
+
+{% block content %}
+<!-- ============================================
+     ENCABEZADO DE LA PÁGINA
+     ============================================ -->
+<div class="row mb-4" data-aos="fade-down">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm bg-gradient-success text-white">
+            <div class="card-body p-4">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <div class="d-flex align-items-center mb-3 mb-md-0">
+                            <div class="bg-white bg-opacity-20 rounded-circle p-3 me-3">
+                                <i class="bi bi-controller fs-1"></i>
+                            </div>
+                            <div>
+                                <h1 class="display-5 fw-bold mb-2">Practica con 100 ejercicios</h1>
+                                <p class="lead mb-0 opacity-90">Mejora tu dominio de los incisos explicativos con ejercicios interactivos</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-md-end">
+                            <div class="text-center text-md-end">
+                                <span class="badge bg-white text-success px-3 py-2 rounded-pill mb-2">
+                                    <i class="bi bi-star-fill me-1"></i> Progreso
+                                </span>
+                                <div class="d-flex align-items-center justify-content-md-end">
+                                    <div class="me-3">
+                                        <span class="h3 mb-0 fw-bold text-white counter" id="progresoCounter">0</span>
+                                        <small class="d-block opacity-75">/100</small>
+                                    </div>
+                                    <div>
+                                        <span class="h3 mb-0 fw-bold text-white" id="puntosCounter">0</span>
+                                        <small class="d-block opacity-75">puntos</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     FILTROS Y CONTROLES
+     ============================================ -->
+<div class="row g-3 mb-4" data-aos="fade-up">
+    <div class="col-lg-3 col-md-6">
+        <label class="form-label fw-semibold">
+            <i class="bi bi-grid-3x3-gap-fill me-2 text-primary"></i>Modo de práctica
+        </label>
+        <select class="form-select rounded-pill" id="modoPractica">
+            <option value="completar" selected>📝 Completar oraciones</option>
+            <option value="corregir">🔧 Corregir errores</option>
+            <option value="aleatorio">🎲 Modo aleatorio</option>
+        </select>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <label class="form-label fw-semibold">
+            <i class="bi bi-tag-fill me-2 text-success"></i>Categoría
+        </label>
+        <select class="form-select rounded-pill" id="categoriaPractica">
+            <option value="">📚 Todas las categorías</option>
+            <option value="Comas">🔖 Comas explicativas</option>
+            <option value="Paréntesis">📌 Paréntesis</option>
+            <option value="Rayas">➖ Rayas</option>
+            <option value="Geográficos">🌍 Contexto geográfico</option>
+            <option value="Siglas">🔤 Siglas</option>
+        </select>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <label class="form-label fw-semibold">
+            <i class="bi bi-bar-chart-fill me-2 text-warning"></i>Dificultad
+        </label>
+        <select class="form-select rounded-pill" id="dificultadPractica">
+            <option value="">⚖️ Todas</option>
+            <option value="fácil">🌱 Fácil</option>
+            <option value="media">🌿 Media</option>
+            <option value="difícil">🌳 Difícil</option>
+        </select>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <label class="form-label fw-semibold">
+            <i class="bi bi-sort-numeric-down-alt me-2 text-info"></i>Ejercicio
+        </label>
+        <div class="d-flex gap-2">
+            <input type="number" class="form-control rounded-pill" id="ejercicioNumero" min="1" max="100" value="1">
+            <button class="btn btn-outline-primary rounded-pill px-4" id="irEjercicioBtn">
+                <i class="bi bi-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     ESTADÍSTICAS RÁPIDAS
+     ============================================ -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="card border-0 shadow-sm bg-primary bg-opacity-10">
+            <div class="card-body p-3">
+                <div class="d-flex align-items-center">
+                    <div class="bg-primary bg-opacity-20 rounded-circle p-2 me-3">
+                        <i class="bi bi-check-circle-fill text-primary"></i>
+                    </div>
+                    <div>
+                        <small class="text-secondary d-block">Correctos</small>
+                        <span class="h5 mb-0 fw-bold" id="statsCorrectos">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="card border-0 shadow-sm bg-success bg-opacity-10">
+            <div class="card-body p-3">
+                <div class="d-flex align-items-center">
+                    <div class="bg-success bg-opacity-20 rounded-circle p-2 me-3">
+                        <i class="bi bi-trophy-fill text-success"></i>
+                    </div>
+                    <div>
+                        <small class="text-secondary d-block">Racha</small>
+                        <span class="h5 mb-0 fw-bold" id="statsRacha">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="card border-0 shadow-sm bg-warning bg-opacity-10">
+            <div class="card-body p-3">
+                <div class="d-flex align-items-center">
+                    <div class="bg-warning bg-opacity-20 rounded-circle p-2 me-3">
+                        <i class="bi bi-star-fill text-warning"></i>
+                    </div>
+                    <div>
+                        <small class="text-secondary d-block">Precisión</small>
+                        <span class="h5 mb-0 fw-bold" id="statsPrecision">0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="card border-0 shadow-sm bg-info bg-opacity-10">
+            <div class="card-body p-3">
+                <div class="d-flex align-items-center">
+                    <div class="bg-info bg-opacity-20 rounded-circle p-2 me-3">
+                        <i class="bi bi-clock-history-fill text-info"></i>
+                    </div>
+                    <div>
+                        <small class="text-secondary d-block">Tiempo</small>
+                        <span class="h5 mb-0 fw-bold" id="statsTiempo">00:00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     ÁREA PRINCIPAL DE PRÁCTICA
+     ============================================ -->
+<div class="row g-4">
+    <!-- Columna izquierda - Ejercicio -->
+    <div class="col-lg-8" data-aos="fade-right">
+        <div class="card border-0 shadow-lg">
+            <div class="card-header bg-white border-0 py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="fw-bold mb-0">
+                        <i class="bi bi-puzzle-fill text-primary me-2"></i>
+                        Ejercicio <span id="ejercicioActual">1</span>/100
+                    </h4>
+                    <div>
+                        <span class="badge bg-primary me-2" id="categoriaBadge">Comas</span>
+                        <span class="badge bg-secondary" id="dificultadBadge">Media</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-4">
+                <!-- Enunciado del ejercicio -->
+                <div class="bg-light rounded-4 p-4 mb-4">
+                    <p class="lead mb-0" id="enunciadoEjercicio">
+                        Cargando ejercicio...
+                    </p>
+                </div>
+                
+                <!-- Pistas (opcional) -->
+                <div class="alert alert-info bg-opacity-10 border-0 mb-4" id="pistasContainer" style="display: none;">
+                    <div class="d-flex">
+                        <i class="bi bi-lightbulb-fill fs-4 text-info me-3"></i>
+                        <div id="pistasTexto"></div>
+                    </div>
+                </div>
+                
+                <!-- Área de respuesta -->
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">
+                        <i class="bi bi-pencil-fill me-2 text-primary"></i>
+                        Tu respuesta:
+                    </label>
+                    <div class="input-group">
+                        <input type="text" 
+                               class="form-control form-control-lg border-2" 
+                               id="respuestaInput" 
+                               placeholder="Escribe la oración completa con el inciso..."
+                               autocomplete="off">
+                        <button class="btn btn-primary px-4" type="button" id="comprobarBtn">
+                            <i class="bi bi-check-lg me-2"></i>
+                            Comprobar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Feedback -->
+                <div id="feedbackContainer" class="mb-4"></div>
+                
+                <!-- Controles de navegación -->
+                <div class="d-flex justify-content-between align-items-center">
+                    <button class="btn btn-outline-primary rounded-pill px-4" id="anteriorBtn">
+                        <i class="bi bi-arrow-left me-2"></i>
+                        Anterior
+                    </button>
+                    <button class="btn btn-outline-primary rounded-pill px-4" id="nuevoEjercicioBtn">
+                        <i class="bi bi-shuffle me-2"></i>
+                        Nuevo
+                    </button>
+                    <button class="btn btn-outline-primary rounded-pill px-4" id="siguienteBtn">
+                        Siguiente
+                        <i class="bi bi-arrow-right ms-2"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-footer bg-white border-0 py-3">
+                <small class="text-secondary">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Escribe la oración completa con el inciso en la posición correcta usando la puntuación adecuada.
+                </small>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Columna derecha - Información y ayuda -->
+    <div class="col-lg-4" data-aos="fade-left">
+        <!-- Información del ejercicio -->
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white border-0 py-3">
+                <h5 class="fw-bold mb-0">
+                    <i class="bi bi-info-circle-fill text-info me-2"></i>
+                    Información
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <small class="text-secondary d-block mb-1">Inciso a usar:</small>
+                    <div class="bg-light rounded-3 p-3">
+                        <code class="h6 mb-0" id="incisoInfo">-</code>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <small class="text-secondary d-block mb-1">Puntuación requerida:</small>
+                    <div class="d-flex align-items-center">
+                        <span class="badge bg-primary me-2" id="puntuacionInfo">comas</span>
+                        <i class="bi bi-question-circle text-secondary" 
+                           data-bs-toggle="tooltip" 
+                           title="Usa el tipo de puntuación indicado para separar el inciso"></i>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <small class="text-secondary d-block mb-1">Categoría:</small>
+                    <div id="categoriaInfo">-</div>
+                </div>
+                <div>
+                    <small class="text-secondary d-block mb-1">Dificultad:</small>
+                    <div class="d-flex align-items-center">
+                        <div class="progress flex-grow-1 me-2" style="height: 8px;">
+                            <div id="dificultadBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                        </div>
+                        <span id="dificultadText">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Consejos -->
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white border-0 py-3">
+                <h5 class="fw-bold mb-0">
+                    <i class="bi bi-lightbulb-fill text-warning me-2"></i>
+                    Consejos
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="tip-carousel">
+                    <div id="tipActual" class="text-center p-3">
+                        <i class="bi bi-quote fs-1 text-primary opacity-25 mb-3"></i>
+                        <p class="mb-0" id="tipTexto">Carga el primer ejercicio para ver consejos</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center gap-2 mt-3">
+                    <button class="btn btn-sm btn-outline-primary rounded-circle" id="tipAnterior">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                    <span class="mx-2" id="tipCounter">1/5</span>
+                    <button class="btn btn-sm btn-outline-primary rounded-circle" id="tipSiguiente">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Historial rápido -->
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 py-3">
+                <h5 class="fw-bold mb-0">
+                    <i class="bi bi-clock-history text-success me-2"></i>
+                    Últimos ejercicios
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush" id="historialLista">
+                    <div class="list-group-item text-center text-secondary py-4">
+                        <i class="bi bi-arrow-repeat me-2"></i>
+                        Completa ejercicios para ver tu historial
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     MODAL DE LOGRO
+     ============================================ -->
+<div class="modal fade" id="logroModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-warning">
+            <div class="modal-header border-0">
+                <h5 class="modal-title">
+                    <i class="bi bi-trophy-fill me-2"></i>
+                    ¡Nuevo logro!
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center p-4">
+                <i class="bi bi-star-fill text-white display-1 mb-3"></i>
+                <h3 id="logroTitulo">¡10 ejercicios completados!</h3>
+                <p id="logroDescripcion">Has desbloqueado la medalla de bronce</p>
+                <div class="mt-4">
+                    <span class="badge bg-white text-dark p-3 fs-6">
+                        <i class="bi bi-star-fill me-2"></i>
+                        +50 puntos extra
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     ESTILOS ADICIONALES
+     ============================================ -->
+<style>
+    .bg-gradient-success {
+        background: linear-gradient(135deg, #1cc88a 0%, #13855c 100%);
+    }
+    
+    .bg-opacity-20 {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .opacity-90 {
+        opacity: 0.9;
+    }
+    
+    .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    /* Animación para feedback */
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .feedback-enter {
+        animation: slideIn 0.3s ease forwards;
+    }
+    
+    /* Estilos para respuestas correctas/incorrectas */
+    .correcto {
+        border-left: 4px solid #1cc88a;
+        background-color: rgba(28, 200, 138, 0.05);
+    }
+    
+    .incorrecto {
+        border-left: 4px solid #e74a3b;
+        background-color: rgba(231, 74, 59, 0.05);
+    }
+    
+    /* Tooltips personalizados */
+    .custom-tooltip {
+        position: relative;
+    }
+    
+    .custom-tooltip:hover:after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 5px 10px;
+        background: #333;
+        color: white;
+        border-radius: 5px;
+        font-size: 12px;
+        white-space: nowrap;
+        z-index: 1000;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .bg-gradient-success {
+            padding: 2rem 1rem;
+        }
+        
+        .btn-group {
+            flex-direction: column;
+        }
+        
+        .btn-group .btn {
+            border-radius: 0.375rem !important;
+            margin-bottom: 0.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // ============================================
+    // CONFIGURACIÓN INICIAL
+    // ============================================
+    let ejercicios = {{ ejercicios|tojson }};
+    let ejercicioActual = null;
+    let indiceActual = 0;
+    let historial = [];
+    let timerInterval = null;
+    let segundos = 0;
+    
+    // Consejos para mostrar
+    const tips = [
+        "Recuerda que el inciso debe ir entre signos de puntuación",
+        "Si eliminas el inciso, la oración debe mantener sentido",
+        "Máximo 2 incisos por oración para mantener claridad",
+        "Las comas se usan para información relacionada",
+        "Los paréntesis son ideales para datos técnicos",
+        "Las rayas aportan énfasis a la oración"
+    ];
+    let tipActual = 0;
+    
+    $(document).ready(function() {
+        // ============================================
+        // INICIALIZACIÓN
+        // ============================================
+        cargarEjercicio(0);
+        actualizarEstadisticas();
+        iniciarTimer();
+        
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+        $('#modoPractica, #categoriaPractica, #dificultadPractica').change(function() {
+            filtrarEjercicios();
+        });
+        
+        $('#comprobarBtn').click(verificarRespuesta);
+        
+        $('#respuestaInput').keypress(function(e) {
+            if (e.which == 13) { // Enter
+                verificarRespuesta();
+            }
+        });
+        
+        $('#anteriorBtn').click(function() {
+            if (indiceActual > 0) {
+                cargarEjercicio(indiceActual - 1);
+            }
+        });
+        
+        $('#siguienteBtn').click(function() {
+            if (indiceActual < ejercicios.length - 1) {
+                cargarEjercicio(indiceActual + 1);
+            }
+        });
+        
+        $('#nuevoEjercicioBtn').click(function() {
+            filtrarEjercicios();
+        });
+        
+        $('#irEjercicioBtn').click(function() {
+            const num = parseInt($('#ejercicioNumero').val()) - 1;
+            if (num >= 0 && num < ejercicios.length) {
+                cargarEjercicio(num);
+            } else {
+                Notificaciones.error('Número de ejercicio inválido');
+            }
+        });
+        
+        // Tooltips de Bootstrap
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function(tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+        
+        // ============================================
+        // FUNCIÓN PARA CARGAR EJERCICIO
+        // ============================================
+        function cargarEjercicio(indice) {
+            if (!ejercicios || ejercicios.length === 0) {
+                Notificaciones.error('No hay ejercicios disponibles');
+                return;
+            }
+            
+            indiceActual = indice;
+            ejercicioActual = ejercicios[indice];
+            
+            // Actualizar UI
+            $('#ejercicioActual').text(indice + 1);
+            $('#enunciadoEjercicio').text(ejercicioActual.base);
+            $('#categoriaBadge').text(ejercicioActual.categoria);
+            $('#dificultadBadge').text(ejercicioActual.dificultad);
+            $('#incisoInfo').text(ejercicioActual.inciso);
+            $('#puntuacionInfo').text(ejercicioActual.puntuacion).removeClass().addClass(`badge bg-${ejercicioActual.puntuacion === 'comas' ? 'primary' : (ejercicioActual.puntuacion === 'paréntesis' ? 'success' : 'warning')} me-2`);
+            $('#categoriaInfo').text(ejercicioActual.categoria);
+            
+            // Barra de dificultad
+            const dificultadValor = ejercicioActual.dificultad === 'fácil' ? 33 : (ejercicioActual.dificultad === 'media' ? 66 : 100);
+            $('#dificultadBar').css('width', dificultadValor + '%');
+            $('#dificultadText').text(ejercicioActual.dificultad);
+            
+            // Mostrar pistas si existen
+            if (ejercicioActual.pistas && ejercicioActual.pistas.length > 0) {
+                $('#pistasContainer').show();
+                let pistasHtml = '<ul class="mb-0">';
+                ejercicioActual.pistas.forEach(pista => {
+                    pistasHtml += `<li>${pista}</li>`;
+                });
+                pistasHtml += '</ul>';
+                $('#pistasTexto').html(pistasHtml);
+            } else {
+                $('#pistasContainer').hide();
+            }
+            
+            // Limpiar respuesta y feedback
+            $('#respuestaInput').val('');
+            $('#feedbackContainer').empty();
+        }
+        
+        // ============================================
+        // FUNCIÓN PARA FILTRAR EJERCICIOS
+        // ============================================
+        function filtrarEjercicios() {
+            const modo = $('#modoPractica').val();
+            const categoria = $('#categoriaPractica').val();
+            const dificultad = $('#dificultadPractica').val();
+            
+            let filtrados = [...ejercicios];
+            
+            if (categoria) {
+                filtrados = filtrados.filter(e => e.categoria === categoria);
+            }
+            
+            if (dificultad) {
+                filtrados = filtrados.filter(e => e.dificultad === dificultad);
+            }
+            
+            if (filtrados.length === 0) {
+                Notificaciones.warning('No hay ejercicios con esos filtros');
+                return;
+            }
+            
+            // Seleccionar aleatorio
+            const indiceAleatorio = Math.floor(Math.random() * filtrados.length);
+            const ejercicioSeleccionado = filtrados[indiceAleatorio];
+            const indiceOriginal = ejercicios.findIndex(e => e.id === ejercicioSeleccionado.id);
+            
+            cargarEjercicio(indiceOriginal);
+        }
+        
+        // ============================================
+        // FUNCIÓN PARA VERIFICAR RESPUESTA
+        // ============================================
+        function verificarRespuesta() {
+            const respuesta = $('#respuestaInput').val().trim();
+            
+            if (!respuesta) {
+                Notificaciones.warning('Por favor, escribe una respuesta');
+                return;
+            }
+            
+            if (!ejercicioActual) {
+                Notificaciones.error('No hay ejercicio activo');
+                return;
+            }
+            
+            $.ajax({
+                url: '/api/verificar',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    respuesta: respuesta,
+                    ejercicio: ejercicioActual
+                }),
+                success: function(data) {
+                    mostrarFeedback(data);
+                    
+                    // Actualizar estadísticas
+                    actualizarEstadisticas();
+                    
+                    // Agregar al historial
+                    agregarHistorial(ejercicioActual, data.correcto);
+                    
+                    // Mostrar nuevos logros
+                    if (data.nuevos_logros && data.nuevos_logros.length > 0) {
+                        mostrarLogro(data.nuevos_logros[0]);
+                    }
+                }
+            });
+        }
+        
+        // ============================================
+        // FUNCIÓN PARA MOSTRAR FEEDBACK
+        // ============================================
+        function mostrarFeedback(data) {
+            const container = $('#feedbackContainer');
+            container.empty();
+            
+            const alertClass = data.correcto ? 'alert-success' : 'alert-danger';
+            const icon = data.correcto ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill';
+            
+            let mensaje = data.mensaje;
+            if (data.puntos_ganados) {
+                mensaje += ` <span class="badge bg-light text-dark ms-2">+${data.puntos_ganados} pts</span>`;
+            }
+            
+            container.append(`
+                <div class="alert ${alertClass} d-flex align-items-center feedback-enter">
+                    <i class="bi ${icon} fs-4 me-3"></i>
+                    <div>${mensaje}</div>
+                </div>
+            `);
+            
+            // Animar puntos
+            if (data.puntos_ganados) {
+                Puntos.animar(data.puntos_ganados, '#comprobarBtn');
+            }
+            
+            // Actualizar racha
+            if (data.rachas) {
+                $('#statsRacha').text(data.rachas.actual);
+            }
+        }
+        
+        // ============================================
+        // FUNCIÓN PARA MOSTRAR LOGRO
+        // ============================================
+        function mostrarLogro(logro) {
+            $('#logroTitulo').text(logro);
+            $('#logroDescripcion').text('¡Felicidades! Has desbloqueado un nuevo logro');
+            
+            const modal = new bootstrap.Modal(document.getElementById('logroModal'));
+            modal.show();
+            
+            // Lanzar confeti
+            if (typeof confetti !== 'undefined') {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+        
+        // ============================================
+        // FUNCIÓN PARA ACTUALIZAR ESTADÍSTICAS
+        // ============================================
+        function actualizarEstadisticas() {
+            $.get('/api/estadisticas', function(data) {
+                $('#statsCorrectos').text(data.respuestas_correctas);
+                $('#statsRacha').text(data.rachas.actual);
+                
+                const precision = data.ejercicios_completados > 0 
+                    ? Math.round((data.respuestas_correctas / data.ejercicios_completados) * 100)
+                    : 0;
+                $('#statsPrecision').text(precision + '%');
+                $('#puntosCounter').text(data.puntos);
+                $('#progresoCounter').text(data.ejercicios_completados);
+            });
+        }
+        
+        // ============================================
+        // FUNCIÓN PARA AGREGAR AL HISTORIAL
+        // ============================================
+        function agregarHistorial(ejercicio, correcto) {
+            historial.unshift({
+                id: ejercicio.id,
+                categoria: ejercicio.categoria,
+                correcto: correcto,
+                timestamp: new Date().toLocaleTimeString()
+            });
+            
+            if (historial.length > 5) {
+                historial.pop();
+            }
+            
+            actualizarHistorial();
+        }
+        
+        function actualizarHistorial() {
+            const lista = $('#historialLista');
+            lista.empty();
+            
+            if (historial.length === 0) {
+                lista.append(`
+                    <div class="list-group-item text-center text-secondary py-4">
+                        <i class="bi bi-arrow-repeat me-2"></i>
+                        Completa ejercicios para ver tu historial
+                    </div>
+                `);
+                return;
+            }
+            
+            historial.forEach(item => {
+                lista.append(`
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="badge bg-${item.correcto ? 'success' : 'danger'} me-2">
+                                <i class="bi bi-${item.correcto ? 'check' : 'x'}"></i>
+                            </span>
+                            ${item.categoria}
+                        </div>
+                        <small class="text-secondary">${item.timestamp}</small>
+                    </div>
+                `);
+            });
+        }
+        
+        // ============================================
+        // TIMER
+        // ============================================
+        function iniciarTimer() {
+            timerInterval = setInterval(function() {
+                segundos++;
+                const mins = Math.floor(segundos / 60).toString().padStart(2, '0');
+                const secs = (segundos % 60).toString().padStart(2, '0');
+                $('#statsTiempo').text(`${mins}:${secs}`);
+            }, 1000);
+        }
+        
+        // ============================================
+        // CONSEJOS
+        // ============================================
+        function actualizarTip() {
+            $('#tipTexto').text(tips[tipActual]);
+            $('#tipCounter').text(`${tipActual + 1}/${tips.length}`);
+        }
+        
+        $('#tipAnterior').click(function() {
+            tipActual = (tipActual - 1 + tips.length) % tips.length;
+            actualizarTip();
+        });
+        
+        $('#tipSiguiente').click(function() {
+            tipActual = (tipActual + 1) % tips.length;
+            actualizarTip();
+        });
+        
+        actualizarTip();
+        
+        // ============================================
+        // LIMPIEZA AL SALIR
+        // ============================================
+        $(window).on('beforeunload', function() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+        });
+    });
+</script>
+{% endblock %}

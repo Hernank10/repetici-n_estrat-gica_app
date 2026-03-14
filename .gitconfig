@@ -15,5 +15,7 @@
         st = status
 
 [user]
-	email = tu-correo@ejemplo.com
+	email = tu-email@ejemplo.com
 	name = Hernank10
+[pull]
+	rebase = false
