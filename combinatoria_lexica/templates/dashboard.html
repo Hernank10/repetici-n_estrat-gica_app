@@ -1,0 +1,640 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Combinatoria Léxica{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Encabezado con bienvenida -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="display-5 fw-bold">
+                <i class="bi bi-bar-chart-fill text-primary me-3"></i>
+                Tu Progreso
+            </h1>
+            <p class="text-muted lead">
+                ¡Hola, <span class="fw-bold text-primary">{{ current_user.username }}</span>! 
+                Sigue así, cada ejercicio cuenta.
+            </p>
+        </div>
+        <div class="text-end">
+            <span class="badge bg-primary p-3 rounded-3">
+                <i class="bi bi-calendar-check me-2"></i>
+                {{ now.strftime('%d de %B, %Y') }}
+            </span>
+        </div>
+    </div>
+
+    <!-- Mensaje motivacional -->
+    {% if mensaje_motivacional %}
+    <div class="alert alert-info alert-dismissible fade show mb-4 rounded-3 shadow-sm" role="alert">
+        <i class="bi bi-emoji-smile fs-4 me-2"></i>
+        <strong>{{ mensaje_motivacional }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endif %}
+
+    <!-- Tarjetas de resumen -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 hover-scale">
+                <div class="card-body text-center p-4">
+                    <div class="rounded-circle bg-primary bg-gradient p-3 d-inline-block mb-3">
+                        <i class="bi bi-trophy-fill text-white fs-3"></i>
+                    </div>
+                    <h3 class="fw-bold text-primary mb-2" id="xpTotal">0</h3>
+                    <p class="text-muted mb-0">XP Total</p>
+                    <small class="text-success" id="xpTrend">
+                        <i class="bi bi-arrow-up"></i> +0 hoy
+                    </small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 hover-scale">
+                <div class="card-body text-center p-4">
+                    <div class="rounded-circle bg-success bg-gradient p-3 d-inline-block mb-3">
+                        <i class="bi bi-puzzle-fill text-white fs-3"></i>
+                    </div>
+                    <h3 class="fw-bold text-success mb-2" id="ejerciciosTotal">0</h3>
+                    <p class="text-muted mb-0">Ejercicios</p>
+                    <small class="text-info" id="precisionTotal">0% precisión</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 hover-scale">
+                <div class="card-body text-center p-4">
+                    <div class="rounded-circle bg-warning bg-gradient p-3 d-inline-block mb-3">
+                        <i class="bi bi-fire text-white fs-3"></i>
+                    </div>
+                    <h3 class="fw-bold text-warning mb-2" id="rachaActual">0</h3>
+                    <p class="text-muted mb-0">Racha Actual</p>
+                    <small class="text-danger" id="rachaMaxima">Máx: 0</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 hover-scale">
+                <div class="card-body text-center p-4">
+                    <div class="rounded-circle bg-info bg-gradient p-3 d-inline-block mb-3">
+                        <i class="bi bi-card-list text-white fs-3"></i>
+                    </div>
+                    <h3 class="fw-bold text-info mb-2" id="flashcardsTotal">0</h3>
+                    <p class="text-muted mb-0">Flashcards</p>
+                    <small class="text-primary" id="flashcardsDominadas">0 dominadas</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progreso de nivel y gráfico -->
+    <div class="row g-4 mb-5">
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-transparent border-0 pt-4">
+                    <h5 class="card-title fw-bold">
+                        <i class="bi bi-bar-chart-steps me-2 text-primary"></i>
+                        Progreso de Nivel
+                    </h5>
+                </div>
+                <div class="card-body text-center">
+                    <div class="position-relative d-inline-block">
+                        <div class="level-circle" id="nivelCircle">
+                            <span class="display-4 fw-bold" id="nivelActual">1</span>
+                        </div>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success" id="nivelNombre">
+                            Principiante
+                        </span>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="small">Progreso al siguiente nivel</span>
+                            <span class="small fw-bold" id="progresoPorcentaje">0%</span>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div id="progresoBarra" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <small class="text-muted" id="xpActual">0 XP</small>
+                            <small class="text-muted" id="xpSiguiente">500 XP</small>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 p-3 bg-light rounded-3">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-info-circle-fill text-primary me-2"></i>
+                            <small class="text-muted" id="nivelDescripcion">
+                                Completa 5 ejercicios para subir de nivel
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-transparent border-0 pt-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title fw-bold">
+                            <i class="bi bi-graph-up me-2 text-success"></i>
+                            Actividad Semanal
+                        </h5>
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-outline-primary active" id="view7d">7 días</button>
+                            <button type="button" class="btn btn-outline-primary" id="view30d">30 días</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="graficoProgreso" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Medallas y logros -->
+    <div class="row g-4 mb-5">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 pt-4">
+                    <h5 class="card-title fw-bold">
+                        <i class="bi bi-trophy-fill me-2 text-warning"></i>
+                        Medallas Desbloqueadas
+                        <span class="badge bg-warning text-dark ms-2" id="medallasCount">0/10</span>
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="medallasContainer" class="row g-3">
+                        <div class="col-12 text-center text-muted py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 pt-4">
+                    <h5 class="card-title fw-bold">
+                        <i class="bi bi-check2-circle me-2 text-success"></i>
+                        Logros Recientes
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="logrosContainer" class="list-group list-group-flush">
+                        <div class="text-center text-muted py-4">
+                            <div class="spinner-border text-success" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recomendaciones y próximos desafíos -->
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 pt-4">
+                    <h5 class="card-title fw-bold">
+                        <i class="bi bi-lightbulb me-2 text-warning"></i>
+                        Recomendaciones Personalizadas
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="recomendacionesContainer">
+                        {% if recomendaciones %}
+                            {% for rec in recomendaciones %}
+                                <div class="d-flex align-items-center p-3 mb-2 bg-light rounded-3">
+                                    <div class="me-3">
+                                        <span class="display-6">{{ rec.icono }}</span>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <p class="mb-1 fw-semibold">{{ rec.mensaje }}</p>
+                                        <a href="{{ rec.accion }}" class="btn btn-sm btn-{{ rec.color }} mt-1">
+                                            <i class="bi bi-arrow-right-circle me-1"></i>Ir ahora
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center text-muted py-4">
+                                <i class="bi bi-emoji-smile display-4 d-block mb-3"></i>
+                                <p>¡Vas por buen camino! Sigue practicando.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 pt-4">
+                    <h5 class="card-title fw-bold">
+                        <i class="bi bi-calendar-check me-2 text-primary"></i>
+                        Próximos Desafíos
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="desafiosContainer">
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <div>
+                                    <i class="bi bi-star-fill text-warning me-2"></i>
+                                    <span>Completa 10 ejercicios</span>
+                                </div>
+                                <div>
+                                    <span class="badge bg-primary rounded-pill me-2" id="desafio1">0/10</span>
+                                    <i class="bi bi-gem text-info" title="Recompensa: 100 XP"></i>
+                                </div>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <div>
+                                    <i class="bi bi-fire text-danger me-2"></i>
+                                    <span>Racha de 5 días</span>
+                                </div>
+                                <div>
+                                    <span class="badge bg-primary rounded-pill me-2" id="desafio2">0/5</span>
+                                    <i class="bi bi-trophy text-warning" title="Recompensa: Medalla especial"></i>
+                                </div>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <div>
+                                    <i class="bi bi-card-list text-success me-2"></i>
+                                    <span>Estudia 20 flashcards</span>
+                                </div>
+                                <div>
+                                    <span class="badge bg-primary rounded-pill me-2" id="desafio3">0/20</span>
+                                    <i class="bi bi-gem text-info" title="Recompensa: 150 XP"></i>
+                                </div>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <div>
+                                    <i class="bi bi-pencil-square text-primary me-2"></i>
+                                    <span>Guarda 5 oraciones</span>
+                                </div>
+                                <div>
+                                    <span class="badge bg-primary rounded-pill me-2" id="desafio4">0/5</span>
+                                    <i class="bi bi-star-fill text-warning" title="Recompensa: 3 estrellas"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 p-3 bg-light rounded-3">
+                        <h6 class="fw-bold mb-2">
+                            <i class="bi bi-trophy-fill text-warning me-2"></i>
+                            Logros Cercanos
+                        </h6>
+                        <div id="logrosCercanos">
+                            <!-- Se llenará con JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let progresoChart = null;
+let estadisticasData = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    cargarEstadisticas();
+    cargarMedallas();
+    cargarLogros();
+    
+    // Event listeners para cambiar vista del gráfico
+    document.getElementById('view7d').addEventListener('click', function() {
+        this.classList.add('active');
+        document.getElementById('view30d').classList.remove('active');
+        actualizarGrafico(7);
+    });
+    
+    document.getElementById('view30d').addEventListener('click', function() {
+        this.classList.add('active');
+        document.getElementById('view7d').classList.remove('active');
+        actualizarGrafico(30);
+    });
+});
+
+function cargarEstadisticas() {
+    fetch('/api/user/stats')
+        .then(response => response.json())
+        .then(data => {
+            estadisticasData = data;
+            actualizarUI(data);
+            inicializarGrafico(data.progreso_diario);
+        })
+        .catch(error => console.error('Error cargando estadísticas:', error));
+}
+
+function actualizarUI(data) {
+    // Actualizar XP
+    document.getElementById('xpTotal').textContent = data.xp;
+    document.getElementById('xpTrend').innerHTML = `<i class="bi bi-arrow-up"></i> +${data.xp - (data.xp - 50)} hoy`;
+    
+    // Actualizar ejercicios
+    document.getElementById('ejerciciosTotal').textContent = data.ejercicios_completados;
+    document.getElementById('precisionTotal').textContent = data.accuracy + '% precisión';
+    
+    // Actualizar racha
+    document.getElementById('rachaActual').textContent = data.racha_actual;
+    document.getElementById('rachaMaxima').textContent = 'Máx: ' + data.racha_maxima;
+    
+    // Actualizar flashcards
+    document.getElementById('flashcardsTotal').textContent = data.flashcards_estudiadas || 0;
+    document.getElementById('flashcardsDominadas').textContent = (data.flashcards_dominadas || 0) + ' dominadas';
+    
+    // Actualizar nivel
+    const nivel = data.nivel;
+    document.getElementById('nivelActual').textContent = nivel.id || '1';
+    document.getElementById('nivelNombre').textContent = nivel.nombre;
+    document.getElementById('nivelNombre').className = `position-absolute top-0 start-100 translate-middle badge rounded-pill bg-${nivel.color_bootstrap}`;
+    document.getElementById('progresoPorcentaje').textContent = nivel.progreso + '%';
+    document.getElementById('progresoBarra').style.width = nivel.progreso + '%';
+    document.getElementById('xpActual').textContent = data.xp + ' XP';
+    document.getElementById('xpSiguiente').textContent = (data.xp + data.xp_para_siguiente) + ' XP';
+    document.getElementById('nivelDescripcion').textContent = nivel.descripcion || 'Sigue practicando para subir de nivel';
+    
+    // Actualizar desafíos
+    document.getElementById('desafio1').textContent = data.ejercicios_completados + '/10';
+    document.getElementById('desafio2').textContent = data.racha_actual + '/5';
+    document.getElementById('desafio3').textContent = (data.flashcards_estudiadas || 0) + '/20';
+    document.getElementById('desafio4').textContent = (data.oraciones_guardadas || 0) + '/5';
+}
+
+function inicializarGrafico(progresoDiario) {
+    const ctx = document.getElementById('graficoProgreso').getContext('2d');
+    
+    if (progresoChart) {
+        progresoChart.destroy();
+    }
+    
+    progresoChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: progresoDiario.map(d => d.fecha),
+            datasets: [
+                {
+                    label: 'Ejercicios completados',
+                    data: progresoDiario.map(d => d.ejercicios),
+                    borderColor: 'rgb(75, 192, 192)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    yAxisID: 'y'
+                },
+                {
+                    label: 'XP ganado',
+                    data: progresoDiario.map(d => d.xp_ganado),
+                    borderColor: 'rgb(255, 205, 86)',
+                    backgroundColor: 'rgba(255, 205, 86, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    yAxisID: 'y1'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom'
+                },
+                tooltip: {
+                    enabled: true
+                }
+            },
+            scales: {
+                y: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    title: {
+                        display: true,
+                        text: 'Ejercicios'
+                    },
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                },
+                y1: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right',
+                    title: {
+                        display: true,
+                        text: 'XP'
+                    },
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
+                    }
+                }
+            }
+        }
+    });
+}
+
+function actualizarGrafico(dias) {
+    if (!estadisticasData) return;
+    
+    const data = dias === 7 ? estadisticasData.progreso_diario : 
+                 estadisticasData.progreso_diario.slice(-30);
+    
+    progresoChart.data.labels = data.map(d => d.fecha);
+    progresoChart.data.datasets[0].data = data.map(d => d.ejercicios);
+    progresoChart.data.datasets[1].data = data.map(d => d.xp_ganado);
+    progresoChart.update();
+}
+
+function cargarMedallas() {
+    fetch('/api/user/stats')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('medallasContainer');
+            const medallasCount = document.getElementById('medallasCount');
+            
+            const medallasDesbloqueadas = data.medallas.filter(m => m.desbloqueada);
+            medallasCount.textContent = medallasDesbloqueadas.length + '/' + data.medallas.length;
+            
+            if (medallasDesbloqueadas.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12 text-center text-muted py-4">
+                        <i class="bi bi-trophy display-4 d-block mb-3"></i>
+                        <p>Aún no tienes medallas. ¡Sigue practicando!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = '';
+            medallasDesbloqueadas.slice(0, 6).forEach(medalla => {
+                container.innerHTML += `
+                    <div class="col-md-4 col-6">
+                        <div class="text-center p-2">
+                            <span class="display-6 d-block mb-2">${medalla.icono}</span>
+                            <small class="d-block fw-semibold">${medalla.nombre}</small>
+                            <small class="text-muted">${medalla.descripcion}</small>
+                        </div>
+                    </div>
+                `;
+            });
+        })
+        .catch(error => console.error('Error cargando medallas:', error));
+}
+
+function cargarLogros() {
+    fetch('/api/user/stats')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('logrosContainer');
+            const logrosCercanos = document.getElementById('logrosCercanos');
+            
+            // Logros recientes (simulados por ahora)
+            const logrosRecientes = [
+                { nombre: 'Primer ejercicio', icono: '🎯', fecha: 'Hoy' },
+                { nombre: 'Racha de 3 días', icono: '🔥', fecha: 'Ayer' }
+            ];
+            
+            if (logrosRecientes.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-muted py-4">
+                        <i class="bi bi-calendar-check display-4 d-block mb-3"></i>
+                        <p>Completa ejercicios para ver tus logros</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = logrosRecientes.map(logro => `
+                    <div class="list-group-item d-flex align-items-center px-0">
+                        <span class="display-6 me-3">${logro.icono}</span>
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0 fw-semibold">${logro.nombre}</h6>
+                            <small class="text-muted">${logro.fecha}</small>
+                        </div>
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                    </div>
+                `).join('');
+            }
+            
+            // Logros cercanos
+            const cercanos = [
+                { nombre: '5 ejercicios', progreso: 80, icono: '🎯' },
+                { nombre: 'Racha de 7', progreso: 60, icono: '🔥' }
+            ];
+            
+            logrosCercanos.innerHTML = cercanos.map(logro => `
+                <div class="mb-2">
+                    <div class="d-flex justify-content-between small mb-1">
+                        <span><span class="me-2">${logro.icono}</span>${logro.nombre}</span>
+                        <span>${logro.progreso}%</span>
+                    </div>
+                    <div class="progress" style="height: 4px;">
+                        <div class="progress-bar bg-success" style="width: ${logro.progreso}%"></div>
+                    </div>
+                </div>
+            `).join('');
+        })
+        .catch(error => console.error('Error cargando logros:', error));
+}
+</script>
+
+<style>
+.hover-scale {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.hover-scale:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 1rem 2rem rgba(0,0,0,.15)!important;
+}
+
+.level-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+    }
+}
+
+.list-group-item {
+    border-left: none;
+    border-right: none;
+    background-color: transparent;
+}
+
+.card {
+    transition: all 0.3s;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.card-header {
+    border-bottom: none;
+}
+
+.progress {
+    border-radius: 10px;
+    background-color: #e9ecef;
+}
+
+.badge {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.8rem;
+}
+
+@media (max-width: 768px) {
+    .display-5 {
+        font-size: 1.8rem;
+    }
+    
+    .level-circle {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .level-circle .display-4 {
+        font-size: 2rem;
+    }
+}
+</style>
+{% endblock %}

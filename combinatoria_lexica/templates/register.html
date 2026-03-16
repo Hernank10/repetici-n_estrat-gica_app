@@ -1,0 +1,574 @@
+{% extends "base.html" %}
+
+{% block title %}Registro - Combinatoria Léxica{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+                <!-- Header con gradiente -->
+                <div class="card-header bg-success text-white text-center py-4 border-0" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                    <i class="bi bi-person-plus display-4 mb-3 d-block"></i>
+                    <h3 class="fw-bold mb-2">¡Únete a nuestra comunidad!</h3>
+                    <p class="mb-0 opacity-75">Comienza tu viaje en la combinatoria léxica</p>
+                </div>
+                
+                <div class="card-body p-4 p-lg-5">
+                    <!-- Barra de progreso del registro -->
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="small fw-semibold">Completitud del registro</span>
+                            <span class="small text-muted" id="progressPercentage">0%</span>
+                        </div>
+                        <div class="progress" style="height: 8px;">
+                            <div id="registerProgress" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Mensajes flash -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show rounded-3 mb-4" role="alert">
+                                    <div class="d-flex align-items-center">
+                                        {% if category == 'success' %}
+                                            <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+                                        {% elif category == 'danger' %}
+                                            <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
+                                        {% elif category == 'warning' %}
+                                            <i class="bi bi-exclamation-circle-fill me-2 fs-5"></i>
+                                        {% else %}
+                                            <i class="bi bi-info-circle-fill me-2 fs-5"></i>
+                                        {% endif %}
+                                        <span>{{ message }}</span>
+                                    </div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <!-- Formulario de registro -->
+                    <form method="POST" action="{{ url_for('register') }}" class="needs-validation" novalidate id="registerForm">
+                        {{ form.hidden_tag() }}
+                        
+                        <!-- Campo de nombre de usuario -->
+                        <div class="mb-3">
+                            <label for="username" class="form-label fw-semibold">
+                                <i class="bi bi-person-circle me-2"></i>Nombre de Usuario
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="bi bi-person"></i>
+                                </span>
+                                {{ form.username(class="form-control form-control-lg border-start-0" + (' is-invalid' if form.username.errors else ''), 
+                                                placeholder="Elige un nombre de usuario", id="username", 
+                                                pattern="[a-zA-Z0-9_]+", 
+                                                oninput="validateField(this, 'username')") }}
+                                <span class="input-group-text bg-light border-start-0" id="usernameIcon">
+                                    <i class="bi bi-exclamation-circle text-warning"></i>
+                                </span>
+                            </div>
+                            {% if form.username.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.username.errors %}
+                                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text" id="usernameHelp">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Solo letras, números y guiones bajos. Mínimo 3 caracteres.
+                            </div>
+                            <div class="password-strength mt-2" id="usernameStrength"></div>
+                        </div>
+                        
+                        <!-- Campo de email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-semibold">
+                                <i class="bi bi-envelope me-2"></i>Correo Electrónico
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="bi bi-envelope-at"></i>
+                                </span>
+                                {{ form.email(class="form-control form-control-lg border-start-0" + (' is-invalid' if form.email.errors else ''), 
+                                            placeholder="ejemplo@correo.com", id="email",
+                                            oninput="validateField(this, 'email')") }}
+                                <span class="input-group-text bg-light border-start-0" id="emailIcon">
+                                    <i class="bi bi-exclamation-circle text-warning"></i>
+                                </span>
+                            </div>
+                            {% if form.email.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.email.errors %}
+                                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">
+                                <i class="bi bi-shield-check me-1"></i>
+                                Tu email será usado solo para fines de la plataforma.
+                            </div>
+                        </div>
+                        
+                        <!-- Campo de contraseña -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label fw-semibold">
+                                <i class="bi bi-key me-2"></i>Contraseña
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="bi bi-lock"></i>
+                                </span>
+                                {{ form.password(class="form-control form-control-lg border-start-0" + (' is-invalid' if form.password.errors else ''), 
+                                                placeholder="Crea una contraseña segura", id="password",
+                                                oninput="checkPasswordStrength(this.value); validateField(this, 'password')") }}
+                                <button class="btn btn-outline-secondary border-start-0" type="button" id="togglePassword">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <span class="input-group-text bg-light border-start-0" id="passwordIcon">
+                                    <i class="bi bi-exclamation-circle text-warning"></i>
+                                </span>
+                            </div>
+                            {% if form.password.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.password.errors %}
+                                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            
+                            <!-- Medidor de fortaleza de contraseña -->
+                            <div class="password-strength mt-2">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="small">Fortaleza:</span>
+                                    <span class="small" id="strengthText">Débil</span>
+                                </div>
+                                <div class="progress" style="height: 5px;">
+                                    <div id="strengthBar" class="progress-bar bg-danger" role="progressbar" style="width: 25%"></div>
+                                </div>
+                                <ul class="list-unstyled mt-2 small" id="passwordRequirements">
+                                    <li id="req-length" class="text-muted">
+                                        <i class="bi bi-circle me-1"></i>Mínimo 6 caracteres
+                                    </li>
+                                    <li id="req-number" class="text-muted">
+                                        <i class="bi bi-circle me-1"></i>Al menos un número
+                                    </li>
+                                    <li id="req-uppercase" class="text-muted">
+                                        <i class="bi bi-circle me-1"></i>Al menos una mayúscula
+                                    </li>
+                                    <li id="req-special" class="text-muted">
+                                        <i class="bi bi-circle me-1"></i>Al menos un carácter especial
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Confirmar contraseña -->
+                        <div class="mb-4">
+                            <label for="confirm_password" class="form-label fw-semibold">
+                                <i class="bi bi-key-fill me-2"></i>Confirmar Contraseña
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="bi bi-lock-fill"></i>
+                                </span>
+                                {{ form.confirm_password(class="form-control form-control-lg border-start-0" + (' is-invalid' if form.confirm_password.errors else ''), 
+                                                        placeholder="Repite tu contraseña", id="confirm_password",
+                                                        oninput="validateConfirmPassword(this.value)") }}
+                                <span class="input-group-text bg-light border-start-0" id="confirmIcon">
+                                    <i class="bi bi-exclamation-circle text-warning"></i>
+                                </span>
+                            </div>
+                            {% if form.confirm_password.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.confirm_password.errors %}
+                                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text" id="confirmHelp"></div>
+                        </div>
+                        
+                        <!-- Términos y condiciones -->
+                        <div class="mb-4">
+                            <div class="form-check">
+                                {{ form.accept_terms(class="form-check-input", id="accept_terms", onchange="updateProgress()") }}
+                                <label class="form-check-label" for="accept_terms">
+                                    Acepto los <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">términos y condiciones</a> 
+                                    y la <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">política de privacidad</a>
+                                </label>
+                            </div>
+                            {% if form.accept_terms.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.accept_terms.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Botón de registro -->
+                        <div class="d-grid gap-2 mb-4">
+                            <button type="submit" class="btn btn-success btn-lg fw-semibold py-3" id="registerBtn" disabled>
+                                <i class="bi bi-person-plus me-2"></i>Crear Cuenta
+                                <span class="spinner-border spinner-border-sm d-none" id="registerSpinner" role="status"></span>
+                            </button>
+                        </div>
+                        
+                        <!-- Separador -->
+                        <div class="position-relative my-4">
+                            <hr class="text-muted">
+                            <span class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted">
+                                <i class="bi bi-three-dots"></i>
+                            </span>
+                        </div>
+                        
+                        <!-- Enlace a login -->
+                        <div class="text-center">
+                            <p class="mb-2">¿Ya tienes una cuenta?</p>
+                            <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-lg px-5">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
+                            </a>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Beneficios del registro -->
+                <div class="card-footer bg-light border-0 py-3">
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <small class="text-muted d-block">
+                                <i class="bi bi-puzzle-fill text-primary me-1"></i>
+                                <span class="fw-bold">100+</span> ejercicios
+                            </small>
+                        </div>
+                        <div class="col-4">
+                            <small class="text-muted d-block">
+                                <i class="bi bi-card-list-fill text-success me-1"></i>
+                                <span class="fw-bold">50</span> flashcards
+                            </small>
+                        </div>
+                        <div class="col-4">
+                            <small class="text-muted d-block">
+                                <i class="bi bi-trophy-fill text-warning me-1"></i>
+                                <span class="fw-bold">5</span> niveles
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Términos -->
+<div class="modal fade" id="termsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-file-text me-2"></i>Términos y Condiciones
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <h6>1. Aceptación de términos</h6>
+                <p class="small text-muted">Al registrarte y usar esta plataforma, aceptas cumplir con estos términos y condiciones.</p>
+                
+                <h6 class="mt-3">2. Uso de la plataforma</h6>
+                <p class="small text-muted">La plataforma está diseñada para fines educativos. Los usuarios deben usarla de manera responsable y respetuosa.</p>
+                
+                <h6 class="mt-3">3. Cuenta de usuario</h6>
+                <p class="small text-muted">Eres responsable de mantener la confidencialidad de tu cuenta y contraseña.</p>
+                
+                <h6 class="mt-3">4. Contenido</h6>
+                <p class="small text-muted">Todo el contenido educativo es propiedad de la plataforma y está protegido por derechos de autor.</p>
+                
+                <h6 class="mt-3">5. Conducta del usuario</h6>
+                <p class="small text-muted">Los usuarios deben mantener un comportamiento respetuoso y no compartir contenido inapropiado.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Privacidad -->
+<div class="modal fade" id="privacyModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-shield-lock me-2"></i>Política de Privacidad
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <h6>Recopilación de datos</h6>
+                <p class="small text-muted">Recopilamos información básica como nombre de usuario, email y progreso de aprendizaje para personalizar tu experiencia.</p>
+                
+                <h6 class="mt-3">Uso de datos</h6>
+                <p class="small text-muted">Los datos se utilizan para mejorar la plataforma, generar estadísticas y proporcionar retroalimentación personalizada.</p>
+                
+                <h6 class="mt-3">Protección de datos</h6>
+                <p class="small text-muted">Implementamos medidas de seguridad para proteger tu información personal contra accesos no autorizados.</p>
+                
+                <h6 class="mt-3">Cookies</h6>
+                <p class="small text-muted">Usamos cookies para mantener tu sesión, recordar preferencias y mejorar la experiencia de usuario.</p>
+                
+                <h6 class="mt-3">Derechos del usuario</h6>
+                <p class="small text-muted">Puedes solicitar la eliminación de tus datos en cualquier momento contactando a soporte.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info text-white" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Variables para validación
+let isUsernameValid = false;
+let isEmailValid = false;
+let isPasswordValid = false;
+let isConfirmValid = false;
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Mostrar/ocultar contraseña
+    const togglePassword = document.getElementById('togglePassword');
+    const password = document.getElementById('password');
+    
+    if (togglePassword && password) {
+        togglePassword.addEventListener('click', function() {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.querySelector('i').classList.toggle('bi-eye');
+            this.querySelector('i').classList.toggle('bi-eye-slash');
+        });
+    }
+    
+    // Validación inicial
+    updateProgress();
+});
+
+function validateField(field, type) {
+    const value = field.value;
+    const icon = document.getElementById(type + 'Icon').querySelector('i');
+    
+    if (type === 'username') {
+        const isValid = value.length >= 3 && /^[a-zA-Z0-9_]+$/.test(value);
+        isUsernameValid = isValid;
+        icon.className = isValid ? 'bi bi-check-circle-fill text-success' : 'bi bi-exclamation-circle text-warning';
+    }
+    
+    if (type === 'email') {
+        const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        isEmailValid = isValid;
+        icon.className = isValid ? 'bi bi-check-circle-fill text-success' : 'bi bi-exclamation-circle text-warning';
+    }
+    
+    if (type === 'password') {
+        checkPasswordStrength(value);
+    }
+    
+    updateProgress();
+}
+
+function checkPasswordStrength(password) {
+    const strengthBar = document.getElementById('strengthBar');
+    const strengthText = document.getElementById('strengthText');
+    const icon = document.getElementById('passwordIcon').querySelector('i');
+    
+    // Requisitos
+    const hasLength = password.length >= 6;
+    const hasNumber = /\d/.test(password);
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    
+    // Actualizar requisitos visuales
+    updateRequirement('length', hasLength);
+    updateRequirement('number', hasNumber);
+    updateRequirement('uppercase', hasUppercase);
+    updateRequirement('special', hasSpecial);
+    
+    // Calcular fortaleza
+    const requirements = [hasLength, hasNumber, hasUppercase, hasSpecial];
+    const strength = requirements.filter(Boolean).length;
+    
+    // Actualizar barra y texto
+    const percentages = [0, 25, 50, 75, 100];
+    const colors = ['danger', 'danger', 'warning', 'info', 'success'];
+    const texts = ['Muy débil', 'Débil', 'Media', 'Fuerte', 'Muy fuerte'];
+    
+    strengthBar.style.width = percentages[strength] + '%';
+    strengthBar.className = 'progress-bar bg-' + colors[strength];
+    strengthText.textContent = texts[strength];
+    strengthText.className = 'small text-' + colors[strength];
+    
+    // Validar contraseña
+    isPasswordValid = strength >= 3; // Al menos 3 requisitos cumplidos
+    icon.className = isPasswordValid ? 'bi bi-check-circle-fill text-success' : 'bi bi-exclamation-circle text-warning';
+    
+    // Verificar confirmación si ya hay algo escrito
+    const confirm = document.getElementById('confirm_password').value;
+    if (confirm) {
+        validateConfirmPassword(confirm);
+    }
+}
+
+function updateRequirement(req, isValid) {
+    const element = document.getElementById('req-' + req);
+    if (element) {
+        element.className = isValid ? 'text-success' : 'text-muted';
+        element.querySelector('i').className = isValid ? 'bi bi-check-circle-fill me-1' : 'bi bi-circle me-1';
+    }
+}
+
+function validateConfirmPassword(confirm) {
+    const password = document.getElementById('password').value;
+    const icon = document.getElementById('confirmIcon').querySelector('i');
+    const help = document.getElementById('confirmHelp');
+    
+    isConfirmValid = confirm === password && confirm.length > 0;
+    
+    if (confirm.length === 0) {
+        icon.className = 'bi bi-exclamation-circle text-warning';
+        help.innerHTML = '<i class="bi bi-info-circle me-1"></i>Confirma tu contraseña';
+    } else if (confirm === password) {
+        icon.className = 'bi bi-check-circle-fill text-success';
+        help.innerHTML = '<i class="bi bi-check-circle me-1 text-success"></i>Las contraseñas coinciden';
+    } else {
+        icon.className = 'bi bi-exclamation-circle text-danger';
+        help.innerHTML = '<i class="bi bi-exclamation-circle me-1 text-danger"></i>Las contraseñas no coinciden';
+    }
+    
+    updateProgress();
+}
+
+function updateProgress() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    const termsChecked = document.getElementById('accept_terms').checked;
+    
+    // Calcular progreso (username, email, password, confirm, terms)
+    const totalFields = 5;
+    let completed = 0;
+    
+    if (isUsernameValid) completed++;
+    if (isEmailValid) completed++;
+    if (isPasswordValid) completed++;
+    if (isConfirmValid) completed++;
+    if (termsChecked) completed++;
+    
+    const percentage = Math.round((completed / totalFields) * 100);
+    
+    // Actualizar barra
+    const progressBar = document.getElementById('registerProgress');
+    const progressText = document.getElementById('progressPercentage');
+    
+    progressBar.style.width = percentage + '%';
+    progressBar.textContent = '';
+    progressText.textContent = percentage + '%';
+    
+    // Cambiar color según progreso
+    if (percentage < 50) {
+        progressBar.className = 'progress-bar bg-danger';
+    } else if (percentage < 80) {
+        progressBar.className = 'progress-bar bg-warning';
+    } else {
+        progressBar.className = 'progress-bar bg-success';
+    }
+    
+    // Habilitar/deshabilitar botón de registro
+    const registerBtn = document.getElementById('registerBtn');
+    registerBtn.disabled = completed !== totalFields;
+}
+
+// Validación del formulario
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    if (!isUsernameValid || !isEmailValid || !isPasswordValid || !isConfirmValid || 
+        !document.getElementById('accept_terms').checked) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Mostrar mensaje de error general
+        alert('Por favor completa todos los campos correctamente y acepta los términos.');
+    } else {
+        // Mostrar spinner
+        document.getElementById('registerBtn').disabled = true;
+        document.getElementById('registerSpinner').classList.remove('d-none');
+    }
+    
+    this.classList.add('was-validated');
+});
+</script>
+
+<style>
+.card {
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.input-group-text {
+    transition: all 0.3s;
+}
+
+.form-control:focus + .input-group-text,
+.form-control:focus ~ .input-group-text {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
+
+.password-strength {
+    transition: all 0.3s;
+}
+
+.progress {
+    transition: width 0.3s ease;
+}
+
+#passwordRequirements li {
+    transition: color 0.3s ease;
+    font-size: 0.85rem;
+}
+
+.modal-content {
+    border: none;
+    border-radius: 1rem;
+}
+
+.modal-header {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom: none;
+}
+
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1.5rem !important;
+    }
+    
+    .btn-lg {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+    
+    .display-4 {
+        font-size: 2.5rem;
+    }
+}
+</style>
+{% endblock %}

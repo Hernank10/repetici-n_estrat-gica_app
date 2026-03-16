@@ -1,0 +1,176 @@
+{
+  "niveles": [
+    {
+      "id": 1,
+      "nombre": "Principiante",
+      "nombre_en": "Beginner",
+      "nivel": 1,
+      "xp_requerido": 0,
+      "xp_maximo": 499,
+      "color": "bronce",
+      "color_bootstrap": "secondary",
+      "color_hex": "#CD7F32",
+      "icono": "🌱",
+      "icono_bootstrap": "bi-seedling",
+      "descripcion": "Comienza tu viaje en la combinatoria léxica. Aprende los verbos básicos de movimiento y sus usos más comunes.",
+      "descripcion_larga": "En este nivel aprenderás los verbos fundamentales: subir, bajar, caer y levantar. Te familiarizarás con sus usos literales y comenzarás a explorar las primeras restricciones semánticas.",
+      "objetivos": [
+        "Identificar los 4 verbos principales de movimiento",
+        "Comprender la diferencia entre uso literal y metafórico",
+        "Realizar 10 ejercicios básicos correctamente",
+        "Estudiar 5 flashcards iniciales"
+      ],
+      "recompensas": {
+        "medalla": "novato",
+        "estrellas": 1,
+        "xp_bonus": 100,
+        "titulo": "Explorador Inicial"
+      },
+      "ejercicios_desbloqueados": "1-20",
+      "flashcards_desbloqueadas": "1-10"
+    },
+    {
+      "id": 2,
+      "nombre": "Intermedio",
+      "nombre_en": "Intermediate",
+      "nivel": 2,
+      "xp_requerido": 500,
+      "xp_maximo": 1499,
+      "color": "plata",
+      "color_bootstrap": "info",
+      "color_hex": "#C0C0C0",
+      "icono": "🌿",
+      "icono_bootstrap": "bi-tree",
+      "descripcion": "Ya dominas las combinaciones básicas. Ahora explorarás verbos más específicos como izar, arriar y alzar.",
+      "descripcion_larga": "Profundizarás en verbos de movimiento más especializados y comenzarás a entender las restricciones semánticas con mayor claridad. Introducción a las metáforas conceptuales y expresiones idiomáticas.",
+      "objetivos": [
+        "Dominar 8 verbos de movimiento diferentes",
+        "Identificar usos metafóricos comunes",
+        "Completar 30 ejercicios de nivel intermedio",
+        "Estudiar 15 flashcards adicionales",
+        "Mantener una racha de 5 días"
+      ],
+      "recompensas": {
+        "medalla": "aprendiz",
+        "estrellas": 3,
+        "xp_bonus": 250,
+        "titulo": "Aprendiz Dedicado"
+      },
+      "ejercicios_desbloqueados": "21-50",
+      "flashcards_desbloqueadas": "11-25"
+    },
+    {
+      "id": 3,
+      "nombre": "Avanzado",
+      "nombre_en": "Advanced",
+      "nivel": 3,
+      "xp_requerido": 1500,
+      "xp_maximo": 2999,
+      "color": "oro",
+      "color_bootstrap": "warning",
+      "color_hex": "#FFD700",
+      "icono": "🌳",
+      "icono_bootstrap": "bi-tree-fill",
+      "descripcion": "Manejas con soltura las restricciones semánticas. Ahora explorarás combinaciones más complejas y matices de significado.",
+      "descripcion_larga": "En el nivel avanzado, trabajarás con verbos como ascender, descender, emerger y hundir. Comprenderás las diferencias sutiles entre sinónimos y las restricciones contextuales más específicas.",
+      "objetivos": [
+        "Diferenciar entre 12 verbos de movimiento",
+        "Dominar metáforas complejas",
+        "Completar 50 ejercicios de nivel avanzado",
+        "Estudiar 20 flashcards adicionales",
+        "Alcanzar una precisión del 80%",
+        "Mantener una racha de 10 días"
+      ],
+      "recompensas": {
+        "medalla": "experto",
+        "estrellas": 5,
+        "xp_bonus": 500,
+        "titulo": "Maestro de Verbos"
+      },
+      "ejercicios_desbloqueados": "51-75",
+      "flashcards_desbloqueadas": "26-35"
+    },
+    {
+      "id": 4,
+      "nombre": "Experto",
+      "nombre_en": "Expert",
+      "nivel": 4,
+      "xp_requerido": 3000,
+      "xp_maximo": 4999,
+      "color": "diamante",
+      "color_bootstrap": "primary",
+      "color_hex": "#B9F2FF",
+      "icono": "🏆",
+      "icono_bootstrap": "bi-trophy",
+      "descripcion": "Conoces las combinaciones como un lingüista. Ahora explorarás los diccionarios de Bosque y las colocaciones léxicas.",
+      "descripcion_larga": "Nivel experto: te sumergirás en los diccionarios REDES y PRÁCTICO de Ignacio Bosque. Comprenderás las complejidades de las colocaciones y las restricciones léxicas documentadas.",
+      "objetivos": [
+        "Conocer 15+ verbos de movimiento",
+        "Comprender las entradas de REDES",
+        "Completar 75 ejercicios de nivel experto",
+        "Estudiar todas las flashcards",
+        "Alcanzar una precisión del 90%",
+        "Guardar 20 oraciones originales"
+      ],
+      "recompensas": {
+        "medalla": "maestro",
+        "estrellas": 10,
+        "xp_bonus": 1000,
+        "titulo": "Lingüista en Formación"
+      },
+      "ejercicios_desbloqueados": "76-90",
+      "flashcards_desbloqueadas": "36-45"
+    },
+    {
+      "id": 5,
+      "nombre": "Maestro",
+      "nombre_en": "Master",
+      "nivel": 5,
+      "xp_requerido": 5000,
+      "xp_maximo": 10000,
+      "color": "legendario",
+      "color_bootstrap": "danger",
+      "color_hex": "#FF4500",
+      "icono": "👑",
+      "icono_bootstrap": "bi-crown",
+      "descripcion": "Eres un verdadero experto en combinatoria léxica. Has alcanzado el nivel máximo de conocimiento.",
+      "descripcion_larga": "Nivel maestro: has completado todo el contenido y ahora puedes crear tus propias combinaciones con total naturalidad. Reconoces las sutilezas del lenguaje y puedes explicar las restricciones semánticas a otros.",
+      "objetivos": [
+        "Completar los 100 ejercicios",
+        "Estudiar las 50 flashcards",
+        "Alcanzar 5000 XP",
+        "Desbloquear todas las medallas",
+        "Mantener una racha de 30 días",
+        "Guardar 50 oraciones originales",
+        "Ayudar a otros estudiantes"
+      ],
+      "recompensas": {
+        "medalla": "leyenda",
+        "estrellas": 20,
+        "xp_bonus": 2000,
+        "titulo": "Maestro de la Combinatoria Léxica"
+      },
+      "ejercicios_desbloqueados": "91-100",
+      "flashcards_desbloqueadas": "46-50"
+    }
+  ],
+  "estadisticas_globales": {
+    "total_usuarios": 0,
+    "usuarios_por_nivel": {
+      "principiante": 0,
+      "intermedio": 0,
+      "avanzado": 0,
+      "experto": 0,
+      "maestro": 0
+    },
+    "xp_promedio": 0,
+    "ejercicios_totales_completados": 0
+  },
+  "requisitos_especiales": {
+    "desbloquear_logros": {
+      "racha_maestro": 30,
+      "precision_perfecta": 100,
+      "coleccionista_total": 50
+    }
+  }
+}

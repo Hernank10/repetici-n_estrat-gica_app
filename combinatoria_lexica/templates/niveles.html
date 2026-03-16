@@ -1,0 +1,735 @@
+{% extends "base.html" %}
+
+{% block title %}Sistema de Niveles - Combinatoria Léxica{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Encabezado -->
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold">
+            <i class="bi bi-bar-chart-steps text-primary me-3"></i>
+            Sistema de Niveles
+        </h1>
+        <p class="lead text-muted">
+            ¡Sube de nivel mientras dominas la combinatoria léxica y desbloquea recompensas exclusivas!
+        </p>
+    </div>
+
+    <!-- Tarjeta de progreso del usuario -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg bg-gradient-primary">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-4 text-center mb-3 mb-md-0">
+                            <div class="position-relative d-inline-block">
+                                <div class="level-circle-large" id="userLevelCircle">
+                                    <span class="display-3 fw-bold" id="userLevelNumber">1</span>
+                                </div>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning" id="userLevelName">
+                                    Principiante
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <h3 class="text-white mb-3">Tu Progreso</h3>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between text-white-50 mb-2">
+                                    <span><i class="bi bi-star-fill me-2"></i>XP Actual</span>
+                                    <span class="fw-bold text-white" id="userXP">0 XP</span>
+                                </div>
+                                <div class="progress" style="height: 12px;">
+                                    <div id="userProgressBar" class="progress-bar bg-warning" role="progressbar" style="width: 0%"></div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-2">
+                                    <small class="text-white-50" id="userLevelXP">0 XP</small>
+                                    <small class="text-white-50" id="userNextLevelXP">500 XP</small>
+                                </div>
+                            </div>
+                            <div class="row text-white-50">
+                                <div class="col-4 text-center">
+                                    <div class="fw-bold text-white fs-4" id="userEjercicios">0</div>
+                                    <small>Ejercicios</small>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <div class="fw-bold text-white fs-4" id="userRacha">0</div>
+                                    <small>Racha 🔥</small>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <div class="fw-bold text-white fs-4" id="userLogros">0</div>
+                                    <small>Logros</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timeline de niveles -->
+    <div class="position-relative mb-5">
+        <div class="timeline-line"></div>
+        <div class="row justify-content-between" id="nivelesTimeline">
+            <!-- Los niveles se generarán dinámicamente -->
+        </div>
+    </div>
+
+    <!-- Grid de niveles -->
+    <div class="row g-4 mb-5" id="nivelesGrid">
+        <!-- Los niveles se cargarán dinámicamente -->
+    </div>
+
+    <!-- Recompensas y beneficios -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h3 class="fw-bold mb-4">
+                <i class="bi bi-gift-fill text-warning me-2"></i>
+                Recompensas por Nivel
+            </h3>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 text-center hover-scale">
+                <div class="card-body">
+                    <div class="rounded-circle bg-primary bg-gradient p-3 d-inline-block mb-3">
+                        <i class="bi bi-star-fill text-white fs-3"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Estrellas</h5>
+                    <p class="text-muted small">Gana estrellas al subir de nivel y canjéalas por recompensas especiales</p>
+                    <div class="mt-3">
+                        <span class="badge bg-primary" id="totalEstrellas">0</span> estrellas obtenidas
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 text-center hover-scale">
+                <div class="card-body">
+                    <div class="rounded-circle bg-success bg-gradient p-3 d-inline-block mb-3">
+                        <i class="bi bi-trophy-fill text-white fs-3"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Medallas</h5>
+                    <p class="text-muted small">Desbloquea medallas exclusivas que demuestran tu experiencia</p>
+                    <div class="mt-3">
+                        <span class="badge bg-success" id="totalMedallas">0</span> medallas obtenidas
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 text-center hover-scale">
+                <div class="card-body">
+                    <div class="rounded-circle bg-warning bg-gradient p-3 d-inline-block mb-3">
+                        <i class="bi bi-lock-fill text-white fs-3"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Contenido Exclusivo</h5>
+                    <p class="text-muted small">Accede a ejercicios más desafiantes y contenido premium</p>
+                    <div class="mt-3">
+                        <span class="badge bg-warning text-dark" id="nivelMaximo">5</span> niveles disponibles
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 text-center hover-scale">
+                <div class="card-body">
+                    <div class="rounded-circle bg-info bg-gradient p-3 d-inline-block mb-3">
+                        <i class="bi bi-gem text-white fs-3"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Títulos</h5>
+                    <p class="text-muted small">Obtén títulos especiales que muestran tu rango en la comunidad</p>
+                    <div class="mt-3">
+                        <span class="badge bg-info" id="tituloActual">Explorador</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logros especiales por nivel -->
+    <div class="row">
+        <div class="col-12">
+            <h3 class="fw-bold mb-4">
+                <i class="bi bi-award-fill text-warning me-2"></i>
+                Logros Especiales por Nivel
+            </h3>
+        </div>
+        
+        <div class="col-lg-6 mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 pt-4">
+                    <h5 class="fw-semibold mb-0">
+                        <i class="bi bi-lightning-charge-fill text-warning me-2"></i>
+                        Logros de Progresión
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush" id="logrosProgresion">
+                        <div class="list-group-item d-flex align-items-center px-0">
+                            <span class="display-6 me-3">🌱</span>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1 fw-semibold">Novato</h6>
+                                <small class="text-muted">Alcanza el nivel Principiante</small>
+                                <div class="progress mt-2" style="height: 4px;">
+                                    <div class="progress-bar bg-success" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <i class="bi bi-check-circle-fill text-success fs-4"></i>
+                        </div>
+                        
+                        <div class="list-group-item d-flex align-items-center px-0">
+                            <span class="display-6 me-3">🌿</span>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1 fw-semibold">Aprendiz</h6>
+                                <small class="text-muted">Alcanza el nivel Intermedio</small>
+                                <div class="progress mt-2" style="height: 4px;">
+                                    <div class="progress-bar bg-warning" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <span class="badge bg-warning">60%</span>
+                        </div>
+                        
+                        <div class="list-group-item d-flex align-items-center px-0">
+                            <span class="display-6 me-3">🌳</span>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1 fw-semibold">Experto</h6>
+                                <small class="text-muted">Alcanza el nivel Avanzado</small>
+                                <div class="progress mt-2" style="height: 4px;">
+                                    <div class="progress-bar bg-info" style="width: 30%"></div>
+                                </div>
+                            </div>
+                            <span class="badge bg-info">30%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 pt-4">
+                    <h5 class="fw-semibold mb-0">
+                        <i class="bi bi-trophy-fill text-warning me-2"></i>
+                        Próximas Recompensas
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="proximasRecompensas">
+                        <div class="text-center text-muted py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de detalles de nivel -->
+<div class="modal fade" id="nivelModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0">
+            <div class="modal-header" id="nivelModalHeader">
+                <h5 class="modal-title" id="nivelModalTitle">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    Detalles del Nivel
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4" id="nivelModalBody">
+                <!-- Contenido dinámico -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="nivelModalAction">Continuar practicando</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Datos de niveles (simulados - idealmente vendrían del backend)
+const nivelesData = [
+    {
+        id: 1,
+        nombre: 'Principiante',
+        nivel: 1,
+        xp_requerido: 0,
+        xp_maximo: 499,
+        color: 'secondary',
+        icono: '🌱',
+        descripcion: 'Comienza tu viaje en la combinatoria léxica',
+        beneficios: [
+            'Acceso a ejercicios básicos',
+            '5 flashcards disponibles',
+            'Medalla "Novato" al completar'
+        ],
+        recompensas: {
+            estrellas: 1,
+            medalla: 'Novato',
+            titulo: 'Explorador'
+        }
+    },
+    {
+        id: 2,
+        nombre: 'Intermedio',
+        nivel: 2,
+        xp_requerido: 500,
+        xp_maximo: 1499,
+        color: 'info',
+        icono: '🌿',
+        descripcion: 'Ya dominas las combinaciones básicas',
+        beneficios: [
+            'Acceso a ejercicios intermedios',
+            '15 flashcards disponibles',
+            'Medalla "Aprendiz" al completar'
+        ],
+        recompensas: {
+            estrellas: 3,
+            medalla: 'Aprendiz',
+            titulo: 'Conocedor'
+        }
+    },
+    {
+        id: 3,
+        nombre: 'Avanzado',
+        nivel: 3,
+        xp_requerido: 1500,
+        xp_maximo: 2999,
+        color: 'warning',
+        icono: '🌳',
+        descripcion: 'Manejas con soltura las restricciones semánticas',
+        beneficios: [
+            'Acceso a ejercicios avanzados',
+            '30 flashcards disponibles',
+            'Medalla "Experto" al completar'
+        ],
+        recompensas: {
+            estrellas: 5,
+            medalla: 'Experto',
+            titulo: 'Maestro'
+        }
+    },
+    {
+        id: 4,
+        nombre: 'Experto',
+        nivel: 4,
+        xp_requerido: 3000,
+        xp_maximo: 4999,
+        color: 'primary',
+        icono: '🏆',
+        descripcion: 'Conoces las combinaciones como un lingüista',
+        beneficios: [
+            'Acceso a ejercicios de experto',
+            '45 flashcards disponibles',
+            'Medalla "Maestro" al completar'
+        ],
+        recompensas: {
+            estrellas: 10,
+            medalla: 'Maestro',
+            titulo: 'Lingüista'
+        }
+    },
+    {
+        id: 5,
+        nombre: 'Maestro',
+        nivel: 5,
+        xp_requerido: 5000,
+        xp_maximo: 10000,
+        color: 'danger',
+        icono: '👑',
+        descripcion: 'Eres un verdadero experto en combinatoria léxica',
+        beneficios: [
+            'Acceso a todos los ejercicios',
+            'Todas las flashcards',
+            'Medalla "Leyenda" al completar',
+            'Certificado de finalización'
+        ],
+        recompensas: {
+            estrellas: 20,
+            medalla: 'Leyenda',
+            titulo: 'Gran Maestro'
+        }
+    }
+];
+
+document.addEventListener('DOMContentLoaded', function() {
+    cargarNiveles();
+    cargarProgresoUsuario();
+});
+
+function cargarNiveles() {
+    const timeline = document.getElementById('nivelesTimeline');
+    const grid = document.getElementById('nivelesGrid');
+    
+    // Generar timeline
+    timeline.innerHTML = nivelesData.map((nivel, index) => `
+        <div class="col position-relative">
+            <div class="timeline-node ${index === 0 ? 'active' : ''}" data-nivel="${nivel.nivel}">
+                <span class="timeline-icon">${nivel.icono}</span>
+                <span class="timeline-label">${nivel.nombre}</span>
+            </div>
+        </div>
+    `).join('');
+    
+    // Generar grid de niveles
+    grid.innerHTML = nivelesData.map(nivel => `
+        <div class="col-md-6 col-lg-4">
+            <div class="card nivel-card h-100 border-0 shadow-sm hover-scale" data-nivel="${nivel.nivel}">
+                <div class="card-body text-center p-4">
+                    <div class="nivel-icon mb-3">
+                        <span class="display-1">${nivel.icono}</span>
+                    </div>
+                    <h4 class="fw-bold mb-2">${nivel.nombre}</h4>
+                    <p class="text-muted small mb-3">${nivel.descripcion}</p>
+                    
+                    <div class="nivel-stats mb-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>XP Requerido:</span>
+                            <span class="fw-bold">${nivel.xp_requerido} XP</span>
+                        </div>
+                        <div class="progress" style="height: 6px;">
+                            <div class="progress-bar bg-${nivel.color}" role="progressbar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="nivel-recompensas mb-3">
+                        <h6 class="fw-semibold mb-2">Recompensas:</h6>
+                        <div class="d-flex justify-content-center gap-3">
+                            <span class="badge bg-warning text-dark" title="Estrellas">
+                                <i class="bi bi-star-fill me-1"></i>${nivel.recompensas.estrellas}
+                            </span>
+                            <span class="badge bg-info" title="Medalla">
+                                <i class="bi bi-trophy-fill me-1"></i>${nivel.recompensas.medalla}
+                            </span>
+                            <span class="badge bg-success" title="Título">
+                                <i class="bi bi-gem me-1"></i>${nivel.recompensas.titulo}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-outline-${nivel.color} btn-sm" onclick="verDetalleNivel(${nivel.nivel})">
+                        <i class="bi bi-eye me-1"></i>Ver detalles
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function cargarProgresoUsuario() {
+    fetch('/api/user/stats')
+        .then(response => response.json())
+        .then(data => {
+            // Actualizar información del usuario
+            document.getElementById('userXP').textContent = data.xp + ' XP';
+            document.getElementById('userEjercicios').textContent = data.ejercicios_completados;
+            document.getElementById('userRacha').textContent = data.racha_actual;
+            document.getElementById('userLogros').textContent = data.logros_totales || 0;
+            
+            // Actualizar nivel
+            const nivelActual = data.nivel;
+            document.getElementById('userLevelNumber').textContent = nivelActual.id || '1';
+            document.getElementById('userLevelName').textContent = nivelActual.nombre;
+            document.getElementById('userLevelName').className = `position-absolute top-0 start-100 translate-middle badge rounded-pill bg-${nivelActual.color_bootstrap}`;
+            
+            // Actualizar barra de progreso
+            document.getElementById('userProgressBar').style.width = nivelActual.progreso + '%';
+            document.getElementById('userLevelXP').textContent = data.xp + ' XP';
+            document.getElementById('userNextLevelXP').textContent = (data.xp + data.xp_para_siguiente) + ' XP';
+            
+            // Actualizar recompensas totales
+            document.getElementById('totalEstrellas').textContent = calcularTotalEstrellas(data.nivel.nivel);
+            document.getElementById('totalMedallas').textContent = data.logros_totales || 0;
+            document.getElementById('tituloActual').textContent = obtenerTituloPorNivel(data.nivel.nombre);
+            
+            // Actualizar timeline
+            actualizarTimeline(data.nivel.nivel);
+            
+            // Cargar próximas recompensas
+            cargarProximasRecompensas(data);
+        })
+        .catch(error => console.error('Error cargando progreso:', error));
+}
+
+function calcularTotalEstrellas(nivel) {
+    const estrellasPorNivel = [0, 1, 3, 5, 10, 20];
+    return estrellasPorNivel.slice(0, nivel).reduce((a, b) => a + b, 0);
+}
+
+function obtenerTituloPorNivel(nivel) {
+    const titulos = {
+        'principiante': 'Explorador',
+        'intermedio': 'Conocedor',
+        'avanzado': 'Maestro',
+        'experto': 'Lingüista',
+        'maestro': 'Gran Maestro'
+    };
+    return titulos[nivel.toLowerCase()] || 'Explorador';
+}
+
+function actualizarTimeline(nivelActual) {
+    const nodes = document.querySelectorAll('.timeline-node');
+    nodes.forEach((node, index) => {
+        if (index + 1 < nivelActual) {
+            node.classList.add('completed');
+            node.classList.remove('active');
+        } else if (index + 1 === nivelActual) {
+            node.classList.add('active');
+            node.classList.remove('completed');
+        } else {
+            node.classList.remove('active', 'completed');
+        }
+    });
+}
+
+function cargarProximasRecompensas(userData) {
+    const container = document.getElementById('proximasRecompensas');
+    const nivelActual = userData.nivel.nivel;
+    const xpActual = userData.xp;
+    
+    const siguientesNiveles = nivelesData.filter(n => n.nivel > nivelActual).slice(0, 2);
+    
+    if (siguientesNiveles.length === 0) {
+        container.innerHTML = `
+            <div class="text-center text-success py-4">
+                <i class="bi bi-trophy-fill display-4 d-block mb-3"></i>
+                <h6>¡Has alcanzado el nivel máximo!</h6>
+                <p class="small text-muted">Sigue practicando para mantener tu título</p>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = siguientesNiveles.map(nivel => {
+        const xpNecesario = nivel.xp_requerido - xpActual;
+        return `
+            <div class="d-flex align-items-center mb-3 p-3 bg-light rounded-3">
+                <span class="display-6 me-3">${nivel.icono}</span>
+                <div class="flex-grow-1">
+                    <h6 class="mb-1 fw-semibold">${nivel.nombre}</h6>
+                    <small class="text-muted d-block mb-2">Faltan ${xpNecesario} XP</small>
+                    <div class="progress" style="height: 4px;">
+                        <div class="progress-bar bg-${nivel.color}" style="width: ${calcularProgresoHaciaNivel(xpActual, nivel)}%"></div>
+                    </div>
+                </div>
+                <div class="ms-3">
+                    <span class="badge bg-warning text-dark" title="Estrellas">
+                        <i class="bi bi-star-fill me-1"></i>${nivel.recompensas.estrellas}
+                    </span>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function calcularProgresoHaciaNivel(xpActual, nivel) {
+    const xpEnRango = xpActual - nivel.xp_requerido;
+    const rangoTotal = nivel.xp_maximo - nivel.xp_requerido;
+    return Math.min(100, Math.max(0, (xpEnRango / rangoTotal) * 100));
+}
+
+function verDetalleNivel(nivelId) {
+    const nivel = nivelesData.find(n => n.nivel === nivelId);
+    if (!nivel) return;
+    
+    const modalHeader = document.getElementById('nivelModalHeader');
+    const modalTitle = document.getElementById('nivelModalTitle');
+    const modalBody = document.getElementById('nivelModalBody');
+    
+    modalHeader.className = `modal-header bg-${nivel.color} text-white`;
+    modalTitle.innerHTML = `<i class="bi bi-info-circle-fill me-2"></i>Nivel ${nivel.nivel}: ${nivel.nombre}`;
+    
+    modalBody.innerHTML = `
+        <div class="text-center mb-4">
+            <span class="display-1">${nivel.icono}</span>
+            <h4 class="mt-3 fw-bold">${nivel.nombre}</h4>
+            <p class="text-muted">${nivel.descripcion}</p>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-6 text-center">
+                <div class="p-3 bg-light rounded-3">
+                    <small class="text-muted d-block">XP Requerido</small>
+                    <span class="fw-bold fs-4">${nivel.xp_requerido}</span>
+                </div>
+            </div>
+            <div class="col-6 text-center">
+                <div class="p-3 bg-light rounded-3">
+                    <small class="text-muted d-block">XP Máximo</small>
+                    <span class="fw-bold fs-4">${nivel.xp_maximo}</span>
+                </div>
+            </div>
+        </div>
+        
+        <h6 class="fw-semibold mb-3">Beneficios del nivel:</h6>
+        <ul class="list-unstyled mb-4">
+            ${nivel.beneficios.map(b => `
+                <li class="mb-2">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                    ${b}
+                </li>
+            `).join('')}
+        </ul>
+        
+        <h6 class="fw-semibold mb-3">Recompensas al completar:</h6>
+        <div class="d-flex justify-content-around p-3 bg-light rounded-3">
+            <div class="text-center">
+                <i class="bi bi-star-fill text-warning fs-3"></i>
+                <div class="fw-bold">${nivel.recompensas.estrellas}</div>
+                <small class="text-muted">Estrellas</small>
+            </div>
+            <div class="text-center">
+                <i class="bi bi-trophy-fill text-info fs-3"></i>
+                <div class="fw-bold">${nivel.recompensas.medalla}</div>
+                <small class="text-muted">Medalla</small>
+            </div>
+            <div class="text-center">
+                <i class="bi bi-gem text-success fs-3"></i>
+                <div class="fw-bold">${nivel.recompensas.titulo}</div>
+                <small class="text-muted">Título</small>
+            </div>
+        </div>
+    `;
+    
+    const modal = new bootstrap.Modal(document.getElementById('nivelModal'));
+    modal.show();
+}
+
+// Estilos adicionales
+const style = document.createElement('style');
+style.textContent = `
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .level-circle-large {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: white;
+        color: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        animation: pulse 2s infinite;
+    }
+    
+    .timeline-line {
+        position: absolute;
+        top: 35px;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: #e9ecef;
+        z-index: 0;
+    }
+    
+    .timeline-node {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        cursor: pointer;
+    }
+    
+    .timeline-node .timeline-icon {
+        display: block;
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        margin: 0 auto 10px;
+        border-radius: 50%;
+        background: #e9ecef;
+        color: #6c757d;
+        font-size: 24px;
+        transition: all 0.3s;
+    }
+    
+    .timeline-node.active .timeline-icon {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        transform: scale(1.1);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .timeline-node.completed .timeline-icon {
+        background: #28a745;
+        color: white;
+    }
+    
+    .timeline-node .timeline-label {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #6c757d;
+    }
+    
+    .timeline-node.active .timeline-label {
+        color: #667eea;
+        font-weight: 600;
+    }
+    
+    .hover-scale {
+        transition: all 0.3s;
+    }
+    
+    .hover-scale:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 2rem rgba(0,0,0,.15)!important;
+    }
+    
+    .nivel-card {
+        cursor: pointer;
+        border-left: 4px solid transparent;
+    }
+    
+    .nivel-card[data-nivel="1"] { border-left-color: #6c757d; }
+    .nivel-card[data-nivel="2"] { border-left-color: #17a2b8; }
+    .nivel-card[data-nivel="3"] { border-left-color: #ffc107; }
+    .nivel-card[data-nivel="4"] { border-left-color: #007bff; }
+    .nivel-card[data-nivel="5"] { border-left-color: #dc3545; }
+    
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .level-circle-large {
+            width: 80px;
+            height: 80px;
+        }
+        
+        .level-circle-large .display-3 {
+            font-size: 2rem;
+        }
+        
+        .timeline-node .timeline-icon {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 18px;
+        }
+        
+        .timeline-node .timeline-label {
+            font-size: 0.7rem;
+        }
+    }
+`;
+document.head.appendChild(style);
+</script>
+{% endblock %}

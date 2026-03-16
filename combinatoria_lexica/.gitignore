@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pythonenv*
+
+# Base de datos
+*.db
+*.sqlite
+*.sqlite3
+
+# Archivos de entorno
+.env
+.flaskenv
+*.conf
+
+# Archivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Archivos de log
+*.log
+*.log.*
+
+# Archivos de caché
+.cache/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Archivos de backup
+*.bak
+*.backup
+*.old
+
+# Archivos de distribución
+dist/
+build/
+*.egg-info/
+
+# Archivos de la aplicación
+instance/
+*.pid
+*.sock
+
+# Archivos de documentación
+docs/_build/
+
+# Archivos de test
+tests/.cache
+
+# Mantener directorios vacíos
+**/.gitkeep
+
+# Archivos de configuración local
+config_local.py

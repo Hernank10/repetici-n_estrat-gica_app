@@ -1,0 +1,552 @@
+{% extends "base.html" %}
+
+{% block title %}Mi Perfil - Combinatoria Léxica{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Encabezado -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="display-5 fw-bold">
+                <i class="bi bi-person-circle text-primary me-3"></i>
+                Mi Perfil
+            </h1>
+            <p class="text-muted lead">
+                Gestiona tu información personal y configuración de la cuenta
+            </p>
+        </div>
+        <div class="text-end">
+            <span class="badge bg-info p-3 rounded-3">
+                <i class="bi bi-calendar-check me-2"></i>
+                Miembro desde: {{ current_user.created_at.strftime('%d/%m/%Y') }}
+            </span>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Columna izquierda - Información personal -->
+        <div class="col-lg-4">
+            <!-- Tarjeta de perfil -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body text-center p-4">
+                    <div class="position-relative d-inline-block mb-3">
+                        <div class="avatar-circle-large bg-primary text-white" id="avatarInicial">
+                            {{ current_user.username[0]|upper }}
+                        </div>
+                        <button class="btn btn-sm btn-primary position-absolute bottom-0 end-0 rounded-circle" 
+                                data-bs-toggle="modal" data-bs-target="#avatarModal" title="Cambiar avatar">
+                            <i class="bi bi-camera-fill"></i>
+                        </button>
+                    </div>
+                    
+                    <h3 class="fw-bold mb-1">{{ current_user.username }}</h3>
+                    <p class="text-muted mb-3">{{ current_user.email }}</p>
+                    
+                    <div class="d-flex justify-content-center gap-2 mb-3">
+                        <span class="badge bg-primary p-2">
+                            <i class="bi bi-trophy-fill me-1"></i>
+                            Nivel {{ current_user.nivel_actual|title }}
+                        </span>
+                        <span class="badge bg-success p-2">
+                            <i class="bi bi-star-fill me-1"></i>
+                            {{ current_user.xp }} XP
+                        </span>
+                    </div>
+                    
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <h5 class="fw-bold mb-0">{{ current_user.ejercicios_completados }}</h5>
+                            <small class="text-muted">Ejercicios</small>
+                        </div>
+                        <div class="col-4">
+                            <h5 class="fw-bold mb-0">{{ current_user.flashcards_estudiadas }}</h5>
+                            <small class="text-muted">Flashcards</small>
+                        </div>
+                        <div class="col-4">
+                            <h5 class="fw-bold mb-0">{{ current_user.logros_totales }}</h5>
+                            <small class="text-muted">Logros</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estadísticas rápidas -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-transparent border-0 pt-4">
+                    <h5 class="fw-semibold mb-0">
+                        <i class="bi bi-bar-chart-fill text-primary me-2"></i>
+                        Estadísticas Rápidas
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            <span><i class="bi bi-calendar-check me-2 text-success"></i>Días activo</span>
+                            <span class="fw-bold">{{ (now - current_user.created_at).days }} días</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            <span><i class="bi bi-clock-history me-2 text-info"></i>Último acceso</span>
+                            <span class="fw-bold">{{ current_user.last_active.strftime('%d/%m/%Y %H:%M') }}</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            <span><i class="bi bi-fire me-2 text-danger"></i>Racha máxima</span>
+                            <span class="fw-bold">{{ current_user.racha_maxima }} días</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            <span><i class="bi bi-bullseye me-2 text-warning"></i>Precisión</span>
+                            <span class="fw-bold">
+                                {% if current_user.ejercicios_completados > 0 %}
+                                    {{ (current_user.ejercicios_correctos / current_user.ejercicios_completados * 100)|int }}%
+                                {% else %}
+                                    0%
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logros destacados -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 pt-4">
+                    <h5 class="fw-semibold mb-0">
+                        <i class="bi bi-trophy-fill text-warning me-2"></i>
+                        Logros Destacados
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="logrosDestacados">
+                        <!-- Se llenará con JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna derecha - Configuración -->
+        <div class="col-lg-8">
+            <!-- Formulario de edición de perfil -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-transparent border-0 pt-4">
+                    <h5 class="fw-semibold mb-0">
+                        <i class="bi bi-pencil-square text-primary me-2"></i>
+                        Editar Perfil
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('perfil') }}" id="perfilForm">
+                        {{ form.hidden_tag() }}
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    <i class="bi bi-person me-1"></i>Nombre de Usuario
+                                </label>
+                                {{ form.username(class="form-control" + (' is-invalid' if form.username.errors else ''), 
+                                                placeholder="Tu nombre de usuario") }}
+                                {% if form.username.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.username.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    <i class="bi bi-envelope me-1"></i>Correo Electrónico
+                                </label>
+                                {{ form.email(class="form-control" + (' is-invalid' if form.email.errors else ''), 
+                                            placeholder="tu@email.com") }}
+                                {% if form.email.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <h6 class="fw-semibold mb-3">Cambiar Contraseña</h6>
+                        
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Contraseña Actual</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0">
+                                        <i class="bi bi-lock"></i>
+                                    </span>
+                                    {{ form.current_password(class="form-control border-start-0", 
+                                                            placeholder="••••••••") }}
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label class="form-label">Nueva Contraseña</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0">
+                                        <i class="bi bi-lock-fill"></i>
+                                    </span>
+                                    {{ form.new_password(class="form-control border-start-0", 
+                                                        placeholder="••••••••", id="newPassword") }}
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label class="form-label">Confirmar Contraseña</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0">
+                                        <i class="bi bi-lock-fill"></i>
+                                    </span>
+                                    {{ form.confirm_new_password(class="form-control border-start-0", 
+                                                                placeholder="••••••••", id="confirmPassword") }}
+                                </div>
+                                <small class="text-danger d-none" id="passwordError">Las contraseñas no coinciden</small>
+                            </div>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <h6 class="fw-semibold mb-3">Preferencias</h6>
+                        
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Tema</label>
+                                {{ form.theme_preference(class="form-select") }}
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label class="form-label">Tamaño de Fuente</label>
+                                {{ form.font_size(class="form-select") }}
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label class="form-label">&nbsp;</label>
+                                <div class="d-flex gap-3">
+                                    <div class="form-check">
+                                        {{ form.notifications_enabled(class="form-check-input") }}
+                                        <label class="form-check-label">Notificaciones</label>
+                                    </div>
+                                    <div class="form-check">
+                                        {{ form.sound_enabled(class="form-check-input") }}
+                                        <label class="form-check-label">Sonidos</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary px-5" id="guardarPerfil">
+                                <i class="bi bi-check-circle me-2"></i>Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Historial de actividad -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-transparent border-0 pt-4">
+                    <h5 class="fw-semibold mb-0">
+                        <i class="bi bi-clock-history text-info me-2"></i>
+                        Actividad Reciente
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="actividadReciente">
+                        <!-- Se llenará con JavaScript -->
+                    </div>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-outline-primary btn-sm" id="verMasActividad">
+                            Ver más actividad
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Zona de peligro - Eliminar cuenta -->
+            <div class="card border-0 shadow-sm border-danger">
+                <div class="card-header bg-transparent border-0 pt-4">
+                    <h5 class="fw-semibold text-danger mb-0">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        Zona de Peligro
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small mb-3">
+                        Una vez que elimines tu cuenta, no hay vuelta atrás. Por favor, ten certeza.
+                    </p>
+                    <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarCuentaModal">
+                        <i class="bi bi-trash-fill me-2"></i>Eliminar mi cuenta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para cambiar avatar -->
+<div class="modal fade" id="avatarModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content border-0">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-camera-fill me-2"></i>Cambiar Avatar
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="avatarForm" enctype="multipart/form-data">
+                    {{ avatar_form.hidden_tag() }}
+                    
+                    <div class="text-center mb-4">
+                        <div class="avatar-circle-large bg-primary text-white mx-auto mb-3" id="avatarPreview">
+                            {{ current_user.username[0]|upper }}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Seleccionar imagen</label>
+                        {{ avatar_form.avatar(class="form-control", accept="image/*", id="avatarInput") }}
+                        <small class="text-muted">Formatos permitidos: JPG, PNG, GIF. Máximo 5MB.</small>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" id="subirAvatar">
+                            <i class="bi bi-upload me-2"></i>Subir Avatar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación para eliminar cuenta -->
+<div class="modal fade" id="eliminarCuentaModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content border-0">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>¿Eliminar cuenta?
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-3">Esta acción es permanente y no se puede deshacer. Se eliminará:</p>
+                <ul class="text-muted small">
+                    <li>Tu información personal</li>
+                    <li>Todo tu progreso y estadísticas</li>
+                    <li>Tus oraciones guardadas</li>
+                    <li>Tus logros y medallas</li>
+                </ul>
+                <p class="fw-bold text-danger mt-3">¿Estás seguro de que quieres continuar?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmarEliminar">
+                    <i class="bi bi-trash-fill me-2"></i>Sí, eliminar mi cuenta
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    cargarLogrosDestacados();
+    cargarActividadReciente();
+    
+    // Validación de contraseñas
+    const newPassword = document.getElementById('newPassword');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const passwordError = document.getElementById('passwordError');
+    
+    if (newPassword && confirmPassword) {
+        function checkPasswords() {
+            if (newPassword.value !== confirmPassword.value) {
+                passwordError.classList.remove('d-none');
+                return false;
+            } else {
+                passwordError.classList.add('d-none');
+                return true;
+            }
+        }
+        
+        newPassword.addEventListener('keyup', checkPasswords);
+        confirmPassword.addEventListener('keyup', checkPasswords);
+        
+        document.getElementById('perfilForm').addEventListener('submit', function(e) {
+            if (!checkPasswords()) {
+                e.preventDefault();
+            }
+        });
+    }
+    
+    // Vista previa de avatar
+    const avatarInput = document.getElementById('avatarInput');
+    const avatarPreview = document.getElementById('avatarPreview');
+    
+    if (avatarInput) {
+        avatarInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    avatarPreview.innerHTML = `<img src="${e.target.result}" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover;">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+    
+    // Subir avatar
+    document.getElementById('avatarForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        
+        fetch('/api/user/avatar', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('Error al subir el avatar: ' + data.error);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+    
+    // Eliminar cuenta
+    document.getElementById('confirmarEliminar').addEventListener('click', function() {
+        fetch('/api/user/delete', { method: 'DELETE' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+});
+
+function cargarLogrosDestacados() {
+    fetch('/api/user/stats')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('logrosDestacados');
+            const logrosRecientes = data.medallas.filter(m => m.desbloqueada).slice(0, 3);
+            
+            if (logrosRecientes.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-muted py-3">
+                        <i class="bi bi-trophy display-4 d-block mb-2"></i>
+                        <p>Aún no tienes logros. ¡Sigue practicando!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = logrosRecientes.map(logro => `
+                <div class="d-flex align-items-center mb-3">
+                    <span class="display-6 me-3">${logro.icono}</span>
+                    <div>
+                        <h6 class="mb-1 fw-semibold">${logro.nombre}</h6>
+                        <small class="text-muted">${logro.descripcion}</small>
+                    </div>
+                    <i class="bi bi-check-circle-fill text-success ms-auto"></i>
+                </div>
+            `).join('');
+        })
+        .catch(error => console.error('Error cargando logros:', error));
+}
+
+function cargarActividadReciente() {
+    fetch('/api/user/historial?pagina=1')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('actividadReciente');
+            
+            if (data.ejercicios.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-muted py-3">
+                        <i class="bi bi-clock-history display-4 d-block mb-2"></i>
+                        <p>No hay actividad reciente</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = data.ejercicios.slice(0, 5).map(e => `
+                <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-light rounded-3">
+                    <div>
+                        <small class="fw-semibold">Ejercicio #${e.ejercicio_id}</small>
+                        <span class="badge bg-${e.correcto ? 'success' : 'danger'} ms-2">
+                            ${e.correcto ? 'Correcto' : 'Incorrecto'}
+                        </span>
+                    </div>
+                    <small class="text-muted">${e.fecha}</small>
+                </div>
+            `).join('');
+        })
+        .catch(error => console.error('Error cargando actividad:', error));
+}
+
+// Estilos adicionales
+const style = document.createElement('style');
+style.textContent = `
+    .avatar-circle-large {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin: 0 auto;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    
+    .hover-scale {
+        transition: transform 0.3s;
+    }
+    
+    .hover-scale:hover {
+        transform: translateY(-3px);
+    }
+    
+    .list-group-item {
+        border-left: none;
+        border-right: none;
+        background-color: transparent;
+    }
+    
+    .border-danger {
+        border: 1px solid #dc3545 !important;
+    }
+    
+    @media (max-width: 768px) {
+        .display-5 {
+            font-size: 1.8rem;
+        }
+        
+        .avatar-circle-large {
+            width: 80px;
+            height: 80px;
+            font-size: 2rem;
+        }
+    }
+`;
+document.head.appendChild(style);
+</script>
+{% endblock %}

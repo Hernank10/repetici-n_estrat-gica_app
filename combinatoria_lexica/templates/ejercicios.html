@@ -1,0 +1,646 @@
+{% extends "base.html" %}
+
+{% block title %}Ejercicios - Combinatoria Léxica{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Encabezado -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="display-5 fw-bold">
+                <i class="bi bi-puzzle-fill text-primary me-3"></i>
+                Ejercicios Interactivos
+            </h1>
+            <p class="text-muted lead">
+                Practica con 100 ejercicios diseñados para dominar la combinatoria léxica
+            </p>
+        </div>
+        <div class="text-end">
+            <span class="badge bg-success p-3 rounded-3" id="estadisticasEjercicios">
+                <i class="bi bi-bar-chart-fill me-2"></i>
+                <span id="ejerciciosCompletados">0</span>/100 completados
+            </span>
+        </div>
+    </div>
+
+    <!-- Estadísticas rápidas -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm bg-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white-50 mb-1">Precisión</h6>
+                            <h3 class="mb-0" id="precisionTotal">0%</h3>
+                        </div>
+                        <i class="bi bi-bullseye display-6 opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm bg-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white-50 mb-1">Racha Actual</h6>
+                            <h3 class="mb-0" id="rachaActual">0</h3>
+                        </div>
+                        <i class="bi bi-fire display-6 opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm bg-warning text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white-50 mb-1">Mejor Racha</h6>
+                            <h3 class="mb-0" id="rachaMaxima">0</h3>
+                        </div>
+                        <i class="bi bi-trophy display-6 opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm bg-info text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white-50 mb-1">XP Total</h6>
+                            <h3 class="mb-0" id="xpTotal">0</h3>
+                        </div>
+                        <i class="bi bi-star display-6 opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtros y búsqueda -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <form method="GET" id="filtrosForm">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">
+                            <i class="bi bi-bar-chart-steps me-1"></i>Dificultad
+                        </label>
+                        <select name="dificultad" class="form-select" id="filtroDificultad">
+                            <option value="todos">Todas las dificultades</option>
+                            <option value="principiante">🌱 Principiante</option>
+                            <option value="intermedio">🌿 Intermedio</option>
+                            <option value="avanzado">🌳 Avanzado</option>
+                            <option value="experto">🏆 Experto</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">
+                            <i class="bi bi-tags me-1"></i>Categoría
+                        </label>
+                        <select name="categoria" class="form-select" id="filtroCategoria">
+                            <option value="todas">Todas las categorías</option>
+                            <option value="verbos_movimiento">📈 Verbos de movimiento</option>
+                            <option value="metaforas">☁️ Metáforas</option>
+                            <option value="restricciones">🚫 Restricciones</option>
+                            <option value="economia">💰 Economía</option>
+                            <option value="social">👥 Social</option>
+                            <option value="naturaleza">🌊 Naturaleza</option>
+                            <option value="ceremonial">🎉 Ceremonial</option>
+                            <option value="idiomatico">💬 Idiomático</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">
+                            <i class="bi bi-search me-1"></i>Buscar
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0">
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input type="text" class="form-control border-start-0" 
+                                   id="busquedaEjercicios" placeholder="Buscar ejercicios...">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Área del ejercicio actual -->
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg" id="ejercicioCard">
+                <div class="card-header bg-primary text-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="bi bi-lightbulb me-2"></i>
+                            <span id="ejercicioNumero">Ejercicio #1</span>
+                        </h5>
+                        <span class="badge bg-light text-dark" id="ejercicioDificultad">
+                            <i class="bi bi-bar-chart me-1"></i>Principiante
+                        </span>
+                    </div>
+                </div>
+                <div class="card-body p-4" id="ejercicioContainer">
+                    <div class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel lateral de información -->
+        <div class="col-lg-4">
+            <!-- Progreso de nivel -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <h6 class="fw-semibold mb-3">
+                        <i class="bi bi-bar-chart-fill text-primary me-2"></i>
+                        Progreso de Nivel
+                    </h6>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="small" id="nivelActual">Principiante</span>
+                        <span class="small" id="progresoPorcentaje">0%</span>
+                    </div>
+                    <div class="progress mb-3" style="height: 8px;">
+                        <div id="progresoBarra" class="progress-bar bg-success" style="width: 0%"></div>
+                    </div>
+                    <div class="d-flex justify-content-between small text-muted">
+                        <span id="xpActual">0 XP</span>
+                        <span id="xpSiguiente">500 XP</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Consejo del día -->
+            <div class="card border-0 shadow-sm mb-4 bg-light">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <i class="bi bi-lightbulb-fill text-warning fs-1 me-3"></i>
+                        <div>
+                            <h6 class="fw-semibold mb-2">Consejo del día</h6>
+                            <p class="small text-muted mb-0" id="consejoDia">
+                                Presta atención a las restricciones semánticas de cada verbo.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estadísticas por categoría -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="fw-semibold mb-3">
+                        <i class="bi bi-pie-chart-fill text-success me-2"></i>
+                        Rendimiento por Categoría
+                    </h6>
+                    <div id="estadisticasCategorias">
+                        <div class="text-center text-muted py-3">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Historial de últimos ejercicios -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 pt-4">
+                    <h5 class="fw-semibold mb-0">
+                        <i class="bi bi-clock-history me-2 text-primary"></i>
+                        Últimos Ejercicios Realizados
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle" id="tablaHistorial">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Ejercicio</th>
+                                    <th>Resultado</th>
+                                    <th>Tiempo</th>
+                                    <th>XP</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historialBody">
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted py-4">
+                                        <i class="bi bi-inbox me-2"></i>
+                                        No hay ejercicios en el historial
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de retroalimentación -->
+<div class="modal fade" id="feedbackModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content border-0">
+            <div class="modal-header" id="feedbackHeader">
+                <h5 class="modal-title" id="feedbackTitle">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    ¡Correcto!
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p id="feedbackMessage"></p>
+                <div class="alert alert-info" id="feedbackExplanation"></div>
+                <div class="d-flex justify-content-between align-items-center mt-3" id="feedbackXP">
+                    <span class="fw-bold">XP Ganado:</span>
+                    <span class="badge bg-success fs-6" id="feedbackXPCantidad">+10 XP</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="feedbackContinuar">
+                    Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let ejercicioActual = null;
+let tiempoInicio = null;
+let timerInterval = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    cargarEjercicio();
+    cargarEstadisticas();
+    cargarHistorial();
+    iniciarTimer();
+    
+    // Event listeners para filtros
+    document.getElementById('filtroDificultad').addEventListener('change', function() {
+        cargarEjercicio();
+    });
+    
+    document.getElementById('filtroCategoria').addEventListener('change', function() {
+        cargarEjercicio();
+    });
+    
+    // Búsqueda en tiempo real
+    document.getElementById('busquedaEjercicios').addEventListener('input', debounce(function() {
+        cargarEjercicio();
+    }, 500));
+});
+
+function iniciarTimer() {
+    tiempoInicio = Date.now();
+    timerInterval = setInterval(actualizarTimer, 1000);
+}
+
+function actualizarTimer() {
+    const tiempoTranscurrido = Math.floor((Date.now() - tiempoInicio) / 1000);
+    const minutos = Math.floor(tiempoTranscurrido / 60);
+    const segundos = tiempoTranscurrido % 60;
+    // Mostrar timer si quieres implementarlo
+}
+
+function cargarEjercicio() {
+    const dificultad = document.getElementById('filtroDificultad').value;
+    const categoria = document.getElementById('filtroCategoria').value;
+    const busqueda = document.getElementById('busquedaEjercicios').value;
+    
+    let url = `/api/ejercicios/random?dificultad=${dificultad}&categoria=${categoria}`;
+    if (busqueda) {
+        url += `&busqueda=${encodeURIComponent(busqueda)}`;
+    }
+    
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                mostrarError(data.error);
+                return;
+            }
+            
+            ejercicioActual = data;
+            mostrarEjercicio(data);
+            tiempoInicio = Date.now();
+        })
+        .catch(error => {
+            console.error('Error cargando ejercicio:', error);
+            mostrarError('Error al cargar el ejercicio');
+        });
+}
+
+function mostrarEjercicio(ejercicio) {
+    const container = document.getElementById('ejercicioContainer');
+    const dificultadColores = {
+        'principiante': 'success',
+        'intermedio': 'warning',
+        'avanzado': 'danger',
+        'experto': 'dark'
+    };
+    
+    document.getElementById('ejercicioNumero').textContent = `Ejercicio #${ejercicio.id}`;
+    document.getElementById('ejercicioDificultad').innerHTML = `
+        <i class="bi bi-bar-chart me-1"></i>
+        <span class="badge bg-${dificultadColores[ejercicio.dificultad] || 'secondary'}">
+            ${ejercicio.dificultad.charAt(0).toUpperCase() + ejercicio.dificultad.slice(1)}
+        </span>
+    `;
+    
+    let html = `
+        <h5 class="card-title mb-4">${ejercicio.pregunta}</h5>
+        <div class="d-flex flex-wrap gap-3 mb-4" id="opcionesContainer">
+    `;
+    
+    ejercicio.opciones.forEach((opcion, index) => {
+        const letra = String.fromCharCode(65 + index); // A, B, C, D...
+        html += `
+            <button class="btn btn-outline-primary btn-lg flex-fill ejercicio-opcion" data-index="${index}">
+                <span class="badge bg-primary me-2">${letra}</span>
+                ${opcion}
+            </button>
+        `;
+    });
+    
+    html += `
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <small class="text-muted">
+                <i class="bi bi-clock me-1"></i>
+                Tiempo estimado: ${ejercicio.tiempo_estimado || 30}s
+            </small>
+            <button class="btn btn-primary btn-lg px-5" id="btnVerificar" disabled>
+                <i class="bi bi-check-circle me-2"></i>Verificar
+            </button>
+        </div>
+        <div id="feedbackContainer" class="mt-4"></div>
+    `;
+    
+    container.innerHTML = html;
+    
+    // Event listeners para opciones
+    document.querySelectorAll('.ejercicio-opcion').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.ejercicio-opcion').forEach(b => {
+                b.classList.remove('active', 'btn-primary');
+                b.classList.add('btn-outline-primary');
+            });
+            this.classList.add('active', 'btn-primary');
+            this.classList.remove('btn-outline-primary');
+            document.getElementById('btnVerificar').disabled = false;
+            window.respuestaSeleccionada = parseInt(this.dataset.index);
+        });
+    });
+    
+    document.getElementById('btnVerificar').addEventListener('click', verificarRespuesta);
+}
+
+function verificarRespuesta() {
+    if (window.respuestaSeleccionada === undefined) return;
+    
+    const tiempo = Math.floor((Date.now() - tiempoInicio) / 1000);
+    
+    fetch('/api/ejercicios/check', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            ejercicio_id: ejercicioActual.id,
+            respuesta: window.respuestaSeleccionada,
+            tiempo: tiempo
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        mostrarFeedback(data);
+        actualizarEstadisticasPostEjercicio(data);
+        
+        // Deshabilitar opciones
+        document.querySelectorAll('.ejercicio-opcion').forEach(btn => {
+            btn.disabled = true;
+        });
+        
+        // Cargar siguiente ejercicio después de 3 segundos
+        setTimeout(() => {
+            cargarEjercicio();
+            document.getElementById('feedbackContainer').innerHTML = '';
+        }, 3000);
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function mostrarFeedback(data) {
+    const feedback = document.getElementById('feedbackContainer');
+    const modal = new bootstrap.Modal(document.getElementById('feedbackModal'));
+    
+    const header = document.getElementById('feedbackHeader');
+    const title = document.getElementById('feedbackTitle');
+    const message = document.getElementById('feedbackMessage');
+    const explanation = document.getElementById('feedbackExplanation');
+    const xpAmount = document.getElementById('feedbackXPCantidad');
+    
+    if (data.correcto) {
+        header.className = 'modal-header bg-success text-white';
+        title.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>¡Correcto!';
+        message.innerHTML = '<span class="fw-bold">¡Excelente trabajo!</span>';
+        xpAmount.textContent = `+${data.xp_ganado} XP`;
+        
+        // Animación de confeti virtual
+        crearConfeti();
+    } else {
+        header.className = 'modal-header bg-danger text-white';
+        title.innerHTML = '<i class="bi bi-x-circle-fill me-2"></i>Incorrecto';
+        message.innerHTML = '<span class="fw-bold">Sigue practicando</span>';
+        xpAmount.textContent = '+0 XP';
+    }
+    
+    explanation.textContent = data.explicacion;
+    
+    if (data.nuevos_logros && data.nuevos_logros.length > 0) {
+        message.innerHTML += '<br><span class="badge bg-warning mt-2">¡Nuevo logro desbloqueado! 🏆</span>';
+    }
+    
+    modal.show();
+}
+
+function crearConfeti() {
+    // Efecto visual simple de confeti
+    for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+            const confeti = document.createElement('div');
+            confeti.className = 'confeti';
+            confeti.style.left = Math.random() * 100 + '%';
+            confeti.style.animationDuration = (Math.random() * 2 + 1) + 's';
+            confeti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+            document.body.appendChild(confeti);
+            
+            setTimeout(() => confeti.remove(), 3000);
+        }, i * 50);
+    }
+}
+
+function cargarEstadisticas() {
+    fetch('/api/user/stats')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('ejerciciosCompletados').textContent = data.ejercicios_completados;
+            document.getElementById('precisionTotal').textContent = data.accuracy + '%';
+            document.getElementById('rachaActual').textContent = data.racha_actual;
+            document.getElementById('rachaMaxima').textContent = data.racha_maxima;
+            document.getElementById('xpTotal').textContent = data.xp;
+            
+            // Actualizar nivel
+            document.getElementById('nivelActual').textContent = data.nivel.nombre;
+            document.getElementById('progresoPorcentaje').textContent = data.progreso_nivel + '%';
+            document.getElementById('progresoBarra').style.width = data.progreso_nivel + '%';
+            document.getElementById('xpActual').textContent = data.xp + ' XP';
+            document.getElementById('xpSiguiente').textContent = (data.xp + data.xp_para_siguiente) + ' XP';
+            
+            // Actualizar estadísticas por categoría
+            actualizarEstadisticasCategorias(data);
+        })
+        .catch(error => console.error('Error cargando estadísticas:', error));
+}
+
+function actualizarEstadisticasCategorias(data) {
+    // Aquí implementarías la lógica para mostrar estadísticas por categoría
+    const container = document.getElementById('estadisticasCategorias');
+    
+    const categoriasMock = [
+        { nombre: 'Verbos', correctos: 8, total: 10 },
+        { nombre: 'Metáforas', correctos: 5, total: 8 },
+        { nombre: 'Economía', correctos: 3, total: 5 }
+    ];
+    
+    container.innerHTML = categoriasMock.map(cat => `
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="small">${cat.nombre}</span>
+            <div class="d-flex align-items-center">
+                <div class="progress me-2" style="width: 100px; height: 5px;">
+                    <div class="progress-bar bg-success" style="width: ${(cat.correctos/cat.total)*100}%"></div>
+                </div>
+                <small class="text-muted">${cat.correctos}/${cat.total}</small>
+            </div>
+        </div>
+    `).join('');
+}
+
+function cargarHistorial() {
+    fetch('/api/user/historial?pagina=1')
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.getElementById('historialBody');
+            
+            if (data.ejercicios.length === 0) {
+                return;
+            }
+            
+            tbody.innerHTML = data.ejercicios.map(e => `
+                <tr>
+                    <td>Ejercicio #${e.ejercicio_id}</td>
+                    <td>
+                        <span class="badge bg-${e.correcto ? 'success' : 'danger'}">
+                            ${e.correcto ? 'Correcto' : 'Incorrecto'}
+                        </span>
+                    </td>
+                    <td>${e.tiempo}s</td>
+                    <td>${e.correcto ? '+10' : '0'} XP</td>
+                    <td>${e.fecha}</td>
+                </tr>
+            `).join('');
+        })
+        .catch(error => console.error('Error cargando historial:', error));
+}
+
+function actualizarEstadisticasPostEjercicio(data) {
+    // Actualizar contadores en tiempo real
+    const completados = parseInt(document.getElementById('ejerciciosCompletados').textContent) + 1;
+    document.getElementById('ejerciciosCompletados').textContent = completados;
+    
+    if (data.correcto) {
+        document.getElementById('rachaActual').textContent = data.racha;
+        document.getElementById('xpTotal').textContent = parseInt(document.getElementById('xpTotal').textContent) + data.xp_ganado;
+    }
+}
+
+function mostrarError(mensaje) {
+    const container = document.getElementById('ejercicioContainer');
+    container.innerHTML = `
+        <div class="alert alert-danger text-center py-5">
+            <i class="bi bi-exclamation-triangle display-4 d-block mb-3"></i>
+            <h5>${mensaje}</h5>
+            <button class="btn btn-primary mt-3" onclick="cargarEjercicio()">
+                <i class="bi bi-arrow-repeat me-2"></i>Reintentar
+            </button>
+        </div>
+    `;
+}
+
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Estilos adicionales para confeti
+const style = document.createElement('style');
+style.textContent = `
+    .confeti {
+        position: fixed;
+        top: -10px;
+        width: 10px;
+        height: 10px;
+        background: #f00;
+        animation: caer linear forwards;
+        z-index: 9999;
+    }
+    
+    @keyframes caer {
+        to {
+            transform: translateY(100vh) rotate(720deg);
+        }
+    }
+    
+    .ejercicio-opcion {
+        transition: all 0.3s;
+        min-width: 200px;
+    }
+    
+    .ejercicio-opcion:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .ejercicio-opcion.active {
+        transform: scale(1.05);
+    }
+    
+    @media (max-width: 768px) {
+        .ejercicio-opcion {
+            min-width: 100%;
+        }
+    }
+`;
+document.head.appendChild(style);
+</script>
+{% endblock %}

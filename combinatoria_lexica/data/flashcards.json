@@ -1,0 +1,454 @@
+{
+  "flashcards": [
+    {
+      "id": 1,
+      "termino": "Subir",
+      "definicion": "Verbo que indica movimiento ascendente. Puede usarse literalmente (subir una montaña) o metafóricamente (subir los precios).",
+      "ejemplo": "El termómetro subió a 30 grados.",
+      "categoria": "verbos_movimiento",
+      "imagen": "📈",
+      "dificultad": "principiante"
+    },
+    {
+      "id": 2,
+      "termino": "Bajar",
+      "definicion": "Verbo que indica movimiento descendente. Se usa para disminución física o abstracta.",
+      "ejemplo": "Bajó las escaleras rápidamente.",
+      "categoria": "verbos_movimiento",
+      "imagen": "📉",
+      "dificultad": "principiante"
+    },
+    {
+      "id": 3,
+      "termino": "Caer",
+      "definicion": "Movimiento descendente no controlado. También se usa metafóricamente para colapsos o cambios de estado.",
+      "ejemplo": "El imperio romano cayó en el 476 d.C.",
+      "categoria": "verbos_movimiento",
+      "imagen": "💫",
+      "dificultad": "principiante"
+    },
+    {
+      "id": 4,
+      "termino": "Izar",
+      "definicion": "Elevar algo mediante una cuerda, especialmente banderas o velas. Uso ceremonial o náutico.",
+      "ejemplo": "Izaron la bandera al amanecer.",
+      "categoria": "verbos_movimiento",
+      "imagen": "🚩",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 5,
+      "termino": "Arriar",
+      "definicion": "Bajar algo que estaba izado, especialmente velas o banderas. Es el antónimo de izar.",
+      "ejemplo": "Arriaron las velas antes de la tormenta.",
+      "categoria": "verbos_movimiento",
+      "imagen": "⛵",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 6,
+      "termino": "Levantar",
+      "definicion": "Poner algo en posición vertical o elevada. Muy versátil, con muchos usos metafóricos.",
+      "ejemplo": "Levantó la mano para preguntar.",
+      "categoria": "verbos_movimiento",
+      "imagen": "✋",
+      "dificultad": "principiante"
+    },
+    {
+      "id": 7,
+      "termino": "Alzar",
+      "definicion": "Sinónimo de levantar, pero con connotación más formal o literaria.",
+      "ejemplo": "Alzó la copa para brindar.",
+      "categoria": "verbos_movimiento",
+      "imagen": "🥂",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 8,
+      "termino": "Ascender",
+      "definicion": "Moverse hacia arriba, generalmente de manera gradual o en una jerarquía.",
+      "ejemplo": "Ascendió a gerente después de cinco años.",
+      "categoria": "verbos_movimiento",
+      "imagen": "⬆️",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 9,
+      "termino": "Descender",
+      "definicion": "Moverse hacia abajo, opuesto de ascender.",
+      "ejemplo": "Descendieron por la montaña con cuidado.",
+      "categoria": "verbos_movimiento",
+      "imagen": "⬇️",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 10,
+      "termino": "Elevar",
+      "definicion": "Sinónimo formal de levantar, usado en contextos más elaborados o religiosos.",
+      "ejemplo": "Elevó una plegaria al cielo.",
+      "categoria": "verbos_movimiento",
+      "imagen": "🙏",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 11,
+      "termino": "Caer enfermo",
+      "definicion": "Expresión que indica el inicio repentino de una enfermedad.",
+      "ejemplo": "Cayó enfermo después del viaje.",
+      "categoria": "metaforas",
+      "imagen": "🤒",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 12,
+      "termino": "Subir los precios",
+      "definicion": "Metáfora económica que indica aumento en el costo de bienes o servicios.",
+      "ejemplo": "Subieron los precios de la gasolina.",
+      "categoria": "metaforas",
+      "imagen": "💰",
+      "dificultad": "principiante"
+    },
+    {
+      "id": 13,
+      "termino": "Levantar el ánimo",
+      "definicion": "Mejorar el estado de ánimo de alguien.",
+      "ejemplo": "Sus palabras levantaron el ánimo de todos.",
+      "categoria": "metaforas",
+      "imagen": "😊",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 14,
+      "termino": "Caer un imperio",
+      "definicion": "Metáfora de colapso o declive de una civilización o entidad poderosa.",
+      "ejemplo": "El imperio cayó por su propia corrupción.",
+      "categoria": "metaforas",
+      "imagen": "🏛️",
+      "dificultad": "avanzado"
+    },
+    {
+      "id": 15,
+      "termino": "Bajar la guardia",
+      "definicion": "Dejar de estar alerta o prevenido.",
+      "ejemplo": "No puedes bajar la guardia en este negocio.",
+      "categoria": "metaforas",
+      "imagen": "🛡️",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 16,
+      "termino": "Restricción semántica",
+      "definicion": "Limitación que impone un verbo sobre los sustantivos con los que puede combinarse.",
+      "ejemplo": "'Izar' solo combina con objetos que pueden elevarse con cuerda (banderas, velas).",
+      "categoria": "restricciones",
+      "imagen": "🔗",
+      "dificultad": "avanzado"
+    },
+    {
+      "id": 17,
+      "termino": "Selección categorial",
+      "definicion": "Propiedad de los verbos que requieren sustantivos con ciertos rasgos semánticos.",
+      "ejemplo": "'Caer' requiere entidades con gravedad (física o metafórica).",
+      "categoria": "restricciones",
+      "imagen": "⚖️",
+      "dificultad": "avanzado"
+    },
+    {
+      "id": 18,
+      "termino": "Colocación",
+      "definicion": "Combinación frecuente y natural de palabras en una lengua.",
+      "ejemplo": "'Levantar la sesión' es una colocación en español parlamentario.",
+      "categoria": "restricciones",
+      "imagen": "🔤",
+      "dificultad": "avanzado"
+    },
+    {
+      "id": 19,
+      "termino": "REDES (Bosque)",
+      "definicion": "Diccionario combinatorio que documenta las restricciones léxicas del español, dirigido por Ignacio Bosque.",
+      "ejemplo": "Muestra que 'levantar' combina con 'vuelo', 'sesión', 'mano', etc.",
+      "categoria": "diccionarios",
+      "imagen": "📚",
+      "dificultad": "experto"
+    },
+    {
+      "id": 20,
+      "termino": "Diccionario PRÁCTICO",
+      "definicion": "Diccionario de combinaciones léxicas para uso cotidiano, también de Ignacio Bosque.",
+      "ejemplo": "Registra usos como 'levantar una protesta' o 'caer en desgracia'.",
+      "categoria": "diccionarios",
+      "imagen": "📖",
+      "dificultad": "experto"
+    },
+    {
+      "id": 21,
+      "termino": "Uso literal",
+      "definicion": "Cuando el verbo conserva su significado físico original de movimiento.",
+      "ejemplo": "Las hojas caen de los árboles en otoño.",
+      "categoria": "ejemplos",
+      "imagen": "🍂",
+      "dificultad": "principiante"
+    },
+    {
+      "id": 22,
+      "termino": "Uso metafórico",
+      "definicion": "Cuando el verbo extiende su significado a dominios abstractos.",
+      "ejemplo": "Su reputación cayó después del escándalo.",
+      "categoria": "ejemplos",
+      "imagen": "🎭",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 23,
+      "termino": "Erguir",
+      "definicion": "Poner algo derecho, especialmente el cuerpo o la cabeza.",
+      "ejemplo": "Erguió la espalda con orgullo.",
+      "categoria": "verbos_movimiento",
+      "imagen": "🧍",
+      "dificultad": "avanzado"
+    },
+    {
+      "id": 24,
+      "termino": "Caer en la cuenta",
+      "definicion": "Comprender algo repentinamente, darse cuenta.",
+      "ejemplo": "Caí en la cuenta de que me había equivocado.",
+      "categoria": "idiomatico",
+      "imagen": "💡",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 25,
+      "termino": "Subir la moral",
+      "definicion": "Aumentar el ánimo o la confianza de un grupo.",
+      "ejemplo": "La victoria subió la moral del equipo.",
+      "categoria": "metaforas",
+      "imagen": "🏆",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 26,
+      "termino": "Caer del guindo",
+      "definicion": "Expresión coloquial que significa darse cuenta de algo obvio o ser ingenuo.",
+      "ejemplo": "Parece que cayó del guindo cuando le explicaron la situación.",
+      "categoria": "idiomatico",
+      "imagen": "🌳",
+      "dificultad": "experto"
+    },
+    {
+      "id": 27,
+      "termino": "Precipitar",
+      "definicion": "Causar una caída rápida o apresurar un proceso.",
+      "ejemplo": "Se precipitó al vacío.",
+      "categoria": "verbos_movimiento",
+      "imagen": "⏱️",
+      "dificultad": "avanzado"
+    },
+    {
+      "id": 28,
+      "termino": "Suspender",
+      "definicion": "Detener temporalmente algo o colgar algo en el aire.",
+      "ejemplo": "Suspendieron la reunión hasta mañana.",
+      "categoria": "verbos_movimiento",
+      "imagen": "⏸️",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 29,
+      "termino": "Caer en desgracia",
+      "definicion": "Perder el favor, la reputación o la posición privilegiada.",
+      "ejemplo": "El ministro cayó en desgracia tras el escándalo.",
+      "categoria": "idiomatico",
+      "imagen": "👑",
+      "dificultad": "avanzado"
+    },
+    {
+      "id": 30,
+      "termino": "Levantar cabeza",
+      "definicion": "Recuperarse de una dificultad o crisis económica o personal.",
+      "ejemplo": "El país está empezando a levantar cabeza.",
+      "categoria": "idiomatico",
+      "imagen": "🇪🇸",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 31,
+      "termino": "Arriar bandera",
+      "definicion": "Bajar la bandera como señal de rendición o al final del día.",
+      "ejemplo": "Arriaron la bandera al atardecer.",
+      "categoria": "ejemplos",
+      "imagen": "🏁",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 32,
+      "termino": "Subir al poder",
+      "definicion": "Ascender a una posición de autoridad política.",
+      "ejemplo": "Subió al poder después de las elecciones.",
+      "categoria": "metaforas",
+      "imagen": "🏛️",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 33,
+      "termino": "Hundir",
+      "definicion": "Hacer que algo se vaya al fondo o decaiga completamente.",
+      "ejemplo": "Hundieron el barco enemigo.",
+      "categoria": "verbos_movimiento",
+      "imagen": "🚢",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 34,
+      "termino": "Emerger",
+      "definicion": "Salir a la superficie después de estar sumergido o aparecer repentinamente.",
+      "ejemplo": "El submarino emergió de las aguas.",
+      "categoria": "verbos_movimiento",
+      "imagen": "🐋",
+      "dificultad": "avanzado"
+    },
+    {
+      "id": 35,
+      "termino": "Caer en el olvido",
+      "definicion": "Ser olvidado con el paso del tiempo.",
+      "ejemplo": "Muchos artistas caen en el olvido después de su muerte.",
+      "categoria": "metaforas",
+      "imagen": "⏳",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 36,
+      "termino": "Subir la temperatura",
+      "definicion": "Aumentar la intensidad de una situación o discusión.",
+      "ejemplo": "La discusión subió la temperatura del debate.",
+      "categoria": "metaforas",
+      "imagen": "🌡️",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 37,
+      "termino": "Levantar un monumento",
+      "definicion": "Construir o erigir un monumento en memoria de alguien.",
+      "ejemplo": "Levantaron un monumento a los héroes.",
+      "categoria": "ejemplos",
+      "imagen": "🗽",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 38,
+      "termino": "Caer redondo",
+      "definicion": "Desmayarse o caerse de repente al suelo.",
+      "ejemplo": "Cayó redondo al suelo por el golpe.",
+      "categoria": "ejemplos",
+      "imagen": "😵",
+      "dificultad": "avanzado"
+    },
+    {
+      "id": 39,
+      "termino": "Desplomar",
+      "definicion": "Caer o hacer caer algo pesado estrepitosamente.",
+      "ejemplo": "El edificio se desplomó por el terremoto.",
+      "categoria": "verbos_movimiento",
+      "imagen": "🏢",
+      "dificultad": "avanzado"
+    },
+    {
+      "id": 40,
+      "termino": "Escalar",
+      "definicion": "Subir por una superficie vertical usando manos y pies.",
+      "ejemplo": "Escalaron la montaña más alta del mundo.",
+      "categoria": "verbos_movimiento",
+      "imagen": "🧗",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 41,
+      "termino": "Trepar",
+      "definicion": "Subir agarrándose con manos y pies, generalmente a árboles o rocas.",
+      "ejemplo": "Los niños treparon al árbol para ver mejor.",
+      "categoria": "verbos_movimiento",
+      "imagen": "🌲",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 42,
+      "termino": "Caer en la trampa",
+      "definicion": "Ser engañado o víctima de un ardid.",
+      "ejemplo": "Cayó en la trampa que le tendieron sus enemigos.",
+      "categoria": "idiomatico",
+      "imagen": "🪤",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 43,
+      "termino": "Levantar la voz",
+      "definicion": "Hablar más fuerte o protestar enérgicamente.",
+      "ejemplo": "Los ciudadanos levantaron la voz contra la injusticia.",
+      "categoria": "ejemplos",
+      "imagen": "🗣️",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 44,
+      "termino": "Redes semánticas",
+      "definicion": "Conjunto de relaciones entre palabras basadas en su significado.",
+      "ejemplo": "Los verbos de movimiento forman una red semántica.",
+      "categoria": "restricciones",
+      "imagen": "🕸️",
+      "dificultad": "experto"
+    },
+    {
+      "id": 45,
+      "termino": "Bajar la cabeza",
+      "definicion": "Inclinar la cabeza hacia abajo en señal de sumisión o vergüenza.",
+      "ejemplo": "Bajó la cabeza avergonzado por su error.",
+      "categoria": "ejemplos",
+      "imagen": "🙇",
+      "dificultad": "principiante"
+    },
+    {
+      "id": 46,
+      "termino": "Izar la bandera blanca",
+      "definicion": "Levantar bandera blanca en señal de rendición o tregua.",
+      "ejemplo": "Izaron la bandera blanca para negociar la paz.",
+      "categoria": "ejemplos",
+      "imagen": "🏳️",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 47,
+      "termino": "Rebajar",
+      "definicion": "Reducir el precio o la intensidad de algo.",
+      "ejemplo": "Rebajaron los precios por las fiestas.",
+      "categoria": "verbos_movimiento",
+      "imagen": "🏷️",
+      "dificultad": "intermedio"
+    },
+    {
+      "id": 48,
+      "termino": "Deprimir",
+      "definicion": "Hacer que algo descienda o causar tristeza profunda.",
+      "ejemplo": "La noticia deprimió el ánimo de todos.",
+      "categoria": "verbos_movimiento",
+      "imagen": "😔",
+      "dificultad": "avanzado"
+    },
+    {
+      "id": 49,
+      "termino": "Caer la ficha",
+      "definicion": "Comprender algo de repente (expresión del español rioplatense).",
+      "ejemplo": "Recién ahora me cayó la ficha de lo que pasó.",
+      "categoria": "idiomatico",
+      "imagen": "🪙",
+      "dificultad": "experto"
+    },
+    {
+      "id": 50,
+      "termino": "Levantar el vuelo",
+      "definicion": "Comenzar a volar o iniciar un proyecto con éxito.",
+      "ejemplo": "El pájaro levantó el vuelo desde la rama.",
+      "categoria": "ejemplos",
+      "imagen": "🦅",
+      "dificultad": "intermedio"
+    }
+  ]
+}
