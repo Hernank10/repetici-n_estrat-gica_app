@@ -1,0 +1,9 @@
+{
+  "ejercicios": [
+    {"id": 1, "texto": "El ___ y la ___ cuidan a sus hijos.", "respuesta_m": "padre", "respuesta_f": "madre", "categoria": "parentesco", "dificultad": 1},
+    {"id": 2, "texto": "En la plaza vimos un ___ y una ___ pastando.", "respuesta_m": "toro", "respuesta_f": "vaca", "categoria": "animales", "dificultad": 1},
+    {"id": 3, "texto": "El ___ y la ___ visitaron a sus suegros.", "respuesta_m": "yerno", "respuesta_f": "nuera", "categoria": "parentesco", "dificultad": 2},
+    {"id": 4, "texto": "El ___ y la ___ están en el rebaño.", "respuesta_m": "carnero", "respuesta_f": "oveja", "categoria": "animales", "dificultad": 1},
+    {"id": 5, "texto": "El ___ y la ___ corren en el hipódromo.", "respuesta_m": "caballo", "respuesta_f": "yegua", "categoria": "animales", "dificultad": 1}
+  ]
+}

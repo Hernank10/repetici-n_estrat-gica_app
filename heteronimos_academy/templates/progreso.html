@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Mi Progreso{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4 fw-bold">Mi Progreso</h2>
+    
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-icon mx-auto mb-3">
+                    <i class="fas fa-star fa-2x"></i>
+                </div>
+                <h3 id="puntosDisplay">0</h3>
+                <p class="text-muted">Puntos Totales</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-icon mx-auto mb-3">
+                    <i class="fas fa-chart-line fa-2x"></i>
+                </div>
+                <h3 id="nivelDisplay">1</h3>
+                <p class="text-muted">Nivel</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-icon mx-auto mb-3">
+                    <i class="fas fa-fire fa-2x"></i>
+                </div>
+                <h3 id="rachaDisplay">0</h3>
+                <p class="text-muted">Racha Actual</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-icon mx-auto mb-3">
+                    <i class="fas fa-trophy fa-2x"></i>
+                </div>
+                <h3 id="mejorRachaDisplay">0</h3>
+                <p class="text-muted">Mejor Racha</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-modern card mb-4">
+        <div class="card-header-modern">
+            <h5><i class="fas fa-chart-pie me-2"></i>Progreso por Categorías</h5>
+        </div>
+        <div class="card-body p-4">
+            <div class="row" id="categoriasProgreso"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+function cargarEstadisticas() {
+    fetch('/api/estadisticas/completas')
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) return;
+            
+            document.getElementById('puntosDisplay').textContent = data.usuario.puntos_totales;
+            document.getElementById('nivelDisplay').innerHTML = `${data.usuario.nivel}<br><small>${data.usuario.nombre_nivel}</small>`;
+            document.getElementById('rachaDisplay').textContent = data.usuario.racha_actual;
+            document.getElementById('mejorRachaDisplay').textContent = data.usuario.mejor_racha;
+            
+            const categoriasHtml = data.categorias.map(cat => `
+                <div class="col-md-6 mb-3">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6><i class="fas ${cat.icono} me-2"></i>${cat.nombre}</h6>
+                            <div class="progress mb-2" style="height: 8px;">
+                                <div class="progress-bar bg-success" style="width: ${(cat.respuestas_correctas / 30) * 100}%"></div>
+                            </div>
+                            <small>${cat.respuestas_correctas} respuestas correctas</small><br>
+                            <small class="text-muted">${cat.puntos} puntos</small>
+                            ${cat.completada ? '<span class="badge bg-success float-end">Completada</span>' : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('categoriasProgreso').innerHTML = categoriasHtml;
+        });
+}
+
+cargarEstadisticas();
+</script>
+{% endblock %}
+

@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Aprende Heterónimos{% endblock %}
+
+{% block content %}
+<!-- Hero Section con imagen de fondo -->
+<div class="hero-modern">
+    <div class="container text-center text-white position-relative" style="z-index: 2;">
+        <h1 class="display-3 fw-bold mb-4 animate-fadeInUp">Domina los Heterónimos del Español</h1>
+        <p class="lead mb-4 animate-fadeInUp" style="animation-delay: 0.2s;">Aprende de forma interactiva los pares léxicos con raíces diferentes</p>
+        <div class="animate-fadeInUp" style="animation-delay: 0.4s;">
+            <a href="{{ url_for('teoria') }}" class="btn btn-light btn-lg mx-2">
+                <i class="fas fa-graduation-cap me-2"></i>Comenzar
+            </a>
+            <a href="{{ url_for('ejercicios') }}" class="btn btn-outline-light btn-lg mx-2">
+                <i class="fas fa-play me-2"></i>Practicar Ahora
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de Características -->
+<div class="container py-5">
+    <h2 class="text-center mb-5 fw-bold">¿Qué vas a aprender?</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card-modern card h-100 text-center p-4">
+                <div class="stat-icon mx-auto mb-3">
+                    <i class="fas fa-book-open fa-2x"></i>
+                </div>
+                <h4>Teoría Completa</h4>
+                <p class="text-muted">Conceptos fundamentales sobre heterónimos y ejemplos prácticos con explicaciones detalladas.</p>
+                <a href="{{ url_for('teoria') }}" class="btn btn-outline-primary mt-3">Explorar →</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-modern card h-100 text-center p-4">
+                <div class="stat-icon mx-auto mb-3">
+                    <i class="fas fa-puzzle-piece fa-2x"></i>
+                </div>
+                <h4>Ejercicios Interactivos</h4>
+                <p class="text-muted">Múltiples tipos de ejercicios para reforzar el aprendizaje con retroalimentación inmediata.</p>
+                <a href="{{ url_for('ejercicios') }}" class="btn btn-outline-primary mt-3">Practicar →</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-modern card h-100 text-center p-4">
+                <div class="stat-icon mx-auto mb-3">
+                    <i class="fas fa-chart-line fa-2x"></i>
+                </div>
+                <h4>Seguimiento de Progreso</h4>
+                <p class="text-muted">Visualiza tu avance, obtén logros y compite en el ranking global.</p>
+                <a href="{{ url_for('progreso') }}" class="btn btn-outline-primary mt-3">Ver progreso →</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de Estadísticas -->
+<div class="bg-light py-5">
+    <div class="container">
+        <h3 class="text-center mb-5 fw-bold">Estadísticas Globales</h3>
+        <div class="row text-center g-4">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon mx-auto mb-3">
+                        <i class="fas fa-book fa-2x"></i>
+                    </div>
+                    <div class="display-4 fw-bold text-primary">50+</div>
+                    <p class="text-muted">Pares heteronímicos</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon mx-auto mb-3">
+                        <i class="fas fa-tasks fa-2x"></i>
+                    </div>
+                    <div class="display-4 fw-bold text-success">1000+</div>
+                    <p class="text-muted">Ejercicios completados</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon mx-auto mb-3">
+                        <i class="fas fa-users fa-2x"></i>
+                    </div>
+                    <div class="display-4 fw-bold text-info">500+</div>
+                    <p class="text-muted">Estudiantes activos</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon mx-auto mb-3">
+                        <i class="fas fa-star fa-2x"></i>
+                    </div>
+                    <div class="display-4 fw-bold text-warning">92%</div>
+                    <p class="text-muted">Tasa de satisfacción</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de Categorías -->
+<div class="container py-5">
+    <h3 class="text-center mb-5 fw-bold">Explora por Categorías</h3>
+    <div class="row g-3">
+        <div class="col-md-2 col-6">
+            <div class="card-modern card text-center p-3">
+                <i class="fas fa-users fa-3x text-primary mb-2"></i>
+                <h6>Parentesco</h6>
+                <small class="text-muted">12 pares</small>
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="card-modern card text-center p-3">
+                <i class="fas fa-paw fa-3x text-success mb-2"></i>
+                <h6>Animales</h6>
+                <small class="text-muted">15 pares</small>
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="card-modern card text-center p-3">
+                <i class="fas fa-crown fa-3x text-warning mb-2"></i>
+                <h6>Títulos</h6>
+                <small class="text-muted">10 pares</small>
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="card-modern card text-center p-3">
+                <i class="fas fa-briefcase fa-3x text-info mb-2"></i>
+                <h6>Profesiones</h6>
+                <small class="text-muted">25 pares</small>
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="card-modern card text-center p-3">
+                <i class="fas fa-feather-alt fa-3x text-secondary mb-2"></i>
+                <h6>Literario</h6>
+                <small class="text-muted">8 pares</small>
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="card-modern card text-center p-3">
+                <i class="fas fa-globe fa-3x text-danger mb-2"></i>
+                <h6>General</h6>
+                <small class="text-muted">5 pares</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Banner de Flashcards -->
+<div class="container mb-5">
+    <div class="card-modern card bg-primary text-white p-5 text-center">
+        <i class="fas fa-layer-group fa-4x mb-3"></i>
+        <h3>¿Prefieres estudiar con tarjetas?</h3>
+        <p class="mb-4">Accede a nuestras 50 flashcards interactivas con preguntas y respuestas</p>
+        <div>
+            <a href="{{ url_for('flashcards') }}" class="btn btn-light btn-lg">
+                <i class="fas fa-cards me-2"></i>Ir a Flashcards
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

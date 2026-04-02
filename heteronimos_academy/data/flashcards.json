@@ -1,0 +1,9 @@
+{
+  "flashcards": [
+    {"id": 1, "pregunta": "¿Qué es un heterónimo?", "respuesta": "Par de palabras con raíces diferentes que designan al masculino y femenino", "categoria": "definicion", "dificultad": 1},
+    {"id": 2, "pregunta": "¿Cuál es el femenino de 'padre'?", "respuesta": "madre", "categoria": "parentesco", "dificultad": 1},
+    {"id": 3, "pregunta": "¿Cuál es el femenino de 'toro'?", "respuesta": "vaca", "categoria": "animales", "dificultad": 1},
+    {"id": 4, "pregunta": "¿Cuál es el femenino de 'caballo'?", "respuesta": "yegua", "categoria": "animales", "dificultad": 1},
+    {"id": 5, "pregunta": "¿Cuál es el femenino de 'rey'?", "respuesta": "reina", "categoria": "titulos", "dificultad": 1}
+  ]
+}

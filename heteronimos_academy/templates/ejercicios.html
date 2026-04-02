@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}Ejercicios Interactivos{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4 fw-bold">Ejercicios Interactivos</h2>
+    
+    <!-- Selector de Dificultad -->
+    <div class="row mb-4">
+        <div class="col-md-4 mx-auto">
+            <select id="dificultadSelect" class="form-select rounded-pill">
+                <option value="1">⭐ Novato</option>
+                <option value="2">⭐⭐ Intermedio</option>
+                <option value="3">⭐⭐⭐ Avanzado</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- Ejercicio de Completación -->
+        <div class="col-md-6 mb-4">
+            <div class="card-modern card h-100">
+                <div class="card-header-modern">
+                    <h5><i class="fas fa-edit me-2"></i>Completación de Oraciones</h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="mb-3 text-center">
+                        <span id="completacionInfo" class="badge-category badge"></span>
+                    </div>
+                    <div class="mb-4">
+                        <p class="lead text-center fw-bold" id="textoEjercicio">Cargando...</p>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" id="respuestaM" class="form-control rounded-pill mb-2" placeholder="Término masculino">
+                        <input type="text" id="respuestaF" class="form-control rounded-pill" placeholder="Término femenino">
+                    </div>
+                    <button class="btn btn-primary-modern w-100 rounded-pill" onclick="verificarCompletacion()">
+                        <i class="fas fa-check me-2"></i>Verificar
+                    </button>
+                    <div id="feedbackCompletacion" class="mt-3"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ejercicio Quiz -->
+        <div class="col-md-6 mb-4">
+            <div class="card-modern card h-100">
+                <div class="card-header-modern">
+                    <h5><i class="fas fa-question-circle me-2"></i>Quiz de Opción Múltiple</h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="mb-3 text-center">
+                        <span id="quizInfo" class="badge-category badge"></span>
+                    </div>
+                    <div class="mb-4">
+                        <p class="lead fw-bold" id="preguntaQuiz">Cargando...</p>
+                    </div>
+                    <div id="opcionesQuiz" class="mb-3"></div>
+                    <button class="btn btn-primary-modern w-100 rounded-pill" onclick="verificarQuiz()">
+                        <i class="fas fa-check me-2"></i>Responder
+                    </button>
+                    <div id="feedbackQuiz" class="mt-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let ejercicioActual = null;
+let quizActual = null;
+
+function cargarEjercicios() {
+    const dificultad = document.getElementById('dificultadSelect').value;
+    
+    fetch(`/api/ejercicio/completacion/random?dificultad=${dificultad}`)
+        .then(res => res.json())
+        .then(data => {
+            ejercicioActual = data;
+            document.getElementById('textoEjercicio').textContent = data.texto;
+            document.getElementById('completacionInfo').innerHTML = `${data.categoria} | Dificultad: ${'⭐'.repeat(data.dificultad)}`;
+            document.getElementById('respuestaM').value = '';
+            document.getElementById('respuestaF').value = '';
+            document.getElementById('feedbackCompletacion').innerHTML = '';
+        });
+    
+    fetch(`/api/ejercicio/quiz/random?dificultad=${dificultad}`)
+        .then(res => res.json())
+        .then(data => {
+            quizActual = data;
+            document.getElementById('preguntaQuiz').textContent = data.pregunta;
+            document.getElementById('quizInfo').innerHTML = `${data.categoria} | Dificultad: ${'⭐'.repeat(data.dificultad)}`;
+            
+            const opcionesHtml = data.opciones.map((op, idx) => `
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="quizRespuesta" value="${op}" id="op_${idx}">
+                    <label class="form-check-label" for="op_${idx}">${op}</label>
+                </div>
+            `).join('');
+            document.getElementById('opcionesQuiz').innerHTML = opcionesHtml;
+            document.getElementById('feedbackQuiz').innerHTML = '';
+        });
+}
+
+function verificarCompletacion() {
+    const masc = document.getElementById('respuestaM').value.toLowerCase().trim();
+    const fem = document.getElementById('respuestaF').value.toLowerCase().trim();
+    
+    fetch('/api/ejercicio/completacion/verificar', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            ejercicio_id: ejercicioActual.id, 
+            masculino: masc, 
+            femenino: fem
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        const feedback = document.getElementById('feedbackCompletacion');
+        if (data.correcto) {
+            feedback.innerHTML = `<div class="alert alert-success rounded-pill">✅ ¡Correcto! +${data.puntos_ganados} puntos.</div>`;
+        } else {
+            feedback.innerHTML = `<div class="alert alert-danger rounded-pill">❌ Incorrecto. Respuesta correcta: "${data.respuesta_correcta_m}" y "${data.respuesta_correcta_f}"</div>`;
+        }
+        setTimeout(cargarEjercicios, 2000);
+    });
+}
+
+function verificarQuiz() {
+    const seleccion = document.querySelector('input[name="quizRespuesta"]:checked');
+    if (!seleccion) {
+        alert('Por favor selecciona una respuesta');
+        return;
+    }
+    
+    fetch('/api/ejercicio/quiz/verificar', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            quiz_id: quizActual.id, 
+            respuesta: seleccion.value
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        const feedback = document.getElementById('feedbackQuiz');
+        if (data.correcto) {
+            feedback.innerHTML = `<div class="alert alert-success rounded-pill">✅ ¡Correcto! +${data.puntos_ganados} puntos.</div>`;
+        } else {
+            feedback.innerHTML = `<div class="alert alert-danger rounded-pill">❌ Incorrecto. Respuesta correcta: "${data.respuesta_correcta}"</div>`;
+        }
+        setTimeout(cargarEjercicios, 2000);
+    });
+}
+
+// Cargar ejercicios al iniciar
+cargarEjercicios();
+</script>
+{% endblock %}

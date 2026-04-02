@@ -1,0 +1,20 @@
+{
+  "niveles": [
+    {"nivel": 1, "nombre": "Novato", "puntos_minimos": 0, "puntos_requeridos": 100, "color": "bronce"},
+    {"nivel": 2, "nombre": "Aprendiz", "puntos_minimos": 100, "puntos_requeridos": 250, "color": "plata"},
+    {"nivel": 3, "nombre": "Competente", "puntos_minimos": 250, "puntos_requeridos": 500, "color": "oro"}
+  ],
+  "categorias": [
+    {"nombre": "parentesco", "nombre_amigable": "Parentesco", "icono": "fa-users"},
+    {"nombre": "animales", "nombre_amigable": "Animales", "icono": "fa-paw"},
+    {"nombre": "titulos", "nombre_amigable": "Títulos", "icono": "fa-crown"},
+    {"nombre": "profesiones", "nombre_amigable": "Profesiones", "icono": "fa-briefcase"},
+    {"nombre": "literario", "nombre_amigable": "Literario", "icono": "fa-feather-alt"},
+    {"nombre": "general", "nombre_amigable": "General", "icono": "fa-globe"}
+  ],
+  "recompensas": {
+    "ejercicio_correcto": {"base": 10, "multiplicador_dificultad": {"1": 1, "2": 1.5, "3": 2}},
+    "racha": {"3": 15, "5": 25, "10": 50},
+    "categoria_completada": 50
+  }
+}

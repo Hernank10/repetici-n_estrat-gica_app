@@ -1,0 +1,7 @@
+{
+  "quiz": [
+    {"id": 1, "pregunta": "¿Cuál es el femenino de 'padre'?", "opciones": ["madre", "hermana", "tía", "abuela"], "respuesta": "madre", "categoria": "parentesco", "dificultad": 1},
+    {"id": 2, "pregunta": "¿Cuál es el femenino de 'toro'?", "opciones": ["ternera", "vaca", "buey", "novilla"], "respuesta": "vaca", "categoria": "animales", "dificultad": 1},
+    {"id": 3, "pregunta": "¿Cuál es el femenino de 'yerno'?", "opciones": ["suegra", "nuera", "cuñada", "hermana"], "respuesta": "nuera", "categoria": "parentesco", "dificultad": 2}
+  ]
+}

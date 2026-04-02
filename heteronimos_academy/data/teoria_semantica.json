@@ -1,0 +1,27 @@
+{
+  "teoria": [
+    {
+      "id": 1,
+      "titulo": "¿Qué son los Heterónimos?",
+      "subtitulo": "Definición y características fundamentales",
+      "contenido": "Los heterónimos son pares léxicos que designan al masculino y femenino con raíces etimológicas completamente diferentes.",
+      "ejemplos": [
+        {"ejemplo": "padre → madre", "explicacion": "Provienen del latín 'pater' y 'mater'"},
+        {"ejemplo": "toro → vaca", "explicacion": "Del latín 'taurus' y 'vacca'"}
+      ],
+      "icono": "fa-book-open",
+      "color": "primary"
+    },
+    {
+      "id": 2,
+      "titulo": "Origen Etimológico",
+      "subtitulo": "Raíces históricas",
+      "contenido": "La mayoría de los heterónimos provienen de palabras latinas que mantuvieron formas distintas.",
+      "ejemplos": [
+        {"ejemplo": "yerno (latín 'gener') → nuera (latín 'nurus')", "explicacion": "Diferentes raíces para relaciones familiares"}
+      ],
+      "icono": "fa-history",
+      "color": "success"
+    }
+  ]
+}

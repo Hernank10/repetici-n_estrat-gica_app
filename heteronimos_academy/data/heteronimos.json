@@ -1,0 +1,14 @@
+{
+  "heteronimos": [
+    {"id": 1, "masculino": "padre", "femenino": "madre", "categoria": "parentesco", "dificultad": 1, "puntos": 10, "ejemplo": "El padre y la madre cuidan de sus hijos."},
+    {"id": 2, "masculino": "toro", "femenino": "vaca", "categoria": "animales", "dificultad": 1, "puntos": 10, "ejemplo": "El toro y la vaca pastan en el campo."},
+    {"id": 3, "masculino": "yerno", "femenino": "nuera", "categoria": "parentesco", "dificultad": 2, "puntos": 15, "ejemplo": "El yerno y la nuera visitan a sus suegros."},
+    {"id": 4, "masculino": "carnero", "femenino": "oveja", "categoria": "animales", "dificultad": 1, "puntos": 10, "ejemplo": "El carnero y la oveja están en el rebaño."},
+    {"id": 5, "masculino": "caballo", "femenino": "yegua", "categoria": "animales", "dificultad": 1, "puntos": 10, "ejemplo": "El caballo y la yegua corren en el prado."},
+    {"id": 6, "masculino": "rey", "femenino": "reina", "categoria": "titulos", "dificultad": 1, "puntos": 10, "ejemplo": "El rey y la reina gobiernan el reino."},
+    {"id": 7, "masculino": "actor", "femenino": "actriz", "categoria": "profesiones", "dificultad": 2, "puntos": 15, "ejemplo": "El actor y la actriz protagonizan la obra."},
+    {"id": 8, "masculino": "hombre", "femenino": "mujer", "categoria": "general", "dificultad": 1, "puntos": 10, "ejemplo": "El hombre y la mujer pasean por el parque."},
+    {"id": 9, "masculino": "jinete", "femenino": "amazona", "categoria": "profesiones", "dificultad": 3, "puntos": 20, "ejemplo": "El jinete y la amazona participan en la competencia."},
+    {"id": 10, "masculino": "galán", "femenino": "dama", "categoria": "literario", "dificultad": 3, "puntos": 20, "ejemplo": "El galán y la dama bailan en el salón."}
+  ]
+}

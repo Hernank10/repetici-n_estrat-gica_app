@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Teoría de Heterónimos{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="text-center mb-4">Teoría de los Heterónimos</h2>
+    
+    <!-- Navegación entre teoría gramatical y semántica -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="btn-group w-100" role="group">
+                <a href="{{ url_for('teoria') }}" class="btn btn-primary active">
+                    <i class="fas fa-book me-2"></i>Teoría Gramatical
+                </a>
+                <a href="{{ url_for('teoria_semantica') }}" class="btn btn-outline-primary">
+                    <i class="fas fa-brain me-2"></i>Teoría Semántica
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Contenido de teoría gramatical (igual que antes) -->
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h4><i class="fas fa-question-circle me-2"></i>¿Qué son los Heterónimos?</h4>
+                </div>
+                <div class="card-body">
+                    <p>Los <strong>heterónimos</strong> son pares de palabras que designan al masculino y femenino con raíces completamente diferentes.</p>
+                    <h6>Ejemplos fundamentales:</h6>
+                    <ul>
+                        <li><strong>Padre</strong> → <strong>Madre</strong> (progenitores)</li>
+                        <li><strong>Toro</strong> → <strong>Vaca</strong> (bovinos)</li>
+                        <li><strong>Yerno</strong> → <strong>Nuera</strong> (relaciones familiares)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-success text-white">
+                    <h4><i class="fas fa-lightbulb me-2"></i>Características</h4>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>No comparten la misma raíz léxica</li>
+                        <li>Tienen origen etimológico diferente</li>
+                        <li>Reflejan distinciones biológicas y culturales</li>
+                        <li>El masculino no siempre funciona como término no marcado</li>
+                    </ul>
+                    <div class="alert alert-info mt-3">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Dato clave:</strong> "Los hombres" no siempre incluye a "las mujeres" en todos los contextos.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tabla de heterónimos (igual que antes) -->
+    <div class="card mt-4">
+        <div class="card-header bg-info text-white">
+            <h4><i class="fas fa-table me-2"></i>Lista Completa de Heterónimos</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr><th>Categoría</th><th>Masculino</th><th>Femenino</th><th>Ejemplo</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for h in heteronimos %}
+                        <tr>
+                            <td><span class="badge bg-secondary">{{ h.categoria }}</span></td>
+                            <td><strong>{{ h.masculino }}</strong></td>
+                            <td><strong>{{ h.femenino }}</strong></td>
+                            <td>{{ h.ejemplo }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Banner a Flashcards -->
+    <div class="alert alert-warning mt-4 text-center">
+        <i class="fas fa-layer-group fa-2x mb-2 d-block"></i>
+        <strong>¿Quieres practicar con tarjetas interactivas?</strong>
+        <br>
+        <a href="{{ url_for('flashcards') }}" class="btn btn-warning mt-2">
+            <i class="fas fa-cards me-2"></i>Ir a Flashcards
+        </a>
+    </div>
+</div>
+{% endblock %}

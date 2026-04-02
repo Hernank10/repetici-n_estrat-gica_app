@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block title %}Flashcards - Estudio Interactivo{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4 fw-bold">Flashcards Interactivas</h2>
+    <p class="text-center text-muted mb-5">Aprende los heterónimos con nuestro sistema de tarjetas interactivas</p>
+    
+    <!-- Selector de Categoría -->
+    <div class="row mb-4">
+        <div class="col-md-4 mx-auto">
+            <select id="categoriaFlashcard" class="form-select rounded-pill">
+                <option value="">Todas las categorías</option>
+                <option value="definicion">📖 Definición</option>
+                <option value="parentesco">👨‍👩‍👧 Parentesco</option>
+                <option value="animales">🐾 Animales</option>
+                <option value="titulos">👑 Títulos</option>
+                <option value="profesiones">💼 Profesiones</option>
+                <option value="literario">📖 Literario</option>
+            </select>
+        </div>
+    </div>
+    
+    <!-- Flashcard Principal -->
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="flashcard-container">
+                <div id="flashcard" class="flashcard">
+                    <div class="flashcard-front">
+                        <div>
+                            <i class="fas fa-question-circle fa-4x mb-4"></i>
+                            <h3 id="preguntaFlashcard" class="mb-4">Cargando...</h3>
+                            <span id="categoriaBadge" class="badge bg-light text-dark rounded-pill px-3 py-2"></span>
+                            <p class="mt-4 text-white-50"><small>Haz clic para ver la respuesta</small></p>
+                        </div>
+                    </div>
+                    <div class="flashcard-back">
+                        <div>
+                            <i class="fas fa-lightbulb fa-4x mb-4"></i>
+                            <h4 id="respuestaFlashcard" class="mb-4">Respuesta</h4>
+                            <div class="mt-4">
+                                <button class="btn btn-light rounded-pill px-4 me-2" onclick="marcarCorrecta()">
+                                    <i class="fas fa-check me-2"></i>Lo sabía
+                                </button>
+                                <button class="btn btn-outline-light rounded-pill px-4" onclick="siguienteFlashcard()">
+                                    <i class="fas fa-forward me-2"></i>Siguiente
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Controles -->
+    <div class="row mt-4 text-center">
+        <div class="col-md-12">
+            <button class="btn btn-primary rounded-pill px-4" onclick="siguienteFlashcard()">
+                <i class="fas fa-random me-2"></i>Siguiente Tarjeta
+            </button>
+            <button class="btn btn-secondary rounded-pill px-4 ms-2" onclick="resetFlashcards()">
+                <i class="fas fa-sync-alt me-2"></i>Reiniciar
+            </button>
+        </div>
+    </div>
+    
+    <!-- Progreso -->
+    <div class="row mt-5">
+        <div class="col-md-6 mx-auto">
+            <div class="card-modern card p-4 text-center">
+                <h5><i class="fas fa-chart-line me-2 text-info"></i>Tu Progreso</h5>
+                <div class="progress-circle mx-auto mb-3" id="progressCircle" style="background: conic-gradient(#28a745 0deg, #e9ecef 0deg);">
+                    <div class="progress-circle-inner" id="progresoNumero">0%</div>
+                </div>
+                <p class="text-muted" id="progresoTexto">0 flashcards estudiadas de 50</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let flashcardActual = null;
+let flashcardGirada = false;
+
+function cargarFlashcard() {
+    const categoria = document.getElementById('categoriaFlashcard').value;
+    let url = '/api/flashcard/random';
+    if (categoria) url += `?categoria=${categoria}`;
+    
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            flashcardActual = data;
+            document.getElementById('preguntaFlashcard').textContent = data.pregunta;
+            document.getElementById('respuestaFlashcard').textContent = data.respuesta;
+            document.getElementById('categoriaBadge').innerHTML = getCategoriaNombre(data.categoria);
+            resetFlip();
+        });
+}
+
+function getCategoriaNombre(categoria) {
+    const nombres = {
+        'definicion': '📖 Definición',
+        'parentesco': '👨‍👩‍👧 Parentesco',
+        'animales': '🐾 Animales',
+        'titulos': '👑 Títulos',
+        'profesiones': '💼 Profesiones',
+        'literario': '📖 Literario'
+    };
+    return nombres[categoria] || categoria;
+}
+
+function voltearFlashcard() {
+    const flashcard = document.getElementById('flashcard');
+    flashcardGirada = !flashcardGirada;
+    flashcard.style.transform = flashcardGirada ? 'rotateY(180deg)' : 'rotateY(0deg)';
+}
+
+function siguienteFlashcard() {
+    resetFlip();
+    cargarFlashcard();
+}
+
+function resetFlip() {
+    const flashcard = document.getElementById('flashcard');
+    flashcardGirada = false;
+    flashcard.style.transform = 'rotateY(0deg)';
+}
+
+function marcarCorrecta() {
+    if (flashcardActual) {
+        fetch('/api/flashcard/verificar', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                flashcard_id: flashcardActual.id,
+                respuesta: flashcardActual.respuesta
+            })
+        })
+        .then(res => res.json())
+        .then(() => {
+            siguienteFlashcard();
+            cargarProgreso();
+            mostrarNotificacion('¡Respuesta correcta! +1 punto', 'success');
+        });
+    }
+}
+
+function cargarProgreso() {
+    fetch('/api/estadisticas/flashcards')
+        .then(res => res.json())
+        .then(data => {
+            const porcentaje = data.porcentaje;
+            document.getElementById('progresoNumero').textContent = `${porcentaje}%`;
+            document.getElementById('progresoTexto').textContent = `${data.estudiadas} flashcards estudiadas de ${data.total}`;
+            const circle = document.getElementById('progressCircle');
+            circle.style.background = `conic-gradient(#28a745 ${porcentaje * 3.6}deg, #e9ecef 0deg)`;
+        });
+}
+
+function resetFlashcards() {
+    if (confirm('¿Reiniciar todo el progreso de flashcards?')) {
+        fetch('/api/flashcards/reset', {method: 'POST'})
+            .then(() => cargarProgreso());
+    }
+}
+
+document.getElementById('flashcard').addEventListener('click', (e) => {
+    if (!e.target.closest('button')) {
+        voltearFlashcard();
+    }
+});
+
+cargarFlashcard();
+cargarProgreso();
+</script>
+{% endblock %}

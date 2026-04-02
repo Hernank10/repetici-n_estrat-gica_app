@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card-modern card">
+                <div class="card-header-modern text-center">
+                    <h4><i class="fas fa-sign-in-alt me-2"></i>Bienvenido</h4>
+                </div>
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Nombre</label>
+                        <input type="text" id="nombre" class="form-control rounded-pill" placeholder="Tu nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Email</label>
+                        <input type="email" id="email" class="form-control rounded-pill" placeholder="tu@email.com">
+                    </div>
+                    <button class="btn btn-primary-modern w-100 rounded-pill" onclick="registrar()">
+                        <i class="fas fa-user-plus me-2"></i>Comenzar a Aprender
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function registrar() {
+    const nombre = document.getElementById('nombre').value;
+    const email = document.getElementById('email').value;
+    
+    if (!nombre || !email) {
+        alert('Por favor completa todos los campos');
+        return;
+    }
+    
+    fetch('/api/register', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({nombre: nombre, email: email})
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert('¡Registro exitoso!');
+            window.location.href = "/progreso";
+        }
+    });
+}
+</script>
+{% endblock %}
