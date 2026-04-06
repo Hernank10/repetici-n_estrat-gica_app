@@ -2,25 +2,801 @@
   {
     "id": 1,
     "tipo": "correccion",
-    "incorrecto": "Apriete el tornillo. Verifique la pieza.",
-    "correcto": "Apriete el tornillo. Verifique el tornillo.",
+    "incorrecto": "Coloque el **filtro** en la unidad. Luego, retire el **componente**.",
+    "correcto": "Coloque el **filtro** en la unidad. Luego, retire el **filtro**.",
     "dificultad": "facil",
     "categoria": "mecanica"
   },
   {
     "id": 2,
     "tipo": "correccion",
-    "incorrecto": "Use el microscopio. Enfoque el instrumento.",
-    "correcto": "Use el microscopio. Enfoque el microscopio.",
+    "incorrecto": "Active el **sistema de seguridad**. El **dispositivo** se bloqueará.",
+    "correcto": "Active el **sistema de seguridad**. El **sistema de seguridad** se bloqueará.",
+    "dificultad": "facil",
+    "categoria": "seguridad"
+  },
+  {
+    "id": 3,
+    "tipo": "correccion",
+    "incorrecto": "Apriete el **tornillo**. Verifique que la **pieza** esté firme.",
+    "correcto": "Apriete el **tornillo**. Verifique que el **tornillo** esté firme.",
+    "dificultad": "facil",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 4,
+    "tipo": "correccion",
+    "incorrecto": "Use el **microscopio**. Asegúrese de que el **instrumento** esté calibrado.",
+    "correcto": "Use el **microscopio**. Asegúrese de que el **microscopio** esté calibrado.",
     "dificultad": "facil",
     "categoria": "laboratorio"
   },
   {
-    "id": 3,
+    "id": 5,
+    "tipo": "correccion",
+    "incorrecto": "Conecte el **cable USB**. Desenchufe el **dispositivo** después de usar.",
+    "correcto": "Conecte el **cable USB**. Desenchufe el **cable USB** después de usar.",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 6,
+    "tipo": "correccion",
+    "incorrecto": "Inserte la **tarjeta SIM** en la ranura. No exponga el **componente** al agua.",
+    "correcto": "Inserte la **tarjeta SIM** en la ranura. No exponga la **tarjeta SIM** al agua.",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 7,
+    "tipo": "correccion",
+    "incorrecto": "Gire la **válvula** hacia la izquierda. Si el **elemento** no cede, use lubricante.",
+    "correcto": "Gire la **válvula** hacia la izquierda. Si la **válvula** no cede, use lubricante.",
+    "dificultad": "media",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 8,
+    "tipo": "correccion",
+    "incorrecto": "Coloque el **sensor** en la superficie. El **aparato** emitirá una señal sonora.",
+    "correcto": "Coloque el **sensor** en la superficie. El **sensor** emitirá una señal sonora.",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 9,
+    "tipo": "correccion",
+    "incorrecto": "Presione el **botón de inicio**. Espere a que el **elemento mencionado** parpadee.",
+    "correcto": "Presione el **botón de inicio**. Espere a que el **botón de inicio** parpadee.",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 10,
+    "tipo": "correccion",
+    "incorrecto": "Aplique la **pomada** en la herida. Cubra la **sustancia** con una gasa.",
+    "correcto": "Aplique la **pomada** en la herida. Cubra la **pomada** con una gasa.",
+    "dificultad": "facil",
+    "categoria": "seguridad"
+  },
+  {
+    "id": 11,
+    "tipo": "correccion",
+    "incorrecto": "Retire el **filtro de aceite**. Limpie el **componente** con un paño.",
+    "correcto": "Retire el **filtro de aceite**. Limpie el **filtro de aceite** con un paño.",
+    "dificultad": "media",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 12,
+    "tipo": "correccion",
+    "incorrecto": "Caliente la **solución** en el mechero. Vierta el **líquido** en el embudo.",
+    "correcto": "Caliente la **solución** en el mechero. Vierta la **solución** en el embudo.",
+    "dificultad": "media",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 13,
+    "tipo": "correccion",
+    "incorrecto": "Programe el **termostato** a 22°C. El **dispositivo** regulará la temperatura.",
+    "correcto": "Programe el **termostato** a 22°C. El **termostato** regulará la temperatura.",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 14,
+    "tipo": "correccion",
+    "incorrecto": "Sujete la **placa metálica** con tornillos. Luego, pinte el **material**.",
+    "correcto": "Sujete la **placa metálica** con tornillos. Luego, pinte la **placa metálica**.",
+    "dificultad": "media",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 15,
+    "tipo": "correccion",
+    "incorrecto": "Conecte la **manguera** al grifo. Evite doblar el **accesorio**.",
+    "correcto": "Conecte la **manguera** al grifo. Evite doblar la **manguera**.",
+    "dificultad": "facil",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 16,
+    "tipo": "correccion",
+    "incorrecto": "Active el **modo avión**. Desactive la **función** antes de despegar.",
+    "correcto": "Active el **modo avión**. Desactive el **modo avión** antes de despegar.",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 17,
+    "tipo": "correccion",
+    "incorrecto": "Coloque el **libro** en el estante. No exponga el **elemento** al sol.",
+    "correcto": "Coloque el **libro** en el estante. No exponga el **libro** al sol.",
+    "dificultad": "facil",
+    "categoria": "seguridad"
+  },
+  {
+    "id": 18,
+    "tipo": "correccion",
+    "incorrecto": "Instale el **filtro de aire**. No golpee el **utensilio** durante el proceso.",
+    "correcto": "Instale el **filtro de aire**. No golpee el **filtro de aire** durante el proceso.",
+    "dificultad": "media",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 19,
+    "tipo": "correccion",
+    "incorrecto": "Calibre la **báscula**. Asegúrese de que el **instrumento** marque cero.",
+    "correcto": "Calibre la **báscula**. Asegúrese de que la **báscula** marque cero.",
+    "dificultad": "media",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 20,
+    "tipo": "correccion",
+    "incorrecto": "Encienda el **ventilador**. El **aparato** debe girar sin ruido.",
+    "correcto": "Encienda el **ventilador**. El **ventilador** debe girar sin ruido.",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 21,
+    "tipo": "correccion",
+    "incorrecto": "Prepare la **muestra** en el portaobjetos. Cubra el **elemento** con el cubreobjetos.",
+    "correcto": "Prepare la **muestra** en el portaobjetos. Cubra la **muestra** con el cubreobjetos.",
+    "dificultad": "media",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 22,
+    "tipo": "correccion",
+    "incorrecto": "Ajuste la **silla** a su altura. El **asiento** debe quedar cómodo.",
+    "correcto": "Ajuste la **silla** a su altura. La **silla** debe quedar cómoda.",
+    "dificultad": "facil",
+    "categoria": "seguridad"
+  },
+  {
+    "id": 23,
+    "tipo": "correccion",
+    "incorrecto": "Conecte el **cargador** al teléfono. El **accesorio** debe estar firme.",
+    "correcto": "Conecte el **cargador** al teléfono. El **cargador** debe estar firme.",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 24,
+    "tipo": "correccion",
+    "incorrecto": "Abra la **válvula de paso**. El **mecanismo** debe girar suavemente.",
+    "correcto": "Abra la **válvula de paso**. La **válvula de paso** debe girar suavemente.",
+    "dificultad": "media",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 25,
+    "tipo": "correccion",
+    "incorrecto": "Coloque el **electrodo** en la solución. El **componente** debe estar sumergido.",
+    "correcto": "Coloque el **electrodo** en la solución. El **electrodo** debe estar sumergido.",
+    "dificultad": "media",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 26,
+    "tipo": "correccion",
+    "incorrecto": "Presione la **tecla Enter**. El **botón** confirmará la acción.",
+    "correcto": "Presione la **tecla Enter**. La **tecla Enter** confirmará la acción.",
+    "dificultad": "facil",
+    "categoria": "software"
+  },
+  {
+    "id": 27,
+    "tipo": "correccion",
+    "incorrecto": "Extraiga la **batería** del compartimento. El **elemento** debe retirarse con cuidado.",
+    "correcto": "Extraiga la **batería** del compartimento. La **batería** debe retirarse con cuidado.",
+    "dificultad": "media",
+    "categoria": "electronica"
+  },
+  {
+    "id": 28,
+    "tipo": "correccion",
+    "incorrecto": "Llene el **tanque** con combustible. El **recipiente** no debe derramarse.",
+    "correcto": "Llene el **tanque** con combustible. El **tanque** no debe derramarse.",
+    "dificultad": "facil",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 29,
+    "tipo": "correccion",
+    "incorrecto": "Seleccione la **opción** en el menú. La **alternativa** debe estar resaltada.",
+    "correcto": "Seleccione la **opción** en el menú. La **opción** debe estar resaltada.",
+    "dificultad": "facil",
+    "categoria": "software"
+  },
+  {
+    "id": 30,
+    "tipo": "correccion",
+    "incorrecto": "Apriete la **abrazadera** con la llave. La **pieza** debe quedar fija.",
+    "correcto": "Apriete la **abrazadera** con la llave. La **abrazadera** debe quedar fija.",
+    "dificultad": "media",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 31,
+    "tipo": "correccion",
+    "incorrecto": "Cierre la **compuerta** de seguridad. El **mecanismo** se activará automáticamente.",
+    "correcto": "Cierre la **compuerta** de seguridad. La **compuerta** se activará automáticamente.",
+    "dificultad": "facil",
+    "categoria": "seguridad"
+  },
+  {
+    "id": 32,
+    "tipo": "correccion",
+    "incorrecto": "Introduzca la **muestra** en el espectrofotómetro. El **elemento** debe estar seco.",
+    "correcto": "Introduzca la **muestra** en el espectrofotómetro. La **muestra** debe estar seca.",
+    "dificultad": "dificil",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 33,
+    "tipo": "correccion",
+    "incorrecto": "Conecte el **cable de red** al puerto Ethernet. El **conector** debe encajar.",
+    "correcto": "Conecte el **cable de red** al puerto Ethernet. El **cable de red** debe encajar.",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 34,
+    "tipo": "correccion",
+    "incorrecto": "Coloque la **célula** en la cámara de cultivo. El **contenedor** debe estar sellado.",
+    "correcto": "Coloque la **célula** en la cámara de cultivo. La **célula** debe estar sellada.",
+    "dificultad": "dificil",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 35,
+    "tipo": "correccion",
+    "incorrecto": "Active el **generador** de emergencia. El **sistema** suministrará energía.",
+    "correcto": "Active el **generador** de emergencia. El **generador** suministrará energía.",
+    "dificultad": "media",
+    "categoria": "seguridad"
+  },
+  {
+    "id": 36,
+    "tipo": "correccion",
+    "incorrecto": "Suelte el **freno de mano**. El **mecanismo** debe desactivarse completamente.",
+    "correcto": "Suelte el **freno de mano**. El **freno de mano** debe desactivarse completamente.",
+    "dificultad": "facil",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 37,
+    "tipo": "correccion",
+    "incorrecto": "Inserte el **disco** en la unidad óptica. El **soporte** debe entrar suavemente.",
+    "correcto": "Inserte el **disco** en la unidad óptica. El **disco** debe entrar suavemente.",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 38,
+    "tipo": "correccion",
+    "incorrecto": "Coloque el **termómetro** en la muestra. El **instrumento** debe estabilizarse.",
+    "correcto": "Coloque el **termómetro** en la muestra. El **termómetro** debe estabilizarse.",
+    "dificultad": "media",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 39,
+    "tipo": "correccion",
+    "incorrecto": "Presione el **interruptor** general. El **dispositivo** cortará la corriente.",
+    "correcto": "Presione el **interruptor** general. El **interruptor** cortará la corriente.",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 40,
+    "tipo": "correccion",
+    "incorrecto": "Lubrique la **cadena** de transmisión. El **elemento** debe quedar bien engrasado.",
+    "correcto": "Lubrique la **cadena** de transmisión. La **cadena** debe quedar bien engrasada.",
+    "dificultad": "media",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 41,
+    "tipo": "correccion",
+    "incorrecto": "Configure la **variable** en el programa. El **parámetro** debe ser numérico.",
+    "correcto": "Configure la **variable** en el programa. La **variable** debe ser numérica.",
+    "dificultad": "media",
+    "categoria": "software"
+  },
+  {
+    "id": 42,
+    "tipo": "correccion",
+    "incorrecto": "Ajuste el **espejo** del microscopio. El **componente** debe reflejar la luz.",
+    "correcto": "Ajuste el **espejo** del microscopio. El **espejo** debe reflejar la luz.",
+    "dificultad": "media",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 43,
+    "tipo": "correccion",
+    "incorrecto": "Cierre la **válvula** de seguridad. El **mecanismo** detendrá el flujo.",
+    "correcto": "Cierre la **válvula** de seguridad. La **válvula** detendrá el flujo.",
+    "dificultad": "facil",
+    "categoria": "seguridad"
+  },
+  {
+    "id": 44,
+    "tipo": "correccion",
+    "incorrecto": "Conecte el **micrófono** al amplificador. El **accesorio** debe estar encendido.",
+    "correcto": "Conecte el **micrófono** al amplificador. El **micrófono** debe estar encendido.",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 45,
+    "tipo": "correccion",
+    "incorrecto": "Coloque la **placa** en la estufa. El **utensilio** debe estar seco.",
+    "correcto": "Coloque la **placa** en la estufa. La **placa** debe estar seca.",
+    "dificultad": "facil",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 46,
+    "tipo": "correccion",
+    "incorrecto": "Active la **alarma** de incendio. El **sistema** emitirá una señal sonora.",
+    "correcto": "Active la **alarma** de incendio. La **alarma** emitirá una señal sonora.",
+    "dificultad": "facil",
+    "categoria": "seguridad"
+  },
+  {
+    "id": 47,
+    "tipo": "correccion",
+    "incorrecto": "Desconecte el **transformador** de la red. El **dispositivo** debe enfriarse.",
+    "correcto": "Desconecte el **transformador** de la red. El **transformador** debe enfriarse.",
+    "dificultad": "media",
+    "categoria": "electronica"
+  },
+  {
+    "id": 48,
+    "tipo": "correccion",
+    "incorrecto": "Monte el **engranaje** en el eje. La **pieza** debe encajar perfectamente.",
+    "correcto": "Monte el **engranaje** en el eje. El **engranaje** debe encajar perfectamente.",
+    "dificultad": "dificil",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 49,
+    "tipo": "correccion",
+    "incorrecto": "Prepare el **buffer** de solución. El **líquido** debe tener pH 7.0.",
+    "correcto": "Prepare el **buffer** de solución. El **buffer** debe tener pH 7.0.",
+    "dificultad": "media",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 50,
+    "tipo": "correccion",
+    "incorrecto": "Ejecute la **función** principal. El **proceso** debe completarse sin errores.",
+    "correcto": "Ejecute la **función** principal. La **función** debe completarse sin errores.",
+    "dificultad": "media",
+    "categoria": "software"
+  },
+  {
+    "id": 51,
     "tipo": "completar",
     "texto": "Apriete el ______. Verifique que el ______ no esté flojo.",
     "respuesta": "tornillo",
     "dificultad": "facil",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 52,
+    "tipo": "completar",
+    "texto": "Use el ______ para observar. Asegúrese de que el ______ esté enfocado.",
+    "respuesta": "microscopio",
+    "dificultad": "facil",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 53,
+    "tipo": "completar",
+    "texto": "Conecte el ______ al puerto. Desenchufe el ______ después de usar.",
+    "respuesta": "cable USB",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 54,
+    "tipo": "completar",
+    "texto": "Active el ______ de seguridad. El ______ se bloqueará en 10 segundos.",
+    "respuesta": "sistema",
+    "dificultad": "media",
+    "categoria": "seguridad"
+  },
+  {
+    "id": 55,
+    "tipo": "completar",
+    "texto": "Caliente la ______ en el mechero. Vierta la ______ en el embudo.",
+    "respuesta": "solución",
+    "dificultad": "media",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 56,
+    "tipo": "completar",
+    "texto": "Inserte la ______ en la ranura. No exponga la ______ al agua.",
+    "respuesta": "tarjeta SIM",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 57,
+    "tipo": "completar",
+    "texto": "Gire la ______ hacia la izquierda. Si la ______ no cede, use lubricante.",
+    "respuesta": "válvula",
+    "dificultad": "media",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 58,
+    "tipo": "completar",
+    "texto": "Coloque el ______ en la superficie. El ______ emitirá una señal sonora.",
+    "respuesta": "sensor",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 59,
+    "tipo": "completar",
+    "texto": "Presione el ______ de inicio. El ______ parpadeará tres veces.",
+    "respuesta": "botón",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 60,
+    "tipo": "completar",
+    "texto": "Aplique la ______ en la herida. Cubra la ______ con una gasa.",
+    "respuesta": "pomada",
+    "dificultad": "facil",
+    "categoria": "seguridad"
+  },
+  {
+    "id": 61,
+    "tipo": "completar",
+    "texto": "Programe el ______ a 22°C. El ______ regulará la temperatura automáticamente.",
+    "respuesta": "termostato",
+    "dificultad": "media",
+    "categoria": "electronica"
+  },
+  {
+    "id": 62,
+    "tipo": "completar",
+    "texto": "Sujete la ______ con tornillos. Luego, pinte la ______ del mismo color.",
+    "respuesta": "placa",
+    "dificultad": "media",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 63,
+    "tipo": "completar",
+    "texto": "Conecte la ______ al grifo. Evite doblar la ______ durante el uso.",
+    "respuesta": "manguera",
+    "dificultad": "facil",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 64,
+    "tipo": "completar",
+    "texto": "Active el ______ de vuelo. Desactive el ______ antes de aterrizar.",
+    "respuesta": "modo avión",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 65,
+    "tipo": "completar",
+    "texto": "Coloque el ______ en el estante. No exponga el ______ a la luz directa.",
+    "respuesta": "libro",
+    "dificultad": "facil",
+    "categoria": "seguridad"
+  },
+  {
+    "id": 66,
+    "tipo": "completar",
+    "texto": "Instale el ______ de aire. No golpee el ______ durante el proceso.",
+    "respuesta": "filtro",
+    "dificultad": "media",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 67,
+    "tipo": "completar",
+    "texto": "Calibre la ______ antes de usar. La ______ debe marcar cero al inicio.",
+    "respuesta": "báscula",
+    "dificultad": "media",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 68,
+    "tipo": "completar",
+    "texto": "Prepare la ______ en el portaobjetos. Cubra la ______ con el cubreobjetos.",
+    "respuesta": "muestra",
+    "dificultad": "media",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 69,
+    "tipo": "completar",
+    "texto": "Ajuste la ______ a su altura. La ______ debe quedar cómoda para trabajar.",
+    "respuesta": "silla",
+    "dificultad": "facil",
+    "categoria": "seguridad"
+  },
+  {
+    "id": 70,
+    "tipo": "completar",
+    "texto": "Conecte el ______ al teléfono. El ______ debe estar firmemente insertado.",
+    "respuesta": "cargador",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 71,
+    "tipo": "completar",
+    "texto": "Abra la ______ de paso. La ______ debe girar suavemente sin forzar.",
+    "respuesta": "válvula",
+    "dificultad": "media",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 72,
+    "tipo": "completar",
+    "texto": "Coloque el ______ en la solución. El ______ debe estar completamente sumergido.",
+    "respuesta": "electrodo",
+    "dificultad": "dificil",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 73,
+    "tipo": "completar",
+    "texto": "Presione la ______ Enter. La ______ confirmará la acción seleccionada.",
+    "respuesta": "tecla",
+    "dificultad": "facil",
+    "categoria": "software"
+  },
+  {
+    "id": 74,
+    "tipo": "completar",
+    "texto": "Extraiga la ______ del compartimento. La ______ debe retirarse con cuidado.",
+    "respuesta": "batería",
+    "dificultad": "media",
+    "categoria": "electronica"
+  },
+  {
+    "id": 75,
+    "tipo": "completar",
+    "texto": "Llene el ______ con combustible. El ______ no debe derramar líquido.",
+    "respuesta": "tanque",
+    "dificultad": "facil",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 76,
+    "tipo": "completar",
+    "texto": "Seleccione la ______ en el menú. La ______ debe estar resaltada en pantalla.",
+    "respuesta": "opción",
+    "dificultad": "facil",
+    "categoria": "software"
+  },
+  {
+    "id": 77,
+    "tipo": "completar",
+    "texto": "Apriete la ______ con la llave. La ______ debe quedar firmemente sujeta.",
+    "respuesta": "abrazadera",
+    "dificultad": "dificil",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 78,
+    "tipo": "completar",
+    "texto": "Cierre la ______ de seguridad. La ______ se activará automáticamente.",
+    "respuesta": "compuerta",
+    "dificultad": "media",
+    "categoria": "seguridad"
+  },
+  {
+    "id": 79,
+    "tipo": "completar",
+    "texto": "Introduzca la ______ en el espectrofotómetro. La ______ debe estar completamente seca.",
+    "respuesta": "muestra",
+    "dificultad": "dificil",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 80,
+    "tipo": "completar",
+    "texto": "Conecte el ______ de red al puerto. El ______ debe encajar con un clic.",
+    "respuesta": "cable",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 81,
+    "tipo": "completar",
+    "texto": "Coloque la ______ en la cámara. La ______ debe estar en posición horizontal.",
+    "respuesta": "célula",
+    "dificultad": "dificil",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 82,
+    "tipo": "completar",
+    "texto": "Active el ______ de emergencia. El ______ suministrará energía auxiliar.",
+    "respuesta": "generador",
+    "dificultad": "media",
+    "categoria": "seguridad"
+  },
+  {
+    "id": 83,
+    "tipo": "completar",
+    "texto": "Suelte el ______ de mano. El ______ debe desactivarse completamente.",
+    "respuesta": "freno",
+    "dificultad": "facil",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 84,
+    "tipo": "completar",
+    "texto": "Inserte el ______ en la unidad. El ______ debe entrar suavemente sin forzar.",
+    "respuesta": "disco",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 85,
+    "tipo": "completar",
+    "texto": "Coloque el ______ en la muestra. El ______ debe estabilizarse antes de leer.",
+    "respuesta": "termómetro",
+    "dificultad": "media",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 86,
+    "tipo": "completar",
+    "texto": "Presione el ______ general. El ______ cortará el suministro eléctrico.",
+    "respuesta": "interruptor",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 87,
+    "tipo": "completar",
+    "texto": "Lubrique la ______ de transmisión. La ______ debe quedar bien engrasada.",
+    "respuesta": "cadena",
+    "dificultad": "media",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 88,
+    "tipo": "completar",
+    "texto": "Configure la ______ en el programa. La ______ debe ser de tipo numérico.",
+    "respuesta": "variable",
+    "dificultad": "media",
+    "categoria": "software"
+  },
+  {
+    "id": 89,
+    "tipo": "completar",
+    "texto": "Ajuste el ______ del microscopio. El ______ debe reflejar la luz hacia la muestra.",
+    "respuesta": "espejo",
+    "dificultad": "media",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 90,
+    "tipo": "completar",
+    "texto": "Cierre la ______ de seguridad. La ______ detendrá el flujo inmediatamente.",
+    "respuesta": "válvula",
+    "dificultad": "facil",
+    "categoria": "seguridad"
+  },
+  {
+    "id": 91,
+    "tipo": "completar",
+    "texto": "Conecte el ______ al amplificador. El ______ debe estar encendido antes de usar.",
+    "respuesta": "micrófono",
+    "dificultad": "facil",
+    "categoria": "electronica"
+  },
+  {
+    "id": 92,
+    "tipo": "completar",
+    "texto": "Coloque la ______ en la estufa. La ______ debe estar completamente seca.",
+    "respuesta": "placa",
+    "dificultad": "facil",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 93,
+    "tipo": "completar",
+    "texto": "Active la ______ de incendio. La ______ emitirá una señal audible.",
+    "respuesta": "alarma",
+    "dificultad": "facil",
+    "categoria": "seguridad"
+  },
+  {
+    "id": 94,
+    "tipo": "completar",
+    "texto": "Desconecte el ______ de la red. El ______ debe enfriarse antes de tocar.",
+    "respuesta": "transformador",
+    "dificultad": "media",
+    "categoria": "electronica"
+  },
+  {
+    "id": 95,
+    "tipo": "completar",
+    "texto": "Monte el ______ en el eje. El ______ debe encajar perfectamente sin holgura.",
+    "respuesta": "engranaje",
+    "dificultad": "dificil",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 96,
+    "tipo": "completar",
+    "texto": "Prepare el ______ de solución. El ______ debe tener un pH de 7.0.",
+    "respuesta": "buffer",
+    "dificultad": "dificil",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 97,
+    "tipo": "completar",
+    "texto": "Ejecute la ______ principal. La ______ debe completarse sin errores.",
+    "respuesta": "función",
+    "dificultad": "media",
+    "categoria": "software"
+  },
+  {
+    "id": 98,
+    "tipo": "completar",
+    "texto": "Alinee el ______ con la marca. El ______ debe quedar perfectamente centrado.",
+    "respuesta": "láser",
+    "dificultad": "dificil",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 99,
+    "tipo": "completar",
+    "texto": "Configure la ______ de red. La ______ debe tener una IP válida.",
+    "respuesta": "interfaz",
+    "dificultad": "dificil",
+    "categoria": "software"
+  },
+  {
+    "id": 100,
+    "tipo": "completar",
+    "texto": "Verifique el ______ de presión. El ______ debe marcar entre 40 y 60 PSI.",
+    "respuesta": "manómetro",
+    "dificultad": "media",
     "categoria": "mecanica"
   }
 ]

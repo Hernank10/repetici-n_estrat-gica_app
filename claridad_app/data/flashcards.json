@@ -2,15 +2,481 @@
   {
     "id": 1,
     "termino": "Sinónimo innecesario",
-    "definicion": "Palabra que sustituye a un término técnico sin aportar claridad.",
+    "definicion": "Palabra que sustituye a un término técnico sin aportar claridad, generando ambigüedad y confusión en el lector. Ejemplo: usar 'recipiente' en lugar de 'tubo de ensayo'.",
     "dificultad": 1,
-    "categoria": "conceptos"
+    "categoria": "conceptos",
+    "ejemplo": "❌ 'Coloque la muestra en el tubo de ensayo. Agite el recipiente.' → El lector no sabe si 'recipiente' es el mismo tubo."
   },
   {
     "id": 2,
     "termino": "Repetición estratégica",
-    "definicion": "Uso deliberado del mismo término técnico para mantener claridad.",
+    "definicion": "Uso deliberado del mismo término técnico a lo largo de un documento para mantener la claridad y evitar confusiones. No es un error, es una virtud.",
     "dificultad": 1,
-    "categoria": "conceptos"
+    "categoria": "conceptos",
+    "ejemplo": "✅ 'Coloque la muestra en el tubo de ensayo. Agite el tubo de ensayo.' → Claridad total."
+  },
+  {
+    "id": 3,
+    "termino": "Ambigüedad léxica",
+    "definicion": "Confusión que surge cuando un término puede interpretarse de múltiples maneras en un contexto técnico, dificultando la comprensión del mensaje.",
+    "dificultad": 1,
+    "categoria": "conceptos",
+    "ejemplo": "La palabra 'banco' puede significar institución financiera o asiento. En un manual técnico, esto es inaceptable."
+  },
+  {
+    "id": 4,
+    "termino": "Término técnico",
+    "definicion": "Palabra específica de un dominio profesional o científico que tiene un significado preciso, unívoco y estandarizado internacionalmente.",
+    "dificultad": 1,
+    "categoria": "conceptos",
+    "ejemplo": "'Espectrofotómetro' es un término técnico; 'aparato' es un sinónimo vago."
+  },
+  {
+    "id": 5,
+    "termino": "Principio de Zapata",
+    "definicion": "Principio filosófico aplicado a la comunicación técnica: 'No importa repetir si se repite lo que importa', priorizando la claridad sobre la variedad léxica.",
+    "dificultad": 1,
+    "categoria": "conceptos",
+    "ejemplo": "Repite 'válvula' diez veces si es necesario, no la llames 'elemento', 'componente' o 'pieza'."
+  },
+  {
+    "id": 6,
+    "termino": "Carga cognitiva",
+    "definicion": "Esfuerzo mental requerido para interpretar un texto. La sinonimia innecesaria aumenta la carga cognitiva y dificulta la comprensión del lector.",
+    "dificultad": 2,
+    "categoria": "psicologia",
+    "ejemplo": "Un texto con 5 sinónimos diferentes para el mismo objeto fuerza al lector a memorizar equivalencias innecesarias."
+  },
+  {
+    "id": 7,
+    "termino": "Comunicación efectiva",
+    "definicion": "Transmisión de información de manera clara, precisa y sin ruido, logrando que el mensaje sea comprendido exactamente como fue concebido por el emisor.",
+    "dificultad": 1,
+    "categoria": "conceptos",
+    "ejemplo": "Una instrucción quirúrgica debe ser comprendida de la misma forma por todos los médicos en la sala."
+  },
+  {
+    "id": 8,
+    "termino": "Documentación técnica",
+    "definicion": "Texto especializado que describe procedimientos, especificaciones o instrucciones, y que debe priorizar la precisión sobre el estilo literario.",
+    "dificultad": 1,
+    "categoria": "documentacion",
+    "ejemplo": "Manuales de usuario, guías de instalación, procedimientos operativos estándar (POE)."
+  },
+  {
+    "id": 9,
+    "termino": "Manual de instrucciones",
+    "definicion": "Documento que explica paso a paso cómo utilizar un producto o realizar un procedimiento. Debe usar terminología consistente para evitar confusiones.",
+    "dificultad": 1,
+    "categoria": "documentacion",
+    "ejemplo": "Un manual de un taladro debe llamar 'broca' a la broca siempre, no 'accesorio', 'herramienta' o 'elemento'."
+  },
+  {
+    "id": 10,
+    "termino": "Redundancia positiva",
+    "definicion": "Repetición intencional de información que refuerza el mensaje principal y mejora la comprensión del lector, sin resultar molesta ni innecesaria.",
+    "dificultad": 2,
+    "categoria": "conceptos",
+    "ejemplo": "Repetir 'presione el botón rojo' tres veces en diferentes pasos refuerza la instrucción crítica."
+  },
+  {
+    "id": 11,
+    "termino": "Coherencia terminológica",
+    "definicion": "Uso consistente de los mismos términos a lo largo de un documento técnico para evitar ambigüedades y facilitar la comprensión del lector.",
+    "dificultad": 2,
+    "categoria": "conceptos",
+    "ejemplo": "Si llamas 'motor' a un componente, no lo llames 'mecanismo' más adelante."
+  },
+  {
+    "id": 12,
+    "termino": "Legibilidad",
+    "definicion": "Facilidad con la que un texto puede ser leído y comprendido por el público objetivo, influenciada por la estructura, vocabulario y claridad.",
+    "dificultad": 1,
+    "categoria": "conceptos",
+    "ejemplo": "Un texto con sinónimos innecesarios tiene menor legibilidad porque fuerza al lector a hacer inferencias."
+  },
+  {
+    "id": 13,
+    "termino": "Jerga técnica",
+    "definicion": "Vocabulario especializado utilizado por profesionales de un campo específico, que puede ser incomprensible para personas no familiarizadas.",
+    "dificultad": 1,
+    "categoria": "conceptos",
+    "ejemplo": "'Resistor', 'capacitor' y 'transistor' son jerga de electrónica; 'componente' es demasiado genérico."
+  },
+  {
+    "id": 14,
+    "termino": "Usabilidad",
+    "definicion": "Facilidad con la que los usuarios pueden utilizar un producto o sistema para alcanzar objetivos específicos de manera eficiente y satisfactoria.",
+    "dificultad": 2,
+    "categoria": "conceptos",
+    "ejemplo": "Un manual con terminología consistente mejora la usabilidad del producto."
+  },
+  {
+    "id": 15,
+    "termino": "Mortero",
+    "definicion": "Utensilio de laboratorio o construcción con forma de vaso resistente, utilizado para triturar o mezclar sustancias mediante un pistilo.",
+    "dificultad": 1,
+    "categoria": "laboratorio",
+    "ejemplo": "✅ 'Limpie el mortero con agua destilada. Luego, seque el mortero.' ❌ 'Limpie el mortero. Luego, seque el recipiente.'"
+  },
+  {
+    "id": 16,
+    "termino": "Tubo de ensayo",
+    "definicion": "Recipiente cilíndrico de vidrio utilizado en laboratorios para contener pequeñas cantidades de sustancias líquidas o sólidas durante experimentos.",
+    "dificultad": 1,
+    "categoria": "laboratorio",
+    "ejemplo": "✅ 'Caliente el tubo de ensayo. Sujete el tubo de ensayo con pinzas.'"
+  },
+  {
+    "id": 17,
+    "termino": "Pipeta",
+    "definicion": "Instrumento de laboratorio utilizado para medir o transferir pequeñas cantidades de líquido con alta precisión (microlitros o mililitros).",
+    "dificultad": 1,
+    "categoria": "laboratorio",
+    "ejemplo": "✅ 'Calibre la pipeta. Use la pipeta para transferir la muestra.'"
+  },
+  {
+    "id": 18,
+    "termino": "Matraz",
+    "definicion": "Recipiente de vidrio con forma esférica y cuello estrecho, utilizado para contener líquidos, calentar sustancias o realizar reacciones químicas.",
+    "dificultad": 1,
+    "categoria": "laboratorio",
+    "ejemplo": "✅ 'Agite el matraz. Vierta el contenido del matraz en el embudo.'"
+  },
+  {
+    "id": 19,
+    "termino": "Probeta",
+    "definicion": "Cilindro de vidrio graduado utilizado para medir volúmenes de líquidos con precisión moderada en laboratorios (precisión de ±1%).",
+    "dificultad": 1,
+    "categoria": "laboratorio",
+    "ejemplo": "✅ 'Llene la probeta hasta 50 ml. Lea la probeta a la altura de los ojos.'"
+  },
+  {
+    "id": 20,
+    "termino": "Balanza analítica",
+    "definicion": "Instrumento de alta precisión utilizado en laboratorios para medir masas con exactitud de hasta 0.0001 gramos (0.1 miligramos).",
+    "dificultad": 2,
+    "categoria": "laboratorio",
+    "ejemplo": "✅ 'Calibre la balanza analítica. Coloque la muestra en la balanza analítica.'"
+  },
+  {
+    "id": 21,
+    "termino": "Centrífuga",
+    "definicion": "Equipo de laboratorio que separa componentes de una mezcla mediante rotación a alta velocidad, aprovechando la fuerza centrífuga.",
+    "dificultad": 2,
+    "categoria": "laboratorio",
+    "ejemplo": "✅ 'Balancee la centrífuga. Cierre la tapa de la centrífuga antes de iniciar.'"
+  },
+  {
+    "id": 22,
+    "termino": "Espectrofotómetro",
+    "definicion": "Instrumento que mide la cantidad de luz absorbida por una muestra a diferentes longitudes de onda, utilizado en análisis químicos y bioquímicos.",
+    "dificultad": 3,
+    "categoria": "laboratorio",
+    "ejemplo": "✅ 'Encienda el espectrofotómetro. Calibre el espectrofotómetro con el blanco.'"
+  },
+  {
+    "id": 23,
+    "termino": "pH-metro",
+    "definicion": "Dispositivo electrónico utilizado para medir la acidez o alcalinidad de una solución, expresada en unidades de pH (0-14).",
+    "dificultad": 2,
+    "categoria": "laboratorio",
+    "ejemplo": "✅ 'Calibre el pH-metro con soluciones buffer. Enjuague el pH-metro con agua destilada.'"
+  },
+  {
+    "id": 24,
+    "termino": "Autoclave",
+    "definicion": "Equipo que utiliza vapor a alta presión y temperatura (121°C, 15 PSI) para esterilizar instrumentos y materiales de laboratorio.",
+    "dificultad": 2,
+    "categoria": "laboratorio",
+    "ejemplo": "✅ 'Cargue el autoclave. Seleccione el ciclo en el autoclave. Espere a que el autoclave termine.'"
+  },
+  {
+    "id": 25,
+    "termino": "Incubadora",
+    "definicion": "Equipo que mantiene condiciones ambientales controladas (temperatura, humedad, CO2) para el crecimiento de cultivos microbianos o celulares.",
+    "dificultad": 2,
+    "categoria": "laboratorio",
+    "ejemplo": "✅ 'Programe la incubadora a 37°C. Coloque las placas en la incubadora.'"
+  },
+  {
+    "id": 26,
+    "termino": "Tornillo",
+    "definicion": "Elemento de fijación mecánica con cabeza y rosca, utilizado para unir piezas mediante apriete. Debe nombrarse consistentemente en manuales.",
+    "dificultad": 1,
+    "categoria": "mecanica",
+    "ejemplo": "✅ 'Apriete el tornillo. Verifique que el tornillo no esté flojo.'"
+  },
+  {
+    "id": 27,
+    "termino": "Tuerca",
+    "definicion": "Pieza metálica con un orificio roscado que se acopla a un tornillo para fijar componentes mecánicos mediante apriete.",
+    "dificultad": 1,
+    "categoria": "mecanica",
+    "ejemplo": "✅ 'Coloque la tuerca. Apriete la tuerca con una llave.'"
+  },
+  {
+    "id": 28,
+    "termino": "Engranaje",
+    "definicion": "Rueda con dientes que transmite movimiento rotatorio entre ejes, utilizada en sistemas mecánicos para cambiar velocidad, torque o dirección.",
+    "dificultad": 2,
+    "categoria": "mecanica",
+    "ejemplo": "✅ 'Lubrique el engranaje. Verifique que el engranaje gire libremente.'"
+  },
+  {
+    "id": 29,
+    "termino": "Polea",
+    "definicion": "Rueda con una ranura en su perímetro por la que pasa una correa o cuerda, utilizada para transmitir movimiento o levantar cargas.",
+    "dificultad": 2,
+    "categoria": "mecanica",
+    "ejemplo": "✅ 'Instale la polea. Alinee la polea con el eje.'"
+  },
+  {
+    "id": 30,
+    "termino": "Rodamiento",
+    "definicion": "Componente mecánico que reduce la fricción entre partes móviles, permitiendo un movimiento rotatorio suave y preciso mediante bolas o rodillos.",
+    "dificultad": 2,
+    "categoria": "mecanica",
+    "ejemplo": "✅ 'Inserte el rodamiento. Presione el rodamiento hasta el fondo del alojamiento.'"
+  },
+  {
+    "id": 31,
+    "termino": "Válvula",
+    "definicion": "Dispositivo mecánico que regula, dirige o controla el flujo de fluidos (líquidos o gases) mediante apertura, cierre u obstrucción parcial.",
+    "dificultad": 2,
+    "categoria": "mecanica",
+    "ejemplo": "✅ 'Abra la válvula lentamente. Cierre la válvula cuando termine.'"
+  },
+  {
+    "id": 32,
+    "termino": "Pistón",
+    "definicion": "Componente móvil que se desplaza dentro de un cilindro, utilizado en motores y bombas para generar o transmitir fuerza mediante movimiento alternativo.",
+    "dificultad": 2,
+    "categoria": "mecanica",
+    "ejemplo": "✅ 'Lubrique el pistón. Inserte el pistón en el cilindro.'"
+  },
+  {
+    "id": 33,
+    "termino": "Cable USB",
+    "definicion": "Conector estándar para transmisión de datos y alimentación eléctrica entre dispositivos electrónicos (computadoras, teléfonos, periféricos).",
+    "dificultad": 1,
+    "categoria": "electronica",
+    "ejemplo": "✅ 'Conecte el cable USB. Desconecte el cable USB cuando termine.'"
+  },
+  {
+    "id": 34,
+    "termino": "Resistor",
+    "definicion": "Componente electrónico que ofrece resistencia al paso de corriente eléctrica, utilizado para limitar corriente, dividir voltaje o disipar energía.",
+    "dificultad": 2,
+    "categoria": "electronica",
+    "ejemplo": "✅ 'Suelde el resistor. Verifique el valor del resistor con un multímetro.'"
+  },
+  {
+    "id": 35,
+    "termino": "Capacitor",
+    "definicion": "Componente electrónico que almacena energía en forma de campo eléctrico, utilizado para filtrar señales, estabilizar voltajes o crear retardos.",
+    "dificultad": 2,
+    "categoria": "electronica",
+    "ejemplo": "✅ 'Descargue el capacitor antes de manipularlo. Mida la capacitancia del capacitor.'"
+  },
+  {
+    "id": 36,
+    "termino": "Transistor",
+    "definicion": "Dispositivo semiconductor que amplifica o conmuta señales electrónicas, componente fundamental de circuitos integrados y procesadores.",
+    "dificultad": 3,
+    "categoria": "electronica",
+    "ejemplo": "✅ 'Identifique el colector del transistor. Suelde el transistor respetando la polaridad.'"
+  },
+  {
+    "id": 37,
+    "termino": "Diodo",
+    "definicion": "Componente electrónico que permite el flujo de corriente en una sola dirección, utilizado en rectificación, protección y detección de señales.",
+    "dificultad": 2,
+    "categoria": "electronica",
+    "ejemplo": "✅ 'Identifique el ánodo del diodo. Instale el diodo en la orientación correcta.'"
+  },
+  {
+    "id": 38,
+    "termino": "Circuito integrado",
+    "definicion": "Conjunto de componentes electrónicos miniaturizados fabricados en una pastilla de material semiconductor, que realiza funciones específicas.",
+    "dificultad": 3,
+    "categoria": "electronica",
+    "ejemplo": "✅ 'Alinee el circuito integrado con el zócalo. Presione el circuito integrado suavemente.'"
+  },
+  {
+    "id": 39,
+    "termino": "Microcontrolador",
+    "definicion": "Circuito integrado programable que contiene procesador, memoria y periféricos de entrada/salida, utilizado en sistemas embebidos y automatización.",
+    "dificultad": 3,
+    "categoria": "electronica",
+    "ejemplo": "✅ 'Programe el microcontrolador. Conecte el microcontrolador a la alimentación.'"
+  },
+  {
+    "id": 40,
+    "termino": "Sensor",
+    "definicion": "Dispositivo que detecta cambios en el entorno (temperatura, luz, presión, movimiento) y los convierte en señales eléctricas procesables.",
+    "dificultad": 2,
+    "categoria": "electronica",
+    "ejemplo": "✅ 'Calibre el sensor. Conecte el sensor al microcontrolador.'"
+  },
+  {
+    "id": 41,
+    "termino": "Extintor",
+    "definicion": "Dispositivo portátil para combatir principios de incendio, que contiene un agente extintor (agua, polvo, CO2) según el tipo de fuego.",
+    "dificultad": 1,
+    "categoria": "seguridad",
+    "ejemplo": "✅ 'Retire el pasador del extintor. Dirija el extintor a la base del fuego.'"
+  },
+  {
+    "id": 42,
+    "termino": "Alarma",
+    "definicion": "Sistema de aviso que emite señales sonoras o visuales para alertar sobre situaciones de peligro, emergencia o condiciones anormales.",
+    "dificultad": 1,
+    "categoria": "seguridad",
+    "ejemplo": "✅ 'Pruebe la alarma mensualmente. No ignore la alarma cuando suene.'"
+  },
+  {
+    "id": 43,
+    "termino": "Sensor de humo",
+    "definicion": "Dispositivo de seguridad que detecta partículas de humo en el aire y activa una alarma sonora para prevenir incendios y salvar vidas.",
+    "dificultad": 1,
+    "categoria": "seguridad",
+    "ejemplo": "✅ 'Instale el sensor de humo en el techo. Limpie el sensor de humo cada 6 meses.'"
+  },
+  {
+    "id": 44,
+    "termino": "Equipo de protección personal",
+    "definicion": "Conjunto de elementos (guantes, gafas, mascarilla, casco, arnés) utilizados para proteger al trabajador de riesgos laborales específicos.",
+    "dificultad": 1,
+    "categoria": "seguridad",
+    "ejemplo": "✅ 'Use el equipo de protección personal antes de ingresar al área. Inspeccione el equipo de protección personal diariamente.'"
+  },
+  {
+    "id": 45,
+    "termino": "Botiquín",
+    "definicion": "Caja o maletín que contiene suministros y medicamentos básicos (vendas, antisépticos, analgésicos) para proporcionar primeros auxilios.",
+    "dificultad": 1,
+    "categoria": "seguridad",
+    "ejemplo": "✅ 'Revise el botiquín mensualmente. Reponga los elementos del botiquín después de usar.'"
+  },
+  {
+    "id": 46,
+    "termino": "Variable",
+    "definicion": "Espacio de memoria que almacena un valor que puede cambiar durante la ejecución de un programa, identificado por un nombre único.",
+    "dificultad": 1,
+    "categoria": "software",
+    "ejemplo": "✅ 'Declare la variable. Inicialice la variable antes de usarla.'"
+  },
+  {
+    "id": 47,
+    "termino": "Función",
+    "definicion": "Bloque de código reutilizable que realiza una tarea específica y puede ser invocado desde diferentes partes de un programa con parámetros.",
+    "dificultad": 2,
+    "categoria": "software",
+    "ejemplo": "✅ 'Defina la función. Llame a la función cuando sea necesario.'"
+  },
+  {
+    "id": 48,
+    "termino": "Clase",
+    "definicion": "Plantilla o modelo para crear objetos en programación orientada a objetos, que define atributos (datos) y métodos (comportamiento) comunes.",
+    "dificultad": 2,
+    "categoria": "software",
+    "ejemplo": "✅ 'Declare la clase. Instancie la clase para crear un objeto.'"
+  },
+  {
+    "id": 49,
+    "termino": "Objeto",
+    "definicion": "Instancia concreta de una clase en programación orientada a objetos, que tiene estado (valores de atributos) y comportamiento (métodos).",
+    "dificultad": 2,
+    "categoria": "software",
+    "ejemplo": "✅ 'Cree el objeto. Acceda a los métodos del objeto.'"
+  },
+  {
+    "id": 50,
+    "termino": "Algoritmo",
+    "definicion": "Secuencia finita de pasos lógicos, ordenados y no ambiguos para resolver un problema o realizar una tarea específica en computación.",
+    "dificultad": 2,
+    "categoria": "software",
+    "ejemplo": "✅ 'Diseñe el algoritmo. Implemente el algoritmo en código.'"
+  },
+  {
+    "id": 51,
+    "termino": "API",
+    "definicion": "Interfaz de programación de aplicaciones que define cómo diferentes componentes de software deben interactuar entre sí mediante protocolos específicos.",
+    "dificultad": 2,
+    "categoria": "software",
+    "ejemplo": "✅ 'Consulte la documentación de la API. Llame a la API con los parámetros correctos.'"
+  },
+  {
+    "id": 52,
+    "termino": "Base de datos",
+    "definicion": "Conjunto organizado de datos estructurados que se almacenan y acceden electrónicamente para su gestión eficiente mediante sistemas gestores.",
+    "dificultad": 2,
+    "categoria": "software",
+    "ejemplo": "✅ 'Conéctese a la base de datos. Ejecute la consulta en la base de datos.'"
+  },
+  {
+    "id": 53,
+    "termino": "Agitador magnético",
+    "definicion": "Equipo de laboratorio que utiliza un campo magnético rotatorio para mezclar líquidos mediante una barra imantada dentro del recipiente.",
+    "dificultad": 2,
+    "categoria": "laboratorio",
+    "ejemplo": "✅ 'Coloque la barra en el agitador magnético. Encienda el agitador magnético.'"
+  },
+  {
+    "id": 54,
+    "termino": "Cromatógrafo",
+    "definicion": "Instrumento analítico que separa los componentes de una mezcla mediante diferencias en su interacción con una fase móvil y una fase estacionaria.",
+    "dificultad": 3,
+    "categoria": "laboratorio",
+    "ejemplo": "✅ 'Inyecte la muestra en el cromatógrafo. Analice el cromatograma del cromatógrafo.'"
+  },
+  {
+    "id": 55,
+    "termino": "Transmisión",
+    "definicion": "Sistema mecánico que transmite potencia desde el motor a las ruedas, permitiendo cambios en velocidad y torque mediante engranajes.",
+    "dificultad": 2,
+    "categoria": "mecanica",
+    "ejemplo": "✅ 'Revise el nivel de aceite de la transmisión. Cambie el filtro de la transmisión.'"
+  },
+  {
+    "id": 56,
+    "termino": "Bucle",
+    "definicion": "Estructura de control en programación que repite un bloque de código mientras se cumpla una condición específica (for, while, do-while).",
+    "dificultad": 2,
+    "categoria": "software",
+    "ejemplo": "✅ 'Inicie el bucle. Verifique la condición del bucle en cada iteración.'"
+  },
+  {
+    "id": 57,
+    "termino": "Condicional",
+    "definicion": "Estructura de control que ejecuta diferentes bloques de código según el resultado de una condición booleana (if, else, switch).",
+    "dificultad": 2,
+    "categoria": "software",
+    "ejemplo": "✅ 'Evalúe la condición del condicional. Ejecute el bloque verdadero del condicional.'"
+  },
+  {
+    "id": 58,
+    "termino": "Lista",
+    "definicion": "Estructura de datos que almacena una colección ordenada de elementos, permitiendo acceso por posición y operaciones de inserción/eliminación.",
+    "dificultad": 2,
+    "categoria": "software",
+    "ejemplo": "✅ 'Cree la lista. Agregue elementos a la lista. Recorra la lista con un bucle.'"
+  },
+  {
+    "id": 59,
+    "termino": "Interfaz de usuario",
+    "definicion": "Espacio donde ocurre la interacción entre humanos y máquinas, incluyendo elementos visuales, táctiles, auditivos y de voz.",
+    "dificultad": 2,
+    "categoria": "software",
+    "ejemplo": "✅ 'Diseñe la interfaz de usuario. Pruebe la interfaz de usuario con usuarios reales.'"
+  },
+  {
+    "id": 60,
+    "termino": "Servidor",
+    "definicion": "Computadora o software que proporciona servicios, recursos o datos a otros dispositivos llamados clientes en una red (HTTP, FTP, base de datos).",
+    "dificultad": 2,
+    "categoria": "software",
+    "ejemplo": "✅ 'Configure el servidor. Reinicie el servidor después de los cambios.'"
   }
 ]
