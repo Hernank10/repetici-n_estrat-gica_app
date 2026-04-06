@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Generador Automático{% endblock %}
+{% block content %}
+<h1>Generador Automático de Contenido</h1>
+<div class="card">
+    <div class="card-body">
+        <p>Genera nuevos ejercicios y flashcards automáticamente</p>
+        <form method="POST">
+            <div class="mb-3">
+                <label>Cantidad de ejercicios:</label>
+                <input type="number" name="cantidad" class="form-control" value="50">
+            </div>
+            <button type="submit" class="btn btn-primary">Generar</button>
+        </form>
+    </div>
+</div>
+<a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary mt-3">Volver</a>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<h1>Panel de Administración</h1>
+<div class="row">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h3>{{ total_usuarios }}</h3>
+                <p>Usuarios</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h3>{{ total_ejercicios }}</h3>
+                <p>Ejercicios</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-dark">
+            <div class="card-body">
+                <h3>{{ total_flashcards }}</h3>
+                <p>Flashcards</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-4">
+    <a href="{{ url_for('admin_usuarios') }}" class="btn btn-outline-primary">Gestionar Usuarios</a>
+    <a href="{{ url_for('admin_ejercicios') }}" class="btn btn-outline-success">Gestionar Ejercicios</a>
+    <a href="{{ url_for('admin_flashcards') }}" class="btn btn-outline-warning">Gestionar Flashcards</a>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Demostraciones{% endblock %}
+{% block content %}
+<h1>Demostraciones de Código</h1>
+<p class="lead">Implementaciones del principio de claridad en diferentes lenguajes</p>
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5>Python + Tkinter</h5>
+                <p>Aplicación de escritorio con interfaz gráfica</p>
+                <a href="{{ url_for('demo_python') }}" class="btn btn-sm btn-primary">Ver código</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5>Flask + Bootstrap</h5>
+                <p>Aplicación web con Python</p>
+                <a href="{{ url_for('demo_flask') }}" class="btn btn-sm btn-success">Ver código</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5>Kivy (Móvil)</h5>
+                <p>Framework para aplicaciones multitouch</p>
+                <a href="{{ url_for('demo_kivy') }}" class="btn btn-sm btn-warning">Ver código</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

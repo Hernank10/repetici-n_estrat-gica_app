@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Kotlin{% endblock %}
+{% block content %}
+<h1>Kotlin (Android)</h1>
+<pre><code class="language-kotlin">
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            Text("Apriete el tornillo. Verifique el tornillo.")
+        }
+    }
+}
+</code></pre>
+<a href="{{ url_for('demo_index') }}" class="btn btn-secondary">Volver</a>
+{% endblock %}

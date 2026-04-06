@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Gestionar Usuarios{% endblock %}
+{% block content %}
+<h1>Usuarios Registrados</h1>
+<table class="table table-striped">
+    <thead>
+        <tr><th>ID</th><th>Nombre</th><th>Email</th><th>Rol</th><th>Acciones</th></tr>
+    </thead>
+    <tbody>
+        {% for u in usuarios %}
+        <tr>
+            <td>{{ u[0] }}</td>
+            <td>{{ u[1] }}</td>
+            <td>{{ u[2] }}</td>
+            <td>{% if u[4] %}Admin{% else %}Usuario{% endif %}</td>
+            <td>
+                {% if not u[4] %}
+                <form method="POST" action="{{ url_for('admin_eliminar_usuario', usuario_id=u[0]) }}" style="display:inline">
+                    <button class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar?')">Eliminar</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Volver</a>
+{% endblock %}

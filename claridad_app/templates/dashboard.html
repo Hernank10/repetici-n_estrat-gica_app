@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Bienvenido, {{ session.usuario_nombre }}</h1>
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h3>{{ progreso.puntaje_total }}</h3>
+                <p>Puntaje total</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h3>{{ progreso.ejercicios_completados|length }}/{{ total_ejercicios }}</h3>
+                <p>Ejercicios</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h3>{{ progreso.flashcards_dominadas|length }}/{{ total_flashcards }}</h3>
+                <p>Flashcards</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-center mt-4">
+    <a href="{{ url_for('teoria') }}" class="btn btn-primary">Ver teoría</a>
+    <a href="{{ url_for('ejercicios') }}" class="btn btn-success">Ejercicios</a>
+    <a href="{{ url_for('flashcards') }}" class="btn btn-warning">Flashcards</a>
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Progreso{% endblock %}
+{% block content %}
+<h1>Mi Progreso</h1>
+<p>Puntaje total: {{ progreso.puntaje_total }}</p>
+<p>Ejercicios completados: {{ progreso.ejercicios_completados|length }}/{{ total_ejercicios }}</p>
+<p>Flashcards dominadas: {{ progreso.flashcards_dominadas|length }}/{{ total_flashcards }}</p>
+<p>Racha actual: {{ progreso.racha_actual }}</p>
+{% endblock %}

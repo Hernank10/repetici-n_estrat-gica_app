@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "modo_mantenimiento": false,
+  "puntaje_ejercicio": 10,
+  "puntaje_flashcard": 5,
+  "colores": {
+    "primario": "#2c3e50",
+    "secundario": "#3498db"
+  }
+}

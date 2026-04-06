@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "termino": "Sinónimo innecesario",
+    "definicion": "Palabra que sustituye a un término técnico sin aportar claridad.",
+    "dificultad": 1,
+    "categoria": "conceptos"
+  },
+  {
+    "id": 2,
+    "termino": "Repetición estratégica",
+    "definicion": "Uso deliberado del mismo término técnico para mantener claridad.",
+    "dificultad": 1,
+    "categoria": "conceptos"
+  }
+]

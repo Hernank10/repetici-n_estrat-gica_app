@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "tipo": "correccion",
+    "incorrecto": "Apriete el tornillo. Verifique la pieza.",
+    "correcto": "Apriete el tornillo. Verifique el tornillo.",
+    "dificultad": "facil",
+    "categoria": "mecanica"
+  },
+  {
+    "id": 2,
+    "tipo": "correccion",
+    "incorrecto": "Use el microscopio. Enfoque el instrumento.",
+    "correcto": "Use el microscopio. Enfoque el microscopio.",
+    "dificultad": "facil",
+    "categoria": "laboratorio"
+  },
+  {
+    "id": 3,
+    "tipo": "completar",
+    "texto": "Apriete el ______. Verifique que el ______ no esté flojo.",
+    "respuesta": "tornillo",
+    "dificultad": "facil",
+    "categoria": "mecanica"
+  }
+]

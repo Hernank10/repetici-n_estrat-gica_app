@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+<div class="text-center">
+    <h1>Claridad Técnica</h1>
+    <p class="lead">Aprende a comunicar con precisión en entornos técnicos</p>
+    <a href="{{ url_for('login') }}" class="btn btn-primary">Iniciar sesión</a>
+    <a href="{{ url_for('registro') }}" class="btn btn-outline-secondary">Registrarse</a>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Kivy{% endblock %}
+{% block content %}
+<h1>Kivy (Móvil)</h1>
+<pre><code class="language-python">
+from kivy.app import App
+from kivy.uix.label import Label
+
+class ClarityApp(App):
+    def build(self):
+        return Label(text="Apriete el tornillo. Verifique el tornillo.")
+
+if __name__ == '__main__':
+    ClarityApp().run()
+</code></pre>
+<a href="{{ url_for('demo_index') }}" class="btn btn-secondary">Volver</a>
+{% endblock %}

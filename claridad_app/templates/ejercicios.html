@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Ejercicios{% endblock %}
+{% block content %}
+<h1>Ejercicios Interactivos</h1>
+<p>Total de ejercicios: {{ total }}</p>
+<div class="card">
+    <div class="card-body">
+        <div id="ejercicio-container">
+            <p>Cargando ejercicio...</p>
+        </div>
+        <textarea id="respuesta" class="form-control mb-2" rows="3"></textarea>
+        <button id="verificar" class="btn btn-primary">Verificar</button>
+        <div id="feedback" class="mt-2"></div>
+    </div>
+</div>
+<script>
+let ejercicios = {{ ejercicios|tojson }};
+let actual = 0;
+function cargarEjercicio() {
+    if (actual >= ejercicios.length) {
+        document.getElementById('ejercicio-container').innerHTML = '<p>¡Completaste todos los ejercicios!</p>';
+        return;
+    }
+    let ej = ejercicios[actual];
+    document.getElementById('ejercicio-container').innerHTML = ej.tipo === 'correccion' ? ej.incorrecto : ej.texto;
+}
+document.getElementById('verificar').onclick = () => {
+    alert('Función en desarrollo - Verifica con el servidor');
+};
+cargarEjercicio();
+</script>
+{% endblock %}

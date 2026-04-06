@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Flashcards{% endblock %}
+{% block content %}
+<h1>Flashcards</h1>
+<div class="row">
+    {% for fc in flashcards %}
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5>{{ fc.termino }}</h5>
+                <p>{{ fc.definicion[:100] }}...</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}FastAPI{% endblock %}
+{% block content %}
+<h1>FastAPI</h1>
+<pre><code class="language-python">
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def root():
+    return {"mensaje": "Apriete el tornillo. Verifique el tornillo."}
+</code></pre>
+<a href="{{ url_for('demo_index') }}" class="btn btn-secondary">Volver</a>
+{% endblock %}

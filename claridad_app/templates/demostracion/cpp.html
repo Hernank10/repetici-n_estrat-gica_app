@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}C++ con Qt{% endblock %}
+{% block content %}
+<h1>C++ con Qt</h1>
+<pre><code class="language-cpp">
+#include <QApplication>
+#include <QLabel>
+
+int main(int argc, char *argv[]) {
+    QApplication app(argc, argv);
+    QLabel label("Apriete el tornillo. Verifique el tornillo.");
+    label.show();
+    return app.exec();
+}
+</code></pre>
+<a href="{{ url_for('demo_index') }}" class="btn btn-secondary">Volver</a>
+{% endblock %}
